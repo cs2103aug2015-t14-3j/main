@@ -1,0 +1,9 @@
+abstract class Logic {
+
+}
+
+class TBLogic extends Logic {
+	
+	
+	
+}

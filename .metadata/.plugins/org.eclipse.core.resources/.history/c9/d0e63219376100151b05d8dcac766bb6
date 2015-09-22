@@ -1,0 +1,23 @@
+abstract class Logic {
+	
+	public Logic() {
+		
+	}
+	
+	abstract public String welcomeMessage();
+	abstract private String toDoToday();
+
+}
+
+class TBLogic extends Logic {
+	
+	public String welcomeMessage() {
+		return "Welcome to TaskBuddy!!!\n";
+	}
+	
+	private String toDoToday() {
+		return "Nothing to do today :D";
+	}
+	
+	
+}
