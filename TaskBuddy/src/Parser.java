@@ -24,23 +24,18 @@ public class Parser {
 		if (userInput.contains("add")) {
 			command = "add";
 			dictionary.put("command", "add");
-			extractAddContent(dictionary);
 		} else if (userInput.contains("delete")) {
 			command = "delete";
 			dictionary.put("command", "delete");
-			extractDeleteContent(dictionary);
 		} else if (userInput.contains("display")) {
 			command = "display";
 			dictionary.put("command", "display");
-			extractDisplayContent(dictionary);
 		} else if (userInput.contains("edit")) {
 			command = "edit";
 			dictionary.put("command", "edit");
-			extractEditContent(dictionary);
 		} else if (userInput.contains("search")) {
 			command = "search";
 			dictionary.put("command", "search");
-			extractSearchContent(dictionary);
 		} else if (userInput.contains("undo")) {
 			command = "undo";
 			dictionary.put("command", "undo");
@@ -111,6 +106,8 @@ public class Parser {
 				dictionary.put("subCommand", "incomplete");
 			} else if (userInput.equals("floating")) {
 				dictionary.put("subCommnad", "floating");
+			} else if (userInput.equals("")) {
+				dictionary.put("subCommand", null);
 			} else {
 				dictionary.put("subCommand", "color");
 				dictionary.put("color", userInput);
