@@ -21,25 +21,25 @@ public class Parser {
 
 	private String extractCommand(Map<String,String> dictionary) {
 		String command = "";
-		if (userInput.contains("add ") || userInput.contains("create ") || userInput.contains("insert ")) {
+		if (userInput.contains("add") || userInput.contains("create") || userInput.contains("insert")) {
 			command = "add";
 			dictionary.put("command", "add");
-		} else if (userInput.contains("delete ") || userInput.contains("remove ")) {
+		} else if (userInput.contains("delete")) {
 			command = "delete";
 			dictionary.put("command", "delete");
-		} else if (userInput.contains("display ") || userInput.contains("show ")) {
+		} else if (userInput.contains("display") || userInput.containts("show")) {
 			command = "display";
 			dictionary.put("command", "display");
-		} else if (userInput.contains("edit ")) {
+		} else if (userInput.contains("edit")) {
 			command = "edit";
 			dictionary.put("command", "edit");
-		} else if (userInput.contains("search ") || userInput.contains("look for ")) {
+		} else if (userInput.contains("search")) {
 			command = "search";
 			dictionary.put("command", "search");
-		} else if (userInput.contains("undo ")) {
+		} else if (userInput.contains("undo")) {
 			command = "undo";
 			dictionary.put("command", "undo");
-		} else if (userInput.contains("help ")) {
+		} else if (userInput.contains("help")) {
 			command = "help";
 			dictionary.put("command", "help");
 		} 
