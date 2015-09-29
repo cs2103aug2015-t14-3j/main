@@ -26,9 +26,9 @@ class UI {
 		output = logic.welcomeMessage1();
 		display(output);
 		
-		boolean isFirstRun = logic.isFirstRun();
-		if (isFirstRun == true) {
-			setUserName();
+		String userName = logic.getUserName();
+		if (userName == null) {
+			requestUserName();
 		}
 		
 		output = logic.welcomeMessage2();
@@ -38,7 +38,7 @@ class UI {
 		display(output);
 	}
 	
-	private void setUserName() {
+	private void requestUserName() {
 		output = REQUEST_NAME;
 		display(output);
 		userName = sc.nextLine();

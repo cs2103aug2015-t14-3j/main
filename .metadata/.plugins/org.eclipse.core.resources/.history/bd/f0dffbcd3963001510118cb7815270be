@@ -1,0 +1,52 @@
+import java.util.Scanner;
+
+public class TaskBuddy {
+	
+	public static void main(String[] args){
+		UI TB = new UI();
+		TB.run();
+	}
+
+}
+
+class UI {
+	
+	Scanner sc = new Scanner(System.in);
+	private Logic logic;
+	private String output;
+	private String input;
+	private String userName;
+	
+	public UI() {
+		logic = new TBLogic();
+		output = new String();
+		output = logic.welcomeMessage();
+		display(output);
+		
+		boolean isFirstRun = logic.isFirstRun();
+		if (isFirstRun == true) {
+			setUserName();
+		} else {
+			userName = logic.getUserName();
+		}
+	}
+	
+	private void setUserName() {
+		output = "Please enter your Name: ";
+		userName = sc.nextLine();
+		logic.setUserName(userName);
+	}
+	
+	public void run() {
+		while (true) {
+			input = sc.nextLine();
+			output = logic.executeCommand(input);
+			display(output);
+		}
+	}
+	
+	private void display(String output) {
+		System.out.print(output);
+	}
+}
+	

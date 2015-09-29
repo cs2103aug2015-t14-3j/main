@@ -1,4 +1,13 @@
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Map;
 
@@ -8,9 +17,8 @@ abstract class Logic {
 	abstract public String welcomeMessage2();
 	abstract public String toDoToday();
 	abstract public String executeCommand(String command);
-	abstract public boolean isFirstRun();
 	abstract public void setUserName(String userName);
-
+	abstract public String getUserName();
 }
 
 class TBLogic extends Logic {
@@ -20,6 +28,7 @@ class TBLogic extends Logic {
 	private Storage storage;
 	private String userName;
 	private Parser parser;
+	private String namePath = "UserName.txt";
 	
 	private final String WELCOME_MESSAGE1 = "Date: %s\nTime: %s\n--------------------\n";
 	private final String WELCOME_MESSAGE2 = "Welcome back, %s!\n";
@@ -31,18 +40,62 @@ class TBLogic extends Logic {
 		output = new String();
 		parser = new Parser();
 		storage = new Storage();
+		getUserNameFromMemory();
 	}
 	
-	public boolean isFirstRun() {
-		return storage.isFirstRun();
+	//To be refactored
+	private void getUserNameFromMemory() {
+		
+		File fileToRead = new File(namePath);
+		try{
+		BufferedReader reader = new BufferedReader(new FileReader(fileToRead));
+		userName = reader.readLine();
+		reader.close();
+		} catch (FileNotFoundException ex) {
+		userName = null;
+		//Creates an empty file at path
+		try{
+			PrintWriter writer = new PrintWriter(new FileWriter(fileToRead));
+			writer.close();
+			} catch (IOException ex2) {
+			System.out.println(ex2);
+			}
+
+		} catch (IOException ex) {
+		System.out.println(ex);
+		}
 	}
 	
+	//To be refactored
 	public void setUserName(String userName) {
-		storage.setUserName(userName);
+		this.userName = userName;
+		
+		File file = new File(namePath);
+		
+		//Clears the file
+		try{
+		PrintWriter writer = new PrintWriter(new FileWriter(file));
+		writer.close();
+		} catch (IOException ex) {
+		System.out.println(ex);
+		}
+		
+		//Writes username to file
+		try{
+			PrintWriter writer = new PrintWriter(new FileWriter(file, true));
+			writer.println(userName);
+			writer.close();
+			} catch (IOException ex) {
+			System.out.println(ex);
+			}
+
+	}
+	
+	public String getUserName() {
+		return userName;
 	}
 	
 	public String welcomeMessage2() {
-		userName = storage.getUserName();
 		output = String.format(WELCOME_MESSAGE2, userName);
 		return output;
 	}
@@ -62,6 +115,14 @@ class TBLogic extends Logic {
 	public String toDoToday() {
 		output = String.format(DISPLAY_HEADER, "today");
 		int index = 1;
+		
+//		Map<String, String> command = new HashMap<String, String> ();
+		
+//		command.put("subCommand", "on");
+//		command.put("data", date);
+//		output = display(command);
+//		
+//		return output;
 		
 		output += String.format(DISPLAY_FORMAT, index, "submit report", "20/9/2015", "21/9/2015");
 
@@ -117,41 +178,68 @@ class TBLogic extends Logic {
 			//Event
 		}
 		
-		return "add\n";
+		return "add " + "description: " + description + " start: " + startDate + " end: " + endDate + "\n";
 	}
 	
 	private String display(Map<String, String> parsedCommand) {
 		String subCommand = parsedCommand.get("subCommand");
 		String date = parsedCommand.get("date");
 		
+		ArrayList<Map<String, String>> tasks; 
+		
 		if (subCommand == null) {
 			//Display All
 		} else {
 			switch (subCommand) {
 			case "on":
-				
+//				tasks = 
+//				break;
 			case "from":
-				
+//				tasks = 
+//				break;
 			case "after":
-				
+//				tasks = 
+//				break;
 			case "due":
-				
+//				tasks = 
+//				break;
 			case "incomplete":
-				
+//				tasks = 
+//				break;
 			case "floating":
-				
+//				tasks = 
+//				break;
 			default:
-		
+				return INVALID_COMMAND;
 			}
 		}
 		
-		return "display\n";
+//		output = String.format(DISPLAY_HEADER, "today");
+//		int index = 1;
+		
+//		int i = 0;
+		
+//		for (i = 0; i < tasks.size(); ++i) {
+//			Map<String,String> task = tasks.get(i);
+			
+//			String description = task.get("description");
+//			String start = task.get("start");
+//			String end = task.get("end");
+			
+//			output += String.format(DISPLAY_FORMAT, index, description, start, end);			
+//		}
+		
+//		output += "\n";
+//		return output;
+
+		
+		return "display " + "sub: " + subCommand + " date: " + date + "\n";
 	}
 	
 	private String delete(Map<String,String> parsedCommand) {
 		String index = parsedCommand.get("index");
 		
-		return "delete\n";
+		return "delete " + "index: " + index + "\n";
 	}
 	
 	private String edit(Map<String, String> parsedCommand) {
@@ -159,13 +247,13 @@ class TBLogic extends Logic {
 		String field = parsedCommand.get("field");
 		String value = parsedCommand.get("value");
 		
-		return "edit\n";
+		return "edit " + "index: " + index + " field: " + field + " value: " + value + "\n";
 	}
 	
 	private String search(Map<String, String> parsedCommand) {
 		String text = parsedCommand.get("text");
 		
-		return "search\n";
+		return "search " + " text: " + text + "\n";
 	}
 	
 	private String undo(Map<String, String> parsedCommand) {
@@ -189,7 +277,7 @@ class TBLogic extends Logic {
 		case "undo":
 			
 		}
-		return "help\n";
+		return "help " + "target: " + target + "\n";
 	}
 
 }

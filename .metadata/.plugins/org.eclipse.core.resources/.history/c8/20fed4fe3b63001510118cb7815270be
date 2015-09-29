@@ -1,0 +1,12 @@
+public class Storage {
+	public boolean isFirstRun() {
+		return false;
+	}
+	public String getUserName() {
+		return "Jim";
+	}
+	public String setUserName(String userName){
+		System.out.printf("Set Name");
+		return " ";
+	}
+}

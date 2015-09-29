@@ -1,0 +1,111 @@
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.Map;
+
+abstract class Logic {
+
+	abstract public String welcomeMessage1();
+	abstract public String welcomeMessage2();
+	abstract public String toDoToday();
+	abstract public String executeCommand(String command);
+	abstract public boolean isFirstRun();
+	abstract public void setUserName(String userName);
+
+}
+
+class TBLogic extends Logic {
+	
+	private String output;
+	private Storage storage;
+	private String userName;
+//	private Parser parser;
+	
+	private final String WELCOME_MESSAGE1 = "Date: %s\nTime: %s\n--------------------\n";
+	private final String WELCOME_MESSAGE2 = "Welcome back, %s!\n\n";
+	private final String INVALID_COMMAND = "Invalid Command\n";
+	
+	public TBLogic() {
+		output = new String();
+//		parser = new Parser();
+		storage = new Storage();
+		
+	}
+	
+	public boolean isFirstRun() {
+		return storage.isFirstRun();
+	}
+	
+	public void setUserName(String userName) {
+		storage.setUserName(userName);
+	}
+	
+	public String welcomeMessage2() {
+		userName = storage.getUserName();
+		output = String.format(WELCOME_MESSAGE2, userName);
+		return output;
+	}
+	
+	public String welcomeMessage1() {
+		Date dateTime = new Date();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy, EEEE");
+		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+		
+		String date = dateFormat.format(dateTime);
+		String time = timeFormat.format(dateTime);
+		
+		output = String.format(WELCOME_MESSAGE1, date, time);
+		return output;
+	}
+	
+	public String toDoToday() {
+		return "Nothing to do today :D";
+	}
+	
+	enum COMMAND_TYPE {
+		ADD, DISPLAY, DELETE, EDIT, INVALID
+	};
+	
+	public String executeCommand(String command) {
+		Map<String, String> parsedCommand = parser.parseCommand(command);
+		
+		switch (commandType) {
+		case ADD:
+			output = add(command);
+			return output;
+		case DISPLAY:
+			output = display(command);
+			return output;
+		case DELETE:
+			output = delete(command);
+			return output;			
+		case EDIT:
+			output = edit(command);
+			return output;			
+		case INVALID:
+			output = INVALID_COMMAND;
+			return output;
+		}
+	}
+	
+	enum SUB_ADD {
+		ADD_EVENT, ADD_DEADLINE, ADD_FLOATING
+	}
+	private String add(String command) {
+		SUB_ADD sub;
+		String description = parser.getDesc(command);
+		return " ";
+	}
+	
+	private String display(String command) {
+		return " ";
+	}
+	
+	private String delete(String command) {
+		return " ";
+	}
+	
+	private String edit(String command) {
+		return " ";
+	}
+	
+}

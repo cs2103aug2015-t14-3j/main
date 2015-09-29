@@ -1,0 +1,54 @@
+import java.util.HashMap;
+import java.util.Map;
+
+public class Parser {
+	
+	Map<String,String> data= new HashMap<String,String>();
+	
+	public Map<String,String> parseCommand(String command) {
+		//Set Command
+		data.put("command", "add");
+//		data.put("command", "delete");
+//		data.put("command", "display");
+//		data.put("command", "search");
+//		data.put("command", "edit");
+//		data.put("command", "undo");
+//		data.put("command", "help");
+		
+		//Test Add
+		if (true){
+			data.put("description", "desc");
+			data.put("startDate","20/9/2015");
+			data.put("endDate","21/9/2015");
+		}
+		
+		//Test Delete******
+		if (true){
+			data.put("index", "111");
+		}
+		
+		//Test Display
+		if (true){
+			data.put("subcommand", " ");
+			data.put("date","20/9/2015");
+		}
+		
+		//Test Search
+		if (true){
+			data.put("text", "hello");
+		}
+		
+		//Test Edit *****
+		if (false){
+			data.put("index", "123");
+			data.put("field","Description");
+			data.put("value","go sleep");
+		}	
+		
+		if (true){
+			data.put("target", "add");
+		}
+		return data;
+	}
+
+}

@@ -1,0 +1,64 @@
+import java.util.Date;
+import java.text.SimpleDateFormat;
+
+abstract class Logic {
+
+	abstract public String welcomeMessage1();
+	abstract public String welcomeMessage2();
+	abstract protected String toDoToday();
+	abstract public String executeCommand(String command);
+
+}
+
+class TBLogic extends Logic {
+	
+	private String output;
+	private Storage storage;
+	private String userName;
+//	private Parser parser;
+	
+	private final String WELCOME_MESSAGE1 = "Date: %s\nTime: %s\n";
+	private final String WELCOME_MESSAGE2 = "Welcome back, %s!\n";
+	
+	public TBLogic() {
+		output = new String();
+//		parser = new Parser();
+		storage = new Storage();
+		
+	}
+	
+	public boolean isFirstRun() {
+		return storage.isFirstRun();
+	}
+	
+	public void setUserName(String userName) {
+		storage.setUserName(userName);
+	}
+	
+	public String welcomeMessage2() {
+		userName = storage.getUserName();
+		output = String.format(WELCOME_MESSAGE2, userName);
+		return output;
+	}
+	
+	public String welcomeMessage1() {
+		Date dateTime = new Date();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy, EEEE");
+		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+		
+		String date = dateFormat.format(dateTime);
+		String time = timeFormat.format(dateTime);
+		
+		output = String.format(WELCOME_MESSAGE1, date, time);
+		return output;
+	}
+	
+	protected String toDoToday() {
+		return "Nothing to do today :D";
+	}
+	
+	public String executeCommand(String command) {
+		return command;
+	}
+	
+}

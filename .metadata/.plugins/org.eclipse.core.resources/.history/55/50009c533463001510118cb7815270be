@@ -1,0 +1,33 @@
+import java.util.Date;
+import java.text.SimpleDateFormat;
+
+abstract class Logic {
+
+	abstract public String welcomeMessage();
+	abstract protected String toDoToday();
+	abstract public String executeCommand(String command);
+
+}
+
+class TBLogic extends Logic {
+	
+	private String output;
+	
+	public TBLogic() {
+		output = new String();
+	}
+	
+	public String welcomeMessage() {
+		output = "Welcome to TaskBuddy!!!";
+		return output;
+	}
+	
+	protected String toDoToday() {
+		return "Nothing to do today :D";
+	}
+	
+	public String executeCommand(String command) {
+		return command;
+	}
+	
+}

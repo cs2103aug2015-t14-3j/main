@@ -1,0 +1,14 @@
+public class Storage {
+	
+	private String userName = "Jim";
+	
+	public boolean isFirstRun() {
+		return true;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName){
+		this.userName = userName;
+	}
+}
