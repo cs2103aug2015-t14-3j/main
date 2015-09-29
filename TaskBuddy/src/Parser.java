@@ -52,21 +52,26 @@ public class Parser {
 	} 
 	
 	public void removeCommand(String command) {
-		userInput.replace(command, "");
+		userInput = userInput.replace(command, "");
 	}
 	
 	public void extractContent(String command, Map<String,String> dictionary) {
 		switch (command) {
 		case "add":
 			extractAddContent(dictionary);
+			break;
 		case "delete":
 			extractDeleteContent(dictionary);
+			break;
 		case "display":
 			extractDisplayContent(dictionary);
+			break;
 		case "edit":
 			extractEditContent(dictionary);
+			break;
 		case "search":
 			extractSearchContent(dictionary);
+			break;
 		default:
 			System.out.println(ERROR_COMMAND);
 		}
@@ -76,21 +81,25 @@ public class Parser {
 		// code
 		if (userInput.contains("from")) {
 			// code
-			dictionary.put("description", userInput.substring(0,userInput.indexOf("from")));
+			dictionary.put("description", userInput.substring(1,userInput.indexOf("from")));
 			dictionary.put("startDate", 
-					userInput.substring(userInput.indexOf("to")+1, userInput.length()));
+					userInput.substring(userInput.indexOf("from")+5, userInput.indexOf("to")-1));
+			dictionary.put("endDate", 
+					userInput.substring(userInput.indexOf("to")+3, userInput.length()));
 		} else if (userInput.contains("by")) {
 			// code
-			dictionary.put("description", userInput.substring(0,userInput.indexOf("by")));
+			dictionary.put("description", userInput.substring(1,userInput.indexOf("by")));
+			dictionary.put("endDate", userInput.substring(userInput.indexOf("by")+3,userInput.length()));
+			dictionary.put("startDate", null);
 		} else {
-			dictionary.put("description",userInput);
+			dictionary.put("description",userInput.substring(1));
 			dictionary.put("startDate", null);
 			dictionary.put("endDate", null);
 		}
 	}
 	
 	private void extractDeleteContent(Map<String,String> dictionary) {
-		dictionary.put("index", userInput);
+		dictionary.put("index", userInput.substring(1));
 	}
 	
 	private void extractDisplayContent(Map<String,String> dictionary) {
@@ -112,7 +121,7 @@ public class Parser {
 		}	
 	}
 	
-	private  void extractEditContent(Map<String,String> dictionary) {
+	private void extractEditContent(Map<String,String> dictionary) {
 		
 		int whiteSpaceIndex = userInput.indexOf(" ");
 		
@@ -121,7 +130,7 @@ public class Parser {
 				userInput.substring(whiteSpaceIndex+1,userInput.length()));
 	}
 	
-	private  void extractSearchContent(Map<String,String> dictionary) {
-		dictionary.put("searchKey", userInput);
+	private void extractSearchContent(Map<String,String> dictionary) {
+		dictionary.put("searchKey", userInput.substring(1));
 	}
 }

@@ -1,9 +1,0 @@
-abstract class Logic {
-
-}
-
-public class TBLogic extends Logic {
-	
-	
-	
-}

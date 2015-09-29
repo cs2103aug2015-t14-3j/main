@@ -1,0 +1,6 @@
+Searching Tasks
+The command to find all tasks with the specified keyword in their description is ‘search’ followed by the required keyword.
+
+e.g. search homework will find and display all tasks with ‘homework’ in the description
+
+NOTE: The keyword is not case-sensitive.
