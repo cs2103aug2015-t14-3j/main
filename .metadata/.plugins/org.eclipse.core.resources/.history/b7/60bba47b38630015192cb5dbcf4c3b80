@@ -1,0 +1,14 @@
+
+public class Parser {
+	
+	String userInput;
+	
+	public Parser(String input) {
+		userInput = input;
+	}
+	
+	String getCommand () {
+		
+	}
+
+}

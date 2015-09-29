@@ -1,0 +1,71 @@
+import java.util.*;
+
+public class Parser {
+	
+	
+	final String ERROR_COMMAND = "Invalid User Command.";
+	String userInput;
+
+	public Parser() {		
+	}
+	
+	Map<String, String> getDictionary (String input) {
+		Map<String, String> dictionary = new HashMap<String,String>();
+		
+		userInput = input;
+		extractCommand(dictionary);
+		return dictionary;
+	}
+
+	private void extractCommand(Map<String,String> dictionary) {
+		if (userInput.contains("add")) {
+			dictionary.put("command", "add");
+			extractAddContent(dictionary);
+		} else if (userInput.contains("delete")) {
+			dictionary.put("command", "delete");
+			extractDeleteContent(dictionary);
+		} else if (userInput.contains("display on")) {
+			dictionary.put("command", "display on");
+			extractDisplayOnContent(dictionary);
+		} else if (userInput.contains("display")) {
+			dictionary.put("command", "display");
+			extractDisplayContent(dictionary);
+		} else if (userInput.contains("edit")) {
+			dictionary.put("command", "edit");
+			extractEditContent(dictionary);
+		} else if (userInput.contains("search")) {
+			dictionary.put("command", "search");
+		} else if (userInput.contains("undo")) {
+			dictionary.put("command", "undo");
+		} else if (userInput.contains("help")) {
+			dictionary.put("command", "help");
+		} else {
+			System.out.println(ERROR_COMMAND);
+		}
+	} 
+	
+	private void extractAddContent(Map<String,String> dictionary) {
+		// code
+		
+	}
+	
+	private void extractDeleteContent(Map<String,String> dictionary) {
+		// code
+	}
+	
+	private void extractDisplayOnContent(Map<String,String> dictionary) {
+		
+	}
+	
+	private void extractDisplayContent(Map<String,String> dictionary) {
+		
+	}
+	
+	private  void extractEditContent(Map<String,String> dictionary) {
+		
+	}
+	
+	private  void extractEditContent(Map<String,String> dictionary) {
+		
+	}
+}

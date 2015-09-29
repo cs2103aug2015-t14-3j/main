@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Extract method &apos;private void getCommand()&apos; from &apos;Parser.getDictionary()&apos; to &apos;Parser&apos;&#x0A;- Original project: &apos;TaskBuddy&apos;&#x0A;- Method name: &apos;getCommand&apos;&#x0A;- Destination type: &apos;Parser&apos;&#x0A;- Declared visibility: &apos;private&apos;" comments="false" description="Extract method &apos;getCommand&apos;" destination="0" exceptions="false" flags="786434" id="org.eclipse.jdt.ui.extract.method" input="/src&lt;{Parser.java" name="getCommand" replace="false" selection="341 641" stamp="1443158954750" version="1.0" visibility="2"/>
+</session>

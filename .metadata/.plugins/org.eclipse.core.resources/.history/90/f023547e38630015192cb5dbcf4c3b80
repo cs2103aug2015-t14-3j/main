@@ -1,0 +1,31 @@
+
+public class Parser {
+	
+	String userInput;
+	
+	public Parser(String input) {
+		userInput = input;
+	}
+	
+	String getCommand () {
+		if (userInput.contains("add") {
+			return "add";
+		} else if (userInput.contains("delete")) {
+			return "delete";
+		} else if (userInput.contains("display")) {
+			return "display";
+		} else if (userInput.contains("edit")) {
+			return "edit";
+		} else if (userInput.contains"search")) {
+			return "search";
+		} else if (userInput.contains("undo")) {
+			return "undo";
+		} else if (userInput.contains("help")) {
+			return "help";
+		} else if (userInput.contains("edit")) {
+			return "edit";
+		}
+		
+	}
+
+}
