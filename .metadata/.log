@@ -3918,6 +3918,7 @@ Caused by: java.lang.IllegalArgumentException: assertion failed.
 	at com.google.common.util.concurrent.AbstractIdleService$2$1.run(AbstractIdleService.java:54)
 	at com.google.common.util.concurrent.Callables$3.run(Callables.java:93)
 	at java.lang.Thread.run(Thread.java:745)
+<<<<<<< HEAD
 
 !ENTRY org.eclipse.recommenders.coordinates.rcp 4 3 2015-09-30 01:22:34.192
 !MESSAGE Suggesting project coordinate for ‘DependencyInfo{/Library/Java/JavaVirtualMachines/jdk1.8.0_25.jdk/Contents/Home, JRE, {EXECUTION_ENVIRONMENT=JavaSE-1.8}}’ failed.
@@ -3954,3 +3955,5 @@ Caused by: java.lang.IllegalArgumentException: assertion failed.
 
 !ENTRY org.eclipse.core.resources 2 10035 2015-10-01 14:45:32.922
 !MESSAGE The workspace will exit with unsaved changes in this session.
+=======
+>>>>>>> origin/gokul
