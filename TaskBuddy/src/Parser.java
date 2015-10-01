@@ -27,7 +27,7 @@ public class Parser {
 		} else if (userInput.contains("delete ") || userInput.contains("remove ")) {
 			command = "delete";
 			dictionary.put("command", "delete");
-		} else if (userInput.contains("display ") || userInput.contains("show ") || userInput.contains("list ")) {
+		} else if (userInput.contains("display ") || userInput.contains("show ")) {
 			command = "display";
 			dictionary.put("command", "display");
 		} else if (userInput.contains("edit ")) {
