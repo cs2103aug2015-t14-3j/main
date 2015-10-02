@@ -24,9 +24,6 @@ abstract class Logic {
 class TBLogic extends Logic {
 	
 	private String output;
-	private String date;
-	private String userName;
-	private String namePath = "UserName.txt";
 	ArrayList<Map<String, String>> tasks;
 
 	
@@ -35,8 +32,6 @@ class TBLogic extends Logic {
 	private Parser parser;
 	private Helper helper = new Helper();
 	
-	private final String WELCOME_MESSAGE1 = "Date: %s\nTime: %s\n--------------------\n";
-	private final String WELCOME_MESSAGE2 = "Welcome back, %s!\n";
 	private final String INVALID_COMMAND = "Invalid Command\n";
 	private final String DISPLAY_HEADER = "Here is your schedule for %s:\n\n  Description       Start Date          End Date\n";
 	private final String DISPLAY_FORMAT = "%d.%-18s%-20s%s\n";
@@ -45,59 +40,6 @@ class TBLogic extends Logic {
 		output = new String();
 		parser = new Parser();
 //		storage = new Storage();
-		getUserNameFromMemory();
-	}
-	
-	//To be refactored
-	private void getUserNameFromMemory() {
-		
-		File fileToRead = new File(namePath);
-		try{
-		BufferedReader reader = new BufferedReader(new FileReader(fileToRead));
-		userName = reader.readLine();
-		reader.close();
-		} catch (FileNotFoundException ex) {
-		userName = null;
-		//Creates an empty file at path
-		try{
-			PrintWriter writer = new PrintWriter(new FileWriter(fileToRead));
-			writer.close();
-			} catch (IOException ex2) {
-			System.out.println(ex2);
-			}
-
-		} catch (IOException ex) {
-		System.out.println(ex);
-		}
-	}
-	
-	//To be refactored
-	public void setUserName(String userName) {
-		this.userName = userName;
-		
-		File file = new File(namePath);
-		
-		//Clears the file
-		try{
-		PrintWriter writer = new PrintWriter(new FileWriter(file));
-		writer.close();
-		} catch (IOException ex) {
-		System.out.println(ex);
-		}
-		
-		//Writes username to file
-		try{
-			PrintWriter writer = new PrintWriter(new FileWriter(file, true));
-			writer.println(userName);
-			writer.close();
-			} catch (IOException ex) {
-			System.out.println(ex);
-			}
-
-	}
-	
-	public String getUserName() {
-		return userName;
 	}
 	
 	public String welcomeMessage2() {
@@ -106,15 +48,7 @@ class TBLogic extends Logic {
 	}
 	
 	public String welcomeMessage1() {
-		Date dateTime = new Date();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy, EEEE");
-		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-		
-		date = dateFormat.format(dateTime);
-		String time = timeFormat.format(dateTime);
-		
-		output = String.format(WELCOME_MESSAGE1, date, time);
-		return output;
+
 	}
 	
 	public String toDoToday() {
