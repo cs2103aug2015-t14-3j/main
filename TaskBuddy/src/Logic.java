@@ -1,24 +1,11 @@
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.Map;
 
 abstract class Logic {
 
-	abstract public String welcomeMessage1();
-	abstract public String welcomeMessage2();
 	abstract public String toDoToday();
 	abstract public String executeCommand(String command);
-	abstract public void setUserName(String userName);
-	abstract public String getUserName();
+
 }
 
 class TBLogic extends Logic {
@@ -33,22 +20,13 @@ class TBLogic extends Logic {
 	private Helper helper = new Helper();
 	
 	private final String INVALID_COMMAND = "Invalid Command\n";
-	private final String DISPLAY_HEADER = "Here is your schedule for %s:\n\n  Description       Start Date          End Date\n";
+	private final String DISPLAY_HEADER = "Here is your schedule for %s:\n\nDescription         Start Date          End Date\n";
 	private final String DISPLAY_FORMAT = "%d.%-18s%-20s%s\n";
 	
 	public TBLogic() {
 		output = new String();
 		parser = new Parser();
 //		storage = new Storage();
-	}
-	
-	public String welcomeMessage2() {
-		output = String.format(WELCOME_MESSAGE2, userName);
-		return output;
-	}
-	
-	public String welcomeMessage1() {
-
 	}
 	
 	public String toDoToday() {
@@ -100,7 +78,7 @@ class TBLogic extends Logic {
 			output = help(parsedCommand);
 			return output;
 		default:
-			return " ";
+			return INVALID_COMMAND;
 		}
 	}
 	

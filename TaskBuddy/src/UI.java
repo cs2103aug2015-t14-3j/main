@@ -17,8 +17,10 @@ class UI {
 	
 	private final String REQUEST_NAME = "Please enter your Name: ";
 	private final String REQUEST_COMMAND = "Command: ";
-	private final String WELCOME_MESSAGE1 = "Date: %s\nTime: %s\n--------------------\n";
+	private final String WELCOME_MESSAGE1 = "Date: %s\nTime: %s\n-------------------------\n";
 	private final String WELCOME_MESSAGE2 = "Welcome back, %s!\n";
+	private final int DATE_POSITION = 0;
+	private final int TIME_POSITION = 1;
 	
 	public UI() {
 		logic = new TBLogic();
@@ -28,42 +30,49 @@ class UI {
 		
 		welcomeUser();
 		
-		String userName = logic.getUserName();
-		if (userName == null) {
-			requestUserName();
-		}
-		
-		output = logic.welcomeMessage2();
-		display(output);
-		
 		output = logic.toDoToday();
 		display(output);
 	}
 	
 	private void welcomeUser() {
 		String time = new String();
-		getDateTime(date, time);
+		String[] dateTime = getDateTime(date, time);
 		
-		output = String.format(WELCOME_MESSAGE1, date, time);
+		output = String.format(WELCOME_MESSAGE1, dateTime[DATE_POSITION], dateTime[TIME_POSITION]);
+		display(output);
+		
+		if (userName == null) {
+			userName = requestUserName();
+		}
+		
+		output = String.format(WELCOME_MESSAGE2, userName);
+		display(output);
 	}
 	
-	private void getDateTime(String date, String time) {
-		Date dateTime = new Date();
+	private String[] getDateTime(String date, String time) {
+		Date now = new Date();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy, EEEE");
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 		
-		date = dateFormat.format(dateTime);
-		time = timeFormat.format(dateTime);
+		date = dateFormat.format(now);
+		time = timeFormat.format(now);
 		
+		String[] dateTime = new String[2];
+		dateTime[DATE_POSITION] = date;
+		dateTime[TIME_POSITION] = time;
+		
+		return dateTime;
 	}
 	
-	private void requestUserName() {
+	private String requestUserName() {
 		output = REQUEST_NAME;
 		display(output);
 		userName = sc.nextLine();
 		output = "\n";
 		display(output);
-		logic.setUserName(userName);
+		name.setUserName(userName);
+		
+		return userName;
 	}
 	
 	public void run() {
