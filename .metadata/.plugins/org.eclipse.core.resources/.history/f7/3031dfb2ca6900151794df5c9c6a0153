@@ -5,10 +5,11 @@ import java.util.*;
 
 public class Parser {
 	
-	private CommandMatch cmd;
-	private Content content;
-
-	private String userInput;
+	CommandMatch cmd;
+	Content content;
+	
+	
+	String userInput;
 
 	public Parser() {
 	}
