@@ -1,6 +1,9 @@
 package com.cs2013t143j.TaskBuddyM;
 import java.util.*;
 
+import com.joestelmach.natty.DateGroup;
+import com.joestelmach.natty.Parser;
+
 public class TBParser {
 	
 	
@@ -131,4 +134,26 @@ public class TBParser {
 	private void extractSearchContent(Map<String,String> dictionary) {
 		dictionary.put("searchKey", userInput.substring(1));
 	}
+	
+	private List<String> parseDateToStringArray(String userInput){
+		Parser p = new Parser();
+    	List<DateGroup> groups = p.parse(userInput);
+    	List<String> returnList = new ArrayList<>();
+    	for(DateGroup group:groups) {
+    	  List<Date> dates = group.getDates();
+    	  for(Date d : dates){
+    		  String timeString = convertDateToString(d);
+    		  returnList.add(timeString);
+    	  }
+    	}
+    	return returnList;
+	}
+	
+	private String convertDateToString(Date date){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        // Note: zero based!
+        String dateString = String.format("02%d 02%d%02d%d", cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.YEAR));
+        return dateString;
+    }
 }
