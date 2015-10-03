@@ -1,11 +1,7 @@
 import java.util.*;
 
-// Things to note: 
-// 1) First word of userInput should be command
-// 2) Commands: add,insert,create,delete,remove,display,show,edit,search,undo,help
-// 3) For add and edit, user will have to include '-' before every keywords
-//		e.g. add -submit report -by 25 Sep 2015
-//		e.g. edit -2 -description -submit CS2010 report
+// Things to note: First word of userInput should be command
+// command: add,insert,create,delete,remove,display,show,edit,search,undo,help
 
 public class Parser {
 	
