@@ -10,6 +10,7 @@ public class Content {
 	private static final String COMMAND_EDIT = "edit";
 	private static final String COMMAND_DISPLAY = "display";
 	
+	
 	private static final String DICTIONARY_ADD_START = "startDate";
 	private static final String DICTIONARY_ADD_END = "endDate";
 	private static final String DICTIONARY_ADD_DESC = "description";

@@ -6,7 +6,6 @@ import java.util.*;
 // 3) For add and edit, user will have to include '-' before every keywords
 //		e.g. add -submit report -by 25 Sep 2015
 //		e.g. edit -2 -description -submit CS2010 report
-// 4) date format return to logic will be in the following format: hhhh dd/mm/yyyy
 
 public class Parser {
 	
@@ -23,15 +22,12 @@ public class Parser {
 		userInput = input.toLowerCase();
 		
 		String command = retrieveCommand(dictionary);
-		retrieveContent(dictionary, command);
-		return dictionary;
-	}
-
-	private void retrieveContent(Map<String, String> dictionary, String command) {
+		
 		if (!userInput.equals(null)) {
 			content = new Content(userInput,command);
 			content.extractContent(dictionary);
 		}
+		return dictionary;
 	}
 
 	private String retrieveCommand(Map<String, String> dictionary) {

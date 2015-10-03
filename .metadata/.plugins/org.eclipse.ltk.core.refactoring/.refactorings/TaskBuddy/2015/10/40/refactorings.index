@@ -1,3 +1,5 @@
 1443869753668	Extract method 'extractStartDate'
 1443870551597	Extract method 'extractEventContent'
 1443870566787	Extract method 'extractDeadlineContent'
+1443877281820	Extract method 'retrieveCommand'
+1443877306828	Extract method 'retrieveContent'
