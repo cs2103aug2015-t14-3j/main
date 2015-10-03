@@ -35,8 +35,7 @@ class UI {
 	}
 	
 	private void welcomeUser() {
-		String time = new String();
-		String[] dateTime = getDateTime(date, time);
+		String[] dateTime = getDateTime();
 		
 		output = String.format(WELCOME_MESSAGE1, dateTime[DATE_POSITION], dateTime[TIME_POSITION]);
 		display(output);
@@ -49,13 +48,13 @@ class UI {
 		display(output);
 	}
 	
-	private String[] getDateTime(String date, String time) {
+	private String[] getDateTime() {
 		Date now = new Date();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy, EEEE");
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 		
-		date = dateFormat.format(now);
-		time = timeFormat.format(now);
+		String date = dateFormat.format(now);
+		String time = timeFormat.format(now);
 		
 		String[] dateTime = new String[2];
 		dateTime[DATE_POSITION] = date;
