@@ -1,0 +1,9 @@
+
+public class Deleter {
+
+	private Storage storage;
+	
+	public Deleter(Storage storage) {
+		this.storage = storage;
+	}
+}

@@ -12,7 +12,7 @@ class UI {
 	private String usernameFile = "UserName.txt";
 	
 	private Logic logic;
-	private userNameAccess name;
+	private UserName name;
 	
 	private final String REQUEST_NAME = "Please enter your Name: ";
 	private final String REQUEST_COMMAND = "Command: ";
@@ -24,7 +24,7 @@ class UI {
 	
 	public UI() {
 		logic = new TBLogic();
-		name = new userNameAccess(usernameFile);
+		name = new UserName(usernameFile);
 		output = new String();
 		userName = name.getUserName();
 		

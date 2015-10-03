@@ -1,0 +1,20 @@
+import java.util.Map;
+
+public class Deleter {
+
+	private Storage storage;
+	
+	private final String DELETE_INDEX = "index";
+	
+	public Deleter(Storage storage) {
+		this.storage = storage;
+	}
+	
+	public String delete(Map<String,String> parsedCommand) {
+		String index = parsedCommand.get(DELETE_INDEX);
+		
+		storage.delete(Integer.parseInt(index));
+		
+		return "command: delete " + "index: " + index + "\n";
+	}
+}
