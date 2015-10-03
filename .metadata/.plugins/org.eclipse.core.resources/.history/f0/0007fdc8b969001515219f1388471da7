@@ -3,6 +3,7 @@ import java.util.Map;
 
 abstract class Logic {
 
+	abstract public String toDoToday();
 	abstract public String executeCommand(String command);
 
 }
@@ -19,15 +20,31 @@ class TBLogic extends Logic {
 	private Helper helper = new Helper();
 	
 	private final String INVALID_COMMAND = "Invalid Command\n";
-	private final String INVALID_DISPLAY_SUB = "Invalid display subcommand specified\n";
 	private final String DISPLAY_HEADER = "Here is your schedule for %s:\n\nDescription         Start Date          End Date\n";
 	private final String DISPLAY_FORMAT = "%d.%-18s%-20s%s\n";
-
 	
 	public TBLogic() {
 		output = new String();
 		parser = new Parser();
 //		storage = new Storage();
+	}
+	
+	public String toDoToday() {
+		output = String.format(DISPLAY_HEADER, "today");
+		int index = 1;
+		
+//		Map<String, String> command = new HashMap<String, String> ();
+		
+//		command.put("subCommand", "on");
+//		command.put("data", date);
+//		output = display(command);
+//		
+//		return output;
+		
+		output += String.format(DISPLAY_FORMAT, index, "submit report", "20/9/2015", "21/9/2015");
+
+		output += "\n";
+		return output;
 	}
 	
 	public String executeCommand(String command) {
@@ -91,7 +108,6 @@ class TBLogic extends Logic {
 		
 		if (subCommand == null) {
 			//Display All
-//			tasks = 
 		} else {
 			switch (subCommand) {
 			case "on":
@@ -113,7 +129,7 @@ class TBLogic extends Logic {
 //				tasks = 
 				break;
 			default:
-				return INVALID_DISPLAY_SUB;
+				return INVALID_COMMAND;
 			}
 		}
 		

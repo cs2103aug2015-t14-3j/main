@@ -22,7 +22,6 @@ class TBLogic extends Logic {
 	private final String INVALID_DISPLAY_SUB = "Invalid display subcommand specified\n";
 	private final String DISPLAY_HEADER = "Here is your schedule for %s:\n\nDescription         Start Date          End Date\n";
 	private final String DISPLAY_FORMAT = "%d.%-18s%-20s%s\n";
-
 	
 	public TBLogic() {
 		output = new String();

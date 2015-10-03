@@ -19,10 +19,8 @@ class TBLogic extends Logic {
 	private Helper helper = new Helper();
 	
 	private final String INVALID_COMMAND = "Invalid Command\n";
-	private final String INVALID_DISPLAY_SUB = "Invalid display subcommand specified\n";
 	private final String DISPLAY_HEADER = "Here is your schedule for %s:\n\nDescription         Start Date          End Date\n";
 	private final String DISPLAY_FORMAT = "%d.%-18s%-20s%s\n";
-
 	
 	public TBLogic() {
 		output = new String();
@@ -91,7 +89,6 @@ class TBLogic extends Logic {
 		
 		if (subCommand == null) {
 			//Display All
-//			tasks = 
 		} else {
 			switch (subCommand) {
 			case "on":
@@ -113,7 +110,7 @@ class TBLogic extends Logic {
 //				tasks = 
 				break;
 			default:
-				return INVALID_DISPLAY_SUB;
+				return INVALID_COMMAND;
 			}
 		}
 		

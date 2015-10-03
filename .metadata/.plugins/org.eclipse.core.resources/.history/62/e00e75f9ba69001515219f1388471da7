@@ -13,6 +13,7 @@ class UI {
 	
 	private Logic logic;
 	private userNameAccess name;
+
 	
 	private final String REQUEST_NAME = "Please enter your Name: ";
 	private final String REQUEST_COMMAND = "Command: ";
@@ -41,7 +42,8 @@ class UI {
 	
 	private void welcomeUser() {
 		String[] dateTime = getDateTime();
-	
+		date = dateTime[DATE_POSITION];
+		
 		output = String.format(WELCOME_MESSAGE1, dateTime[DATE_POSITION], dateTime[TIME_POSITION]);
 		display(output);
 		
@@ -56,12 +58,10 @@ class UI {
 	private String[] getDateTime() {
 		Date now = new Date();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy, EEEE");
-		SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd/MM/yyyy");
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 		
 		String date = dateFormat.format(now);
 		String time = timeFormat.format(now);
-		this.date = dateFormat2.format(now);
 		
 		String[] dateTime = new String[2];
 		dateTime[DATE_POSITION] = date;

@@ -13,6 +13,7 @@ class UI {
 	
 	private Logic logic;
 	private userNameAccess name;
+
 	
 	private final String REQUEST_NAME = "Please enter your Name: ";
 	private final String REQUEST_COMMAND = "Command: ";
