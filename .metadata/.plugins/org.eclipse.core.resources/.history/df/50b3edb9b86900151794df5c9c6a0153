@@ -1,0 +1,13 @@
+
+
+public class CommandMatch {
+	
+	String userInput;
+	
+	public CommandMatch (String str) {
+		userInput = str;
+	}
+	
+	
+
+}

@@ -1,0 +1,173 @@
+import java.util.Map;
+
+public class Content {
+
+	private static final int ARR_SIZE_EVENT = 3;
+	private static final int ARR_SIZE_DEADLINES = 2;
+	
+	private static final String DICTIONARY_ADD_FIELD_START_DATE = "startDate";
+	private static final String DICTIONARY_ADD_FIELD_END_DATE = "endDate";
+	private static final String DICTIONARY_ADD_DESCRIPTION = "description";
+	
+	final String ERROR_COMMAND = "Invalid User Command.";
+	String[] arr;
+	String command;
+	String remainingUserInput;
+	
+	public Content(String userInput, String command) {
+		userInput = userInput.trim();
+		this.command = command;
+		
+		if (command.equalsIgnoreCase("add") || command.equalsIgnoreCase("edit")) {
+			arr = userInput.split("-");
+		} else {
+			remainingUserInput = userInput;
+		}
+	}
+	
+	public void extractContent(Map<String,String> dictionary) {
+		switch (command) {
+		case "add":
+			extractAddContent(dictionary);
+			break;
+		case "delete":
+			extractDeleteContent(dictionary);
+			break;
+		case "display":
+			extractDisplayContent(dictionary);
+			break;
+		case "edit":
+			extractEditContent(dictionary);
+			break;
+		case "search":
+			extractSearchContent(dictionary);
+			break;
+		default:
+			System.out.println(ERROR_COMMAND);
+		}
+	}
+	
+	private void extractAddContent(Map<String,String> dictionary) {
+		// code
+		/*if (userInput.contains("from")) {
+			// code
+			dictionary.put("description", userInput.substring(1,userInput.indexOf("from")));
+			dictionary.put("startDate", 
+					userInput.substring(userInput.indexOf("from")+5, userInput.indexOf("to")-1));
+			dictionary.put("endDate", 
+					userInput.substring(userInput.indexOf("to")+3, userInput.length()));
+		} else if (userInput.contains("by")) {
+			// code
+			dictionary.put("description", userInput.substring(1,userInput.indexOf("by")));
+			dictionary.put("endDate", userInput.substring(userInput.indexOf("by")+3,userInput.length()));
+			dictionary.put("startDate", null);
+		} else {
+			dictionary.put("description",userInput.substring(1));
+			dictionary.put("startDate", null);
+			dictionary.put("endDate", null);
+		}*/
+		
+		if(arr.length == ARR_SIZE_EVENT) {
+			extractEventContent(dictionary);
+		} else if (arr.length == ARR_SIZE_DEADLINES) {
+			extractDeadlineContent(dictionary);
+		} else {
+			extractFloatingContent(dictionary);
+		}
+	}
+	
+	private void extractFloatingContent(Map<String, String> dictionary) {
+		dictionary.put(DICTIONARY_ADD_DESCRIPTION, arr[0]);
+		dictionary.put(DICTIONARY_ADD_FIELD_START_DATE, null);
+		dictionary.put(DICTIONARY_ADD_FIELD_END_DATE, null);
+	}
+
+	private void extractDeadlineContent(Map<String, String> dictionary) {
+		for (int i=0; i < arr.length; i++) {
+			if (arr[i].contains("by")) {
+				String endDate = extractEndDate(arr[i]);
+				dictionary.put(DICTIONARY_ADD_FIELD_END_DATE, endDate);
+				dictionary.put(DICTIONARY_ADD_FIELD_START_DATE, null);
+			} else {
+				dictionary.put(DICTIONARY_ADD_DESCRIPTION, arr[i]);
+			}
+		}
+	}
+
+	private void extractEventContent(Map<String, String> dictionary) {
+		for (int i=0; i < arr.length; i++) {
+			if (arr[i].contains("from")) {
+				String startDate = extractStartDate(arr[i]);
+				dictionary.put(DICTIONARY_ADD_FIELD_START_DATE, startDate);
+			} else if (arr[i].contains("to")) {
+				String endDate = extractEndDate(arr[i]);
+				dictionary.put(DICTIONARY_ADD_FIELD_END_DATE, endDate);
+			} else {
+				dictionary.put(DICTIONARY_ADD_DESCRIPTION,arr[i]);
+			}
+		}
+	}
+
+	private String extractStartDate(String str) {
+		return str.replace("from", "").trim();
+	}
+	
+	private String extractEndDate(String str) {
+		return str.replace("to","").trim();
+	}
+	
+	private void extractDeleteContent(Map<String,String> dictionary) {
+		dictionary.put("index", arr[0]);
+	}
+	
+	private void extractDisplayContent(Map<String,String> dictionary) {
+		
+		arr = remainingUserInput.split(" ");
+		
+		/*if (whiteSpaceIndex == -1) {
+			if (userInput.equals("incomplete")) {
+				dictionary.put("subCommand", "incomplete");
+			} else if (userInput.equals("floating")) {
+				dictionary.put("subCommnad", "floating");
+			} else if (userInput.equals("")) {
+				dictionary.put("subCommand", null);
+			} else {
+				dictionary.put("subCommand", "color");
+				dictionary.put("color", userInput);
+			}
+		} else {
+			dictionary.put("subCommand", userInput.substring(0,whiteSpaceIndex));
+			dictionary.put("date", userInput.substring(whiteSpaceIndex+1,userInput.length()));
+		}	*/
+		
+		if (arr.length == 0) {
+			dictionary.put("subCommand", null);
+		} else if (arr[0].equalsIgnoreCase("on") || arr[0].equalsIgnoreCase("from") 
+				|| arr[0].equalsIgnoreCase("after") || arr[0].equalsIgnoreCase("due")
+				|| arr[0].equalsIgnoreCase("incomplete") || arr[0].equalsIgnoreCase("floating")) {
+			dictionary.put("subCommand", arr[0]);
+		} else {
+			dictionary.put("subCommnad", "color");
+		}
+	}
+	
+	private void extractEditContent(Map<String,String> dictionary) {
+		for (int i=0; i < arr.length; i++) {
+			if (arr[i].equalsIgnoreCase("description") || arr[i].equalsIgnoreCase("start date") || arr[i].equalsIgnoreCase("end date")) {
+				dictionary.put("field", arr[i]);
+			} else if (isNumeric(arr[i])) {
+				dictionary.put("index", arr[i]);
+			} else {
+				dictionary.put("newValue", arr[i]);
+			}
+		}
+	}
+	
+	public boolean isNumeric(String str) {  
+	    return str.matches("[-+]?\\d*\\.?\\d+");  
+	}  
+	
+	private void extractSearchContent(Map<String,String> dictionary) {
+		dictionary.put("searchKey", remainingUserInput);
+	}
+}
