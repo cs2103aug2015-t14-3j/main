@@ -1,0 +1,9 @@
+
+public class Content {
+
+	String userInput;
+	
+	public Content(String str) {
+		userInput = str;
+	}
+}

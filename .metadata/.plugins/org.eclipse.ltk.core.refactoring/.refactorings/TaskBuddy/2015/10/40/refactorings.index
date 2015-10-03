@@ -1,0 +1,3 @@
+1443869753668	Extract method 'extractStartDate'
+1443870551597	Extract method 'extractEventContent'
+1443870566787	Extract method 'extractDeadlineContent'
