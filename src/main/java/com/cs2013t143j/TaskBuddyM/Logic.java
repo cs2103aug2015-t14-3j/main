@@ -1,3 +1,5 @@
+package com.cs2013t143j.TaskBuddyM;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -16,7 +18,7 @@ class TBLogic extends Logic {
 	
 //	private Storage storage;
 //	private History      ;
-	private Parser parser;
+	private TBParser parser;
 	private Helper helper = new Helper();
 	
 	private final String INVALID_COMMAND = "Invalid Command\n";
@@ -25,7 +27,7 @@ class TBLogic extends Logic {
 	
 	public TBLogic() {
 		output = new String();
-		parser = new Parser();
+		parser = new TBParser();
 //		storage = new Storage();
 	}
 	

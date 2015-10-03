@@ -13,6 +13,7 @@ public class App
     public static void main( String[] args )
     {
     	Parser p = new Parser();
+    	
     	List<DateGroup> groups = p.parse("the day before next thursday");
     	for(DateGroup group:groups) {
     	  List dates = group.getDates();
@@ -22,7 +23,7 @@ public class App
     	  String syntaxTree = group.getSyntaxTree().toStringTree();
     	  boolean isRecurreing = group.isRecurring();
     	  Date recursUntil = group.getRecursUntil();
-    	  System.out.println( dates.get(0).toString() );
+    	  System.out.println( dates.get(1).toString() );
     	}
         
     }

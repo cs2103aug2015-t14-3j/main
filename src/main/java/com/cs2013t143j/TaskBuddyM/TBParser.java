@@ -1,12 +1,13 @@
+package com.cs2013t143j.TaskBuddyM;
 import java.util.*;
 
-public class Parser {
+public class TBParser {
 	
 	
 	final String ERROR_COMMAND = "Invalid User Command.";
 	String userInput;
 
-	public Parser() {		
+	public TBParser() {		
 	}
 	
 	Map<String, String> getDictionary (String input) {
