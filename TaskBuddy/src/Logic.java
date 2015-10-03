@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 abstract class Logic {
@@ -13,7 +15,7 @@ class TBLogic extends Logic {
 	ArrayList<Map<String, String>> tasks;
 
 	
-//	private Storage storage;
+	private Storage storage;
 //	private History      ;
 	private Parser parser;
 	private Helper helper = new Helper();
@@ -27,7 +29,7 @@ class TBLogic extends Logic {
 	public TBLogic() {
 		output = new String();
 		parser = new Parser();
-//		storage = new Storage();
+		storage = new Storage();
 	}
 	
 	public String executeCommand(String command) {
@@ -70,18 +72,47 @@ class TBLogic extends Logic {
 		String startDate = parsedCommand.get("startDate");
 		String endDate = parsedCommand.get("endDate");
 		
+		LocalDateTime start = convertDateTime(startDate);
+		LocalDateTime end = convertDateTime(endDate);
+		
+		Task task;
+		
 		if (endDate == null) {
-			System.out.println("Floating Task");
+			System.out.println("Floating)");
+			task = new Task(description);
 			//Floating Task
 		} else if (startDate == null) {
 			System.out.println("DeadLine");
+			task = new Task(description, end);
 			//DeadLine
 		} else {
 			System.out.println("Event");
+			task = new Task(description, start, end);
 			//Event
 		}
 		
-		return "commmand: add " + "description: " + description + " start: " + startDate + " end: " + endDate + "\n";
+		storage.add(task);
+		
+		return "added new task";
+	}
+	
+	private LocalDateTime convertDateTime(String dateTime) {
+		String[] splitDateTime = dateTime.split(" ");
+		
+		if (splitDateTime.length == 1) {
+			//No time specified
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			LocalDateTime dt = LocalDateTime.parse(dateTime, formatter);
+			
+			return dt;
+		} else {
+			//Time specified
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm dd/MM/yyyy");
+			LocalDateTime dt = LocalDateTime.parse(dateTime, formatter);
+			
+			return dt;
+		}
+	
 	}
 	
 	private String display(Map<String, String> parsedCommand) {
@@ -142,6 +173,8 @@ class TBLogic extends Logic {
 	private String delete(Map<String,String> parsedCommand) {
 		String index = parsedCommand.get("index");
 		
+		storage.delete(Integer.parseInt(index));
+		
 		return "command: delete " + "index: " + index + "\n";
 	}
 	
@@ -149,6 +182,19 @@ class TBLogic extends Logic {
 		String index = parsedCommand.get("index");
 		String field = parsedCommand.get("field");
 		String value = parsedCommand.get("value");
+		
+		switch (field) {
+		case "description":
+			storage.updateDescription(Integer.parseInt(index), value);
+			break;
+		case "start":
+			LocalDateTime newValue = convertDateTime(value);
+			storage.updateStartDate(Integer.parseInt(index), newValue);
+		case "end":
+			LocalDateTime newValue2 = convertDateTime(value);
+			storage.updateEndDate(Integer.parseInt(index), newValue2);
+			break;
+		}
 		
 		return "command: edit " + "index: " + index + " field: " + field + " value: " + value + "\n";
 	}
