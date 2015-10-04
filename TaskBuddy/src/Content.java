@@ -9,6 +9,7 @@ public class Content {
 	private static final String COMMAND_DELETE = "delete";
 	private static final String COMMAND_EDIT = "edit";
 	private static final String COMMAND_DISPLAY = "display";
+	private static final String COMMAND_HELP = "help";
 	
 	private static final String DICTIONARY_ADD_START = "startDate";
 	private static final String DICTIONARY_ADD_END = "endDate";
@@ -19,6 +20,8 @@ public class Content {
 	private static final String ADD_KEYWORD_DEADLINE_END = "by";
 	
 	private static final String DELETE_KEYWORD = "index";
+	
+	private static final String HELP_KEYWORD = "target";
 	
 	private static final String DICTIONARY_DISPLAY_SUB = "subCommand";
 	private static final String DICTIONARY_DISPLAY_COLOR = "color";
@@ -67,12 +70,19 @@ public class Content {
 		case COMMAND_EDIT:
 			extractEditContent(dictionary);
 			break;
+		case COMMAND_HELP:
+			extractHelpContent(dictionary);
+			break;
 		default:
 			extractSearchContent(dictionary);
 			break;
 		}
 	}
 	
+	private void extractHelpContent(Map<String, String> dictionary) {
+		dictionary.put(HELP_KEYWORD, remainingUserInput);		
+	}
+
 	private void extractAddContent(Map<String,String> dictionary) {
 		if(arr.length == ARR_SIZE_EVENT) {
 			extractEventContent(dictionary);
@@ -120,11 +130,12 @@ public class Content {
 	}
 	
 	private String extractEndDate(String str) {
-		return str.replace(ADD_KEYWORD_EVENT_END,"").trim();
+		String extracted = str.replace(ADD_KEYWORD_EVENT_END,"").trim();
+		return extracted.replace(ADD_KEYWORD_DEADLINE_END,"").trim();
 	}
 	
 	private void extractDeleteContent(Map<String,String> dictionary) {
-		dictionary.put(DELETE_KEYWORD, arr[0]);
+		dictionary.put(DELETE_KEYWORD, remainingUserInput);
 	}
 	
 	private void extractDisplayContent(Map<String,String> dictionary) {

@@ -1,0 +1,84 @@
+import java.util.ArrayList;
+import java.util.Map;
+
+abstract class Logic {
+
+	abstract public String executeCommand(String command);
+
+}
+
+class TBLogic extends Logic {
+	
+	private String output;
+	ArrayList<Task> tasks;
+
+	
+	private Storage storage;
+//	private History      ;
+	private Parser parser;
+	
+	private Helper helper;
+	private Adder adder;
+	private Editor editor;
+	private Displayer displayer;
+	private Deleter deleter;
+	private Searcher searcher;
+	
+	private final String INVALID_COMMAND = "Invalid Command\n";
+	
+	private String dataFile = "data.txt";
+	
+	public TBLogic() {
+		output = new String();
+		parser = new Parser();
+		
+		storage = new Storage();
+		
+		helper = new Helper();
+		adder = new Adder(storage);
+		editor = new Editor(storage);
+		displayer = new Displayer(storage);
+		deleter = new Deleter(storage);
+		searcher = new Searcher(storage);		
+	}
+	
+	public String executeCommand(String command) {
+		Map<String, String> parsedCommand = parser.getDictionary(command);
+		
+		String commandType = parsedCommand.get("command");
+		
+		//Edit this out; Used to check if contents of dictionary are correct
+		System.out.println(parsedCommand.toString());
+		
+		switch (commandType) {
+		case "add":
+			output = adder.add(parsedCommand);
+			return output;
+		case "display":
+			output = displayer.display(parsedCommand, tasks);
+			return output;
+		case "delete":
+			output = deleter.delete(parsedCommand, tasks);
+			return output;			
+		case "edit":
+			output = editor.edit(parsedCommand);
+			return output;
+		case "search":
+			output = searcher.search(parsedCommand);
+			return output;
+		case "undo":
+			output = undo(parsedCommand);
+			return output;
+		case "help":
+			output = helper.help(parsedCommand);
+			return output;
+		default:
+			return INVALID_COMMAND;
+		}
+	}
+	
+	private String undo(Map<String, String> parsedCommand) {
+		return "command: undo\n";
+	}
+
+}

@@ -12,50 +12,54 @@ import java.time.LocalDateTime;
 public class Storage {
 
 	private ArrayList<Task> tasks;
+	private String dataFile;
 	
-	
-private void createTaskList() {
-	tasks = new ArrayList<Task>();
-	StorageIO.readFile();
-}
+	public Storage(String dataFile) {
+		this.dataFile = dataFile;
+	}
 
-public void add(Task newTask) {
-	tasks.add(newTask);
-	StorageIO.writeToFile(); 
-}
+	private void createTaskList() {
+		tasks = new ArrayList<Task>();
+		StorageIO.readFile();
+	}
 
-public void delete(int index) {
-	tasks.remove(index);
-	StorageIO.writeToFile();
-}
+	public void add(Task newTask) {
+		tasks.add(newTask);
+		StorageIO.writeToFile(); 
+	}
 
-public Task getTask(int index) {
-	Task task = tasks.get(index);
+	public void delete(int index) {
+		tasks.remove(index);
+		StorageIO.writeToFile();
+	}
+
+	public Task getTask(int index) {
+		Task task = tasks.get(index);
 		return task;
- 
-}
 
-public void updateDescription(int index, String newdescription){
-	Task task = tasks.get(index);
-	task.setDescription(newdescription);
-	tasks.add(index,task);
-	StorageIO.writeToFile();
-}
+	}
 
-public void updateStartDate(int index,LocalDateTime newStartDate) {
-	Task task = tasks.get(index);
-	task.setStartDateTime(newStartDate);
-	tasks.add(index,task);
-	StorageIO.writeToFile();
-}
+	public void updateDescription(int index, String newdescription){
+		Task task = tasks.get(index);
+		task.setDescription(newdescription);
+		tasks.add(index,task);
+		StorageIO.writeToFile();
+	}
 
-public void updateEndDate(int index,LocalDateTime newEndDate) {
-	Task task = tasks.get(index);
-	task.setEndDateTime(newEndDate);
-	tasks.add(index,task);
-	
-	StorageIO.writeToFile();
-}
+	public void updateStartDate(int index,LocalDateTime newStartDate) {
+		Task task = tasks.get(index);
+		task.setStartDateTime(newStartDate);
+		tasks.add(index,task);
+		StorageIO.writeToFile();
+	}
+
+	public void updateEndDate(int index,LocalDateTime newEndDate) {
+		Task task = tasks.get(index);
+		task.setEndDateTime(newEndDate);
+		tasks.add(index,task);
+
+		StorageIO.writeToFile();
+	}
 
 
 

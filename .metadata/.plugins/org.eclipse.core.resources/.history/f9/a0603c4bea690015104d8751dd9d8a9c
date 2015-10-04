@@ -1,0 +1,9 @@
+
+public class Searcher {
+
+	private Storage storage;
+	
+	public Searcher(Storage storage) {
+		this.storage = storage;
+	}
+}

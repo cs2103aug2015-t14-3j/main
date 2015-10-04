@@ -1,0 +1,64 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Map;
+
+public class Adder {
+	
+	private Storage storage;
+	
+	private final String ADD_DESCRIPTION = "description";
+	private final String ADD_START = "startDate";
+	private final String ADD_END = "endDate";
+	
+	public Adder(Storage storage) {
+			this.storage = storage;
+	}
+	
+	public String add(Map<String, String> parsedCommand) {
+		String description = parsedCommand.get(ADD_DESCRIPTION);
+		String startDate = parsedCommand.get(ADD_START);
+		String endDate = parsedCommand.get(ADD_END);
+		
+		LocalDateTime start = convertDateTime(startDate);
+		LocalDateTime end = convertDateTime(endDate);
+		
+		Task task;
+		
+		if (endDate == null) {
+			System.out.println("Floating)");
+			task = new Task(description);
+			//Floating Task
+		} else if (startDate == null) {
+			System.out.println("DeadLine");
+			task = new Task(description, end);
+			//DeadLine
+		} else {
+			System.out.println("Event");
+			task = new Task(description, start, end);
+			//Event
+		}
+		
+		storage.add(task);
+		
+		return "added new task";
+	}
+	
+	private LocalDateTime convertDateTime(String dateTime) {
+		String[] splitDateTime = dateTime.split(" ");
+		
+		if (splitDateTime.length == 1) {
+			//No time specified
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			LocalDateTime dt = LocalDateTime.parse(dateTime, formatter);
+			
+			return dt;
+		} else {
+			//Time specified
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm dd/MM/yyyy");
+			LocalDateTime dt = LocalDateTime.parse(dateTime, formatter);
+			
+			return dt;
+		}
+	
+	}
+}
