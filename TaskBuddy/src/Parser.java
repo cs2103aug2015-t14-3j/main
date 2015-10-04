@@ -6,7 +6,7 @@ import java.util.*;
 // 3) For add and edit, user will have to include '-' before every keywords
 //		e.g. add -submit report -by 25 Sep 2015
 //		e.g. edit -2 -description -submit CS2010 report
-// 4) date format return to logic will be in the following format: hhhh dd/mm/yyyy
+// 4) date format return to logic will be in the following format: HHmm dd/MM/yyyy
 
 public class Parser {
 	
