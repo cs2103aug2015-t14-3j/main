@@ -2,24 +2,24 @@ import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.List;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.lang.Boolean;
-import java.lang.Object;
 import java.lang.String;
+import java.io.IOException;
+
 
 public class StorageIO {
 public static final DateTimeFormatter FORMAT_STORAGE_DATETIME = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 	
 public static String fileName;
 private static List<String>  commands;
-private  static ArrayList<Task> Tasks;
+//private  static ArrayList<Task> Tasks;
 
-public static void readFile() {
+public static void readFile(ArrayList<Task> Tasks) {
 			try {
 			String command;
 			File file = new File(fileName);
@@ -30,23 +30,24 @@ public static void readFile() {
 			
 			while ((command = br.readLine()) != null) {
 				commands.add(command);
+	   }
+			  br.close();
+		      fr.close();
+				
+			
+  }catch (IOException e) {
+			  e.printStackTrace();	
 			}
+			
+	  
 			
 			for(int i=0; i< commands.size();i++) {
-				 createTask(commands.get(i));
-				
-			}
-			} catch(FileNotFoundException e){
-				e.printStackTrace();
-			}
+	        Task task = createTask(commands.get(i));
+			Tasks.add(task);
 			
-			
-			br.close();
-			fr.close();
-
-		   
-}
-
+			}
+		
+	}
 
 public  static Task createTask(String command){
  
@@ -54,6 +55,7 @@ public  static Task createTask(String command){
 	String startDateString = "";
 	String endDateString = "";
 	String done = "";
+	boolean isDone;
 	
 	
 	String[] splitComponents = command.split("");
@@ -69,6 +71,10 @@ public  static Task createTask(String command){
 	        
 	        
 	        Task task = new Task(description,startDate,endDate);
+	        
+	        isDone = Boolean.parseBoolean(done);
+	        task.setIsDone(isDone);
+	        
 	        return task;
 }
 
@@ -76,43 +82,44 @@ private static LocalDateTime convertToDate(String strDate){
 	return LocalDateTime.parse(strDate, FORMAT_STORAGE_DATETIME);
 }
 
-
 private static String createCommands(Task task) {
 
-	commands =  new ArrayList<String>();
+	StringBuilder str = new StringBuilder();
 	
+	str.append("");
 	
 	String description = task.getDescription();
-	commands.add(description);
+	str.append(description);
+	str.append("");
 	
 	String startDateTime = task.getStartDateTimeInString();
-	commands.add(startDateTime);
+	str.append(startDateTime);
+	str.append("");
 	
 	String endDateTime = task.getEndDateTimeInString();
-	commands.add(endDateTime);
+	str.append(endDateTime);
+	str.append("");
 	
 	String done = task.isDone() + "";
-	commands.add(done);
+	str.append(done);
+	str.append("");
 	
-	for(int i=0; i< commands.size();i++){
-		 commands.get(i);
-	}
 	
-	return description;
+	return str.toString();
 }
 
-public static void writeToFile() {
+public static void writeToFile(ArrayList<Task>  Tasks) {
+	commands.clear();
 	
+	for(int i=0;i< Tasks.size();i++){
+		String command = createCommands(Tasks.get(i));
+		commands.add(command);
+	}
 	
 	try { 
 			FileWriter fw = new FileWriter(fileName);
 			BufferedWriter bw = new BufferedWriter(fw);
 	
-			
-			for(int i= 0; i<Tasks.size();i++){
-		        createCommands(Tasks.get(i));
-			}
-			
 			for(int i=0 ; i<commands.size();i++){
 				bw.write(commands.get(i));
 			}
@@ -126,10 +133,7 @@ public static void writeToFile() {
 		
 		e.printStackTrace();
 	}
-
-
 }
-
 }
 
 
