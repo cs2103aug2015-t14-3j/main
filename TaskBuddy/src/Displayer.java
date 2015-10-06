@@ -6,11 +6,13 @@ public class Displayer {
 	
 	private Storage storage;
 	private ArrayList<Task> tasks;
+	String output;
 	
 	private final String DISPLAY_SUB = "subCommand";
 	private final String DISPLAY_DATE = "date";
 	
-	private final String DISPLAY_HEADER = "Here is your schedule for %s:\n\nDescription         Start Date          End Date\n";
+	private final String DISPLAY_HEADER_DATE = "Here is your schedule for %s:\n\nDescription         Start Date          End Date\n";
+	private final String DISPLAY_HEADER_ALL = "Here is your entire schedule:\n\nDescription         Start Date          End Date\n";
 	private final String DISPLAY_FORMAT = "%d.%-18s%-20s%s\n";
 	private final String FREE_DAY = "Looks like there is nothing on your schedule. Enjoy your day!!!\n\n";
 	
@@ -22,6 +24,7 @@ public class Displayer {
 	}
 	
 	public String display(Map<String, String> parsedCommand) {
+		output = new String();
 		String subCommand = parsedCommand.get(DISPLAY_SUB);
 		String date = parsedCommand.get(DISPLAY_DATE);
 
@@ -29,7 +32,7 @@ public class Displayer {
 		
 		if (subCommand == null) {
 			//Display All
-			tasks = allTasks;
+			tasks = extractAll(allTasks);
 		} else {
 			switch (subCommand) {
 			case "on":
@@ -53,9 +56,7 @@ public class Displayer {
 			default:
 				return INVALID_DISPLAY_SUB;
 			}
-		}
-		
-		String output;
+		}		
 		
 		if (tasks.size() == 0) {
 			output = FREE_DAY;
@@ -64,7 +65,6 @@ public class Displayer {
 		
 		Collections.sort(tasks, new TaskSorter());
 		
-		output = String.format(DISPLAY_HEADER, "today");
 		int index = 1;
 		
 		int i = 0;
@@ -95,6 +95,7 @@ public class Displayer {
 		ArrayList<Task> result = new ArrayList<Task>();
 		
 		String date = convertDate(_date);
+		output = String.format(DISPLAY_HEADER_DATE, _date);
 		
 		int i;
 		String startDate;
@@ -121,6 +122,11 @@ public class Displayer {
 		String[] splitDate = date.split("/");
 		
 		return splitDate[0] + "-" + splitDate[1] + "-" + splitDate[2];
+	}
+	
+	private ArrayList<Task> extractAll(ArrayList<Task> allTasks) {
+		output = DISPLAY_HEADER_ALL;
+		return allTasks;
 	}
 
 }

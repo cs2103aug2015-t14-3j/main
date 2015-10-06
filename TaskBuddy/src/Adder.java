@@ -13,7 +13,7 @@ public class Adder {
 	private final String DATE_FORMAT1 = "HHmm dd/MM/yyyy";
 	private final String DATE_FORMAT2 = "HHmm dd/M/yyyy";
 	
-	private final String ADD_OUTPUT = "Added new Task to TaskBuddy\n";
+	private final String ADD_OUTPUT = "Added new Task to TaskBuddy\n\n";
 	
 	public Adder(Storage storage) {
 			this.storage = storage;
@@ -30,15 +30,12 @@ public class Adder {
 		Task task;
 		
 		if (endDate == null) {
-			System.out.println("Floating)");
 			task = new Task(description);
 			//Floating Task
 		} else if (startDate == null) {
-			System.out.println("DeadLine");
 			task = new Task(description, end);
 			//DeadLine
 		} else {
-			System.out.println("Event");
 			task = new Task(description, start, end);
 			//Event
 		}

@@ -15,7 +15,7 @@ class UI {
 	private UserName name;
 	
 	private final String REQUEST_NAME = "Please enter your Name: ";
-	private final String REQUEST_COMMAND = "Command: ";
+	private final String REQUEST_COMMAND = "Enter Command: ";
 	private final String WELCOME_MESSAGE1 = "Date: %s\nTime: %s\n-------------------------\n";
 	private final String WELCOME_MESSAGE2 = "Welcome back, %s!\n";
 	private final int DATE_POSITION = 0;

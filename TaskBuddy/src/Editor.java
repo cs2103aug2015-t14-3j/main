@@ -9,12 +9,14 @@ public class Editor {
 	
 	private final String EDIT_INDEX = "index";
 	private final String EDIT_FIELD = "field";
-	private final String EDIT_VALUE = "value";
+	private final String EDIT_VALUE = "newValue";
 	
 	private final String DATE_FORMAT1 = "HHmm dd/MM/yyyy";
 	private final String DATE_FORMAT2 = "HHmm dd/M/yyyy";
 	
-	private final String EDIT_OUTPUT = "Edited task no.%d %s to %s\n";
+	private final String EDIT_OUTPUT = "Edited task no.%d %s to %s\n\n";
+	private final String INVALID_INDEX = "Invalid Index specified\n\n";
+	private final String INVALID_FIELD = "Invalid field specified\n\n";
 	
 	public Editor(Storage storage) {
 		this.storage = storage;
@@ -25,23 +27,34 @@ public class Editor {
 		String field = parsedCommand.get(EDIT_FIELD);
 		String value = parsedCommand.get(EDIT_VALUE);
 		
-		Task taskToEdit = lastDisplay.get(index);
+		if (index > lastDisplay.size()){
+			return INVALID_INDEX;
+		}
+		
+		Task taskToEdit = lastDisplay.get(index - 1);
 		
 		ArrayList<Task> allTasks = storage.display();
 		
 		int storageIndex = allTasks.indexOf(taskToEdit);
 		
-		switch (field) {
-		case "description":
-			storage.updateDescription(storageIndex, value);
-			break;
-		case "start":
-			LocalDateTime newValue = convertDateTime(value);
-			storage.updateStartDate(storageIndex, newValue);
-		case "end":
-			LocalDateTime newValue2 = convertDateTime(value);
-			storage.updateEndDate(storageIndex, newValue2);
-			break;
+		try {
+			switch (field) {
+			case "description":
+				storage.updateDescription(storageIndex, value);
+				break;
+			case "start date":
+				LocalDateTime newValue = convertDateTime(value);
+				storage.updateStartDate(storageIndex, newValue);
+				break;
+			case "end date":
+				LocalDateTime newValue2 = convertDateTime(value);
+				storage.updateEndDate(storageIndex, newValue2);
+				break;
+			default:
+				return INVALID_FIELD;
+			}
+		} catch (Exception e) {
+			return INVALID_FIELD;
 		}
 		
 		String output = String.format(EDIT_OUTPUT, index, field, value);

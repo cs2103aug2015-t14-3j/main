@@ -1,3 +1,4 @@
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class StorageStub extends Storage {
@@ -14,6 +15,21 @@ public class StorageStub extends Storage {
 	
 	public ArrayList<Task> display() {
 		return tasks;
+	}
+	
+	public void updateDescription(int index, String newdescription){
+		Task task = tasks.get(index);
+		task.setDescription(newdescription);
+	}
+
+	public void updateStartDate(int index,LocalDateTime newStartDate) {
+		Task task = tasks.get(index);
+		task.setStartDateTime(newStartDate);
+	}
+
+	public void updateEndDate(int index,LocalDateTime newEndDate) {
+		Task task = tasks.get(index);
+		task.setEndDateTime(newEndDate);
 	}
 	
 	

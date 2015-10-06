@@ -57,7 +57,8 @@ public class Content {
 			arr = userInput.split("-");
 			
 			for(int i=0; i<arr.length;i++) {
-				System.out.print("arr="+arr[i]);
+				//System.out.print("arr="+arr[i]);
+				arr[i] = arr[i].trim();
 			}
 			System.out.println();
 		} else {
@@ -93,7 +94,6 @@ public class Content {
 	}
 
 	private void extractAddContent(Map<String,String> dictionary) {
-		//System.out.println("add arr length=" + arr.length);
 		if(arr.length == ARR_SIZE_EVENT) {
 			extractEventContent(dictionary);
 		} else if (arr.length == ARR_SIZE_DEADLINES) {
@@ -170,6 +170,10 @@ public class Content {
 	
 	private void extractEditContent(Map<String,String> dictionary) {
 		for (int i=0; i < arr.length; i++) {
+			if (i==1) {
+//				System.out.println(arr[i]);
+				System.out.println(EDIT_KEYWORD_DESC);
+			}
 			if (arr[i].equals(EDIT_KEYWORD_DESC) || arr[i].equals(EDIT_KEYWORD_START) || arr[i].equals(EDIT_KEYWORD_END)) {
 				dictionary.put(DICTIONARY_EDIT_FIELD, arr[i]);
 			} else if (isNumeric(arr[i])) {
@@ -181,7 +185,8 @@ public class Content {
 	}
 	
 	public boolean isNumeric(String str) {  
-	    return str.matches("[-+]?\\d*\\.?\\d+");  
+		String regex = "[0-9]+";
+	    return str.matches(regex);  
 	}  
 	
 	private void extractSearchContent(Map<String,String> dictionary) {

@@ -40,7 +40,6 @@ public class CommandMatch {
 	}
 	
 	public String removeCommand(String command) {
-		//String regex = "\\s*\\bcommand\\b\\s*";
 		return userInput.replace(command, "").trim();
 	}
 

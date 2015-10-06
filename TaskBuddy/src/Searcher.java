@@ -5,9 +5,9 @@ public class Searcher {
 
 	private Storage storage;
 	
-	private final String SEARCH_HEADER = "Search returned %d results:\n";
+	private final String SEARCH_HEADER = "Search returned %d result(s):\n";
 	private final String DISPLAY_FORMAT = "%d.%s\n";
-	private final String NO_RESUTS = "Search returned no results\n";
+	private final String NO_RESUTS = "Search returned no results\n\n";
 	
 	private ArrayList<Task> result = new ArrayList<Task>();
 	
