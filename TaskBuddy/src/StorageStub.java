@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class StorageStub extends Storage {
 	
-	private ArrayList<Task> tasks = new ArrayList<Task>();
+	private static ArrayList<Task> tasks = new ArrayList<Task>();
 	
 	public void add(Task newTask) {
 		tasks.add(newTask);
