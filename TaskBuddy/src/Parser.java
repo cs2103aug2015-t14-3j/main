@@ -4,7 +4,7 @@ import java.util.*;
 // 1) First word of userInput should be command
 // 2) Commands: add,insert,create,delete,remove,display,show,edit,search,undo,help
 // 3) For add and edit, user will have to include '-' before every keywords
-//		e.g. add -submit report -by 25 Sep 2015
+//		e.g. add -submit report -by 25/9/2015
 //		e.g. edit -2 -description -submit CS2010 report
 // 4) date format return to logic will be in the following format: HHmm dd/MM/yyyy
 

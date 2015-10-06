@@ -34,7 +34,7 @@ class TBLogic extends Logic {
 		
 		lastDisplay = new ArrayList<Task>();
 		
-		storage = new StorageStub();
+		storage = new Storage();
 		
 		history = new History(dataFile);
 		helper = new Helper();
@@ -65,11 +65,9 @@ class TBLogic extends Logic {
 		case "display":
 			output = displayer.display(parsedCommand);
 			lastDisplay = displayer.getLastDisplay();
-			System.out.println(lastDisplay.size());
 			return output;
 		case "delete":
 			output = deleter.delete(parsedCommand, lastDisplay);
-			System.out.println(lastDisplay.size());
 			return output;			
 		case "edit":
 			output = editor.edit(parsedCommand,  lastDisplay);

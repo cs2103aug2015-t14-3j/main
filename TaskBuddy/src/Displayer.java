@@ -12,7 +12,7 @@ public class Displayer {
 	
 	private final String DISPLAY_HEADER = "Here is your schedule for %s:\n\nDescription         Start Date          End Date\n";
 	private final String DISPLAY_FORMAT = "%d.%-18s%-20s%s\n";
-	private final String FREE_DAY = "Looks like there is nothing on your schedule. Enjoy your day!!!\n";
+	private final String FREE_DAY = "Looks like there is nothing on your schedule. Enjoy your day!!!\n\n";
 	
 	private final String INVALID_DISPLAY_SUB = "Invalid display subcommand specified\n";
 
@@ -91,8 +91,10 @@ public class Displayer {
 		return tasks;
 	}
 	
-	private ArrayList<Task> extractOn(ArrayList<Task> allTasks, String date) {
+	private ArrayList<Task> extractOn(ArrayList<Task> allTasks, String _date) {
 		ArrayList<Task> result = new ArrayList<Task>();
+		
+		String date = convertDate(_date);
 		
 		int i;
 		String startDate;
@@ -113,6 +115,12 @@ public class Displayer {
 		}
 		
 		return result;
+	}
+	
+	private String convertDate(String date) {
+		String[] splitDate = date.split("/");
+		
+		return splitDate[0] + "-" + splitDate[1] + "-" + splitDate[2];
 	}
 
 }

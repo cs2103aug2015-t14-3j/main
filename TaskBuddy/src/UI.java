@@ -57,7 +57,7 @@ class UI {
 	private String[] getDateTime() {
 		Date now = new Date();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy, EEEE");
-		SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd/MM/yyyy");
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 		
 		String date = dateFormat.format(now);

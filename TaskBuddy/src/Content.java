@@ -25,6 +25,7 @@ public class Content {
 	
 	private static final String DICTIONARY_DISPLAY_SUB = "subCommand";
 	private static final String DICTIONARY_DISPLAY_COLOR = "color";
+	private static final String DICTIONARY_DISPLAY_DATE = "date";
 	private static final String DISPLAY_KEYWORD_ON_DATE = "on";
 	private static final String DISPLAY_KEYWORD_FROM_DATE = "from";
 	private static final String DISPLAY_KEYWORD_AFTER_DATE = "after";
@@ -41,6 +42,7 @@ public class Content {
 	
 	private static final String DICTIONARY_SEARCH = "searchKey";
 	
+	
 	private String[] arr;
 	private String command;
 	private String remainingUserInput;
@@ -48,11 +50,18 @@ public class Content {
 	public Content(String userInput, String command) {
 		userInput = userInput.trim();
 		this.command = command;
-		
-		if (command.equals(COMMAND_ADD) || command.equals(COMMAND_EDIT)) {
+		if (command.equals(COMMAND_ADD) || command.equals(COMMAND_EDIT)) {	
+			if(userInput.charAt(0) == '-') {
+				userInput = userInput.substring(1);
+			}
 			arr = userInput.split("-");
+			
+			for(int i=0; i<arr.length;i++) {
+				System.out.print("arr="+arr[i]);
+			}
+			System.out.println();
 		} else {
-			remainingUserInput = userInput;
+			remainingUserInput = userInput.toLowerCase();
 		}
 	}
 	
@@ -84,6 +93,7 @@ public class Content {
 	}
 
 	private void extractAddContent(Map<String,String> dictionary) {
+		//System.out.println("add arr length=" + arr.length);
 		if(arr.length == ARR_SIZE_EVENT) {
 			extractEventContent(dictionary);
 		} else if (arr.length == ARR_SIZE_DEADLINES) {
@@ -139,16 +149,22 @@ public class Content {
 	}
 	
 	private void extractDisplayContent(Map<String,String> dictionary) {
-		arr = remainingUserInput.split(" ");
 		
-		if (arr.length == 0) {
+	
+		if (remainingUserInput.equals("")) {
 			dictionary.put(DICTIONARY_DISPLAY_SUB, null);
-		} else if (arr[0].equals(DISPLAY_KEYWORD_ON_DATE) || arr[0].equals(DISPLAY_KEYWORD_FROM_DATE) 
-				|| arr[0].equals(DISPLAY_KEYWORD_AFTER_DATE) || arr[0].equals(DISPLAY_KEYWORD_DUE_DATE)
-				|| arr[0].equals(DISPLAY_KEYWORD_INCOMPLETE) || arr[0].equals(DISPLAY_KEYWORD_FLOATING)) {
-			dictionary.put(DICTIONARY_DISPLAY_SUB, arr[0]);
-		} else {
-			dictionary.put(DICTIONARY_DISPLAY_SUB, DICTIONARY_DISPLAY_COLOR );
+		}  else {
+			arr = remainingUserInput.split(" ");
+			if (arr[0].equals(DISPLAY_KEYWORD_ON_DATE) || arr[0].equals(DISPLAY_KEYWORD_FROM_DATE)
+					|| arr[0].equals(DISPLAY_KEYWORD_AFTER_DATE) || arr[0].equals(DISPLAY_KEYWORD_DUE_DATE)) {
+				dictionary.put(DICTIONARY_DISPLAY_SUB, arr[0]);
+				dictionary.put(DICTIONARY_DISPLAY_DATE, arr[1]);
+			} else if (arr[0].equals(DISPLAY_KEYWORD_INCOMPLETE) || arr[0].equals(DISPLAY_KEYWORD_FLOATING)) { 
+				dictionary.put(DICTIONARY_DISPLAY_SUB, arr[0]);
+			} else {
+				// need to specify types of color available. if not invalid subcommand also can pass through
+				dictionary.put(DICTIONARY_DISPLAY_SUB, DICTIONARY_DISPLAY_COLOR);
+			}
 		}
 	}
 	
