@@ -27,7 +27,7 @@ public Task(String description, LocalDateTime startDateTime,LocalDateTime endDat
 public Task(String description, LocalDateTime endDateTime) {
 	setDescription(description);
 	setStartDateTime(null);
-	setEndDateTime(null);
+	setEndDateTime(endDateTime);
 	setIsDone(false);
 }
 

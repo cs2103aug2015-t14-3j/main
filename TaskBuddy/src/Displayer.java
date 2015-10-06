@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 
 public class Displayer {
@@ -48,27 +49,31 @@ public class Displayer {
 				return INVALID_DISPLAY_SUB;
 			}
 		}
+
+		tasks = storage.display();
+		Collections.sort(tasks, new TaskSorter());
 		
-//		output = String.format(DISPLAY_HEADER, "today");
-//		int index = 1;
+		String output = String.format(DISPLAY_HEADER, "today");
+		int index = 1;
 		
-//		int i = 0;
+		int i = 0;
 		
-//		for (i = 0; i < tasks.size(); ++i) {
-//			Map<String,String> task = tasks.get(i);
+		for (i = 0; i < tasks.size(); ++i) {
+			Task task = tasks.get(i);
 			
-//			String description = task.get("description");
-//			String start = task.get("start");
-//			String end = task.get("end");
+			String description = task.getDescription();
+			String start = task.getStartDateTimeInString();
+			String end = task.getEndDateTimeInString();
 			
-//			output += String.format(DISPLAY_FORMAT, index, description, start, end);			
-//		}
+			output += String.format(DISPLAY_FORMAT, index, description, start, end);			
+			++index;
+		}
 		
-//		output += "\n";
-//		return output;
+		output += "\n";
+		return output;
 
 		
-		return "command: display " + "sub: " + subCommand + " date: " + date + "\n";
+//		return "command: display " + "sub: " + subCommand + " date: " + date + "\n";
 	}
 
 }

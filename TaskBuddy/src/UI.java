@@ -31,6 +31,7 @@ class UI {
 		welcomeUser();
 		
 		output = toDoToday();
+		display(output);
 	}
 	
 	private String toDoToday() {

@@ -47,4 +47,8 @@ public void updateEndDate(int index,LocalDateTime newEndDate) {
 	
 	StorageIO.writeToFile(tasks);
 }
+
+public ArrayList<Task> display() {
+	return tasks;
+}
 }

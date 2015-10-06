@@ -43,7 +43,7 @@ public class Adder {
 		
 		storage.add(task);
 		
-		return "added new task";
+		return "added new task\n";
 	}
 	
 	private LocalDateTime convertDateTime(String dateTime) {

@@ -32,7 +32,7 @@ class TBLogic extends Logic {
 		output = new String();
 		parser = new Parser();
 		
-		storage = new Storage(dataFile);
+		storage = new StorageStub();
 		
 		history = new History(dataFile);
 		helper = new Helper();
