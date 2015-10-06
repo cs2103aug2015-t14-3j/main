@@ -162,7 +162,6 @@ public class Content {
 			} else if (arr[0].equals(DISPLAY_KEYWORD_INCOMPLETE) || arr[0].equals(DISPLAY_KEYWORD_FLOATING)) { 
 				dictionary.put(DICTIONARY_DISPLAY_SUB, arr[0]);
 			} else {
-				// need to specify types of color available. if not invalid subcommand also can pass through
 				dictionary.put(DICTIONARY_DISPLAY_SUB, DICTIONARY_DISPLAY_COLOR);
 			}
 		}
