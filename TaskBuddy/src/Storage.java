@@ -4,9 +4,14 @@ import java.time.LocalDateTime;
 public class Storage {
 
     private ArrayList<Task> tasks;
+    private String fileName;
+    
+    public Storage() {
+    	tasks = new ArrayList<Task>();
+//    	createTaskList();
+    }
 	
 private void createTaskList() {
-	tasks = new ArrayList<Task>();
 	StorageIO.readFile(tasks);
 }
 

@@ -10,7 +10,7 @@ abstract class Logic {
 class TBLogic extends Logic {
 	
 	private String output;
-	ArrayList<Task> tasks;
+	private static ArrayList<Task> lastDisplay;
 
 	
 	private Storage storage;
@@ -32,7 +32,9 @@ class TBLogic extends Logic {
 		output = new String();
 		parser = new Parser();
 		
-		storage = new StorageStub();
+		lastDisplay = new ArrayList<Task>();
+		
+		storage = new Storage();
 		
 		history = new History(dataFile);
 		helper = new Helper();
@@ -45,24 +47,30 @@ class TBLogic extends Logic {
 	
 	public String executeCommand(String command) {
 		Map<String, String> parsedCommand = parser.getDictionary(command);
+		String commandType;
 		
-		String commandType = parsedCommand.get("command");
-		
+		commandType = parsedCommand.get("command");
+
 		//Edit this out; Used to check if contents of dictionary are correct
 		System.out.println(parsedCommand.toString());
+		
+		if (commandType == null) {
+			return "";
+		}
 		
 		switch (commandType) {
 		case "add":
 			output = adder.add(parsedCommand);
 			return output;
 		case "display":
-			output = displayer.display(parsedCommand, tasks);
+			output = displayer.display(parsedCommand);
+			lastDisplay = displayer.getLastDisplay();
 			return output;
 		case "delete":
-			output = deleter.delete(parsedCommand, tasks);
+			output = deleter.delete(parsedCommand, lastDisplay);
 			return output;			
 		case "edit":
-			output = editor.edit(parsedCommand, tasks);
+			output = editor.edit(parsedCommand,  lastDisplay);
 			return output;
 		case "search":
 			output = searcher.search(parsedCommand);
