@@ -5,8 +5,8 @@ public class Searcher {
 
 	private Storage storage;
 	
-	private final String SEARCH_HEADER = "Search returned %d results:\n";
-	private final String DISPLAY_FORMAT = "%d.%s\n";
+	private final String DISPLAY_HEADER = "Here is your schedule for %s:\n\nDescription         Start Date          End Date\n";
+	private final String DISPLAY_FORMAT = "%d.%-18s%-20s%s\n";
 	private final String NO_RESUTS = "Search returned no results\n";
 	
 	private ArrayList<Task> result = new ArrayList<Task>();
@@ -37,21 +37,6 @@ public class Searcher {
 			return NO_RESUTS;
 		} 
 		
-		String output;
 		
-		output = String.format(SEARCH_HEADER, result.size());
-		int index = 1;
-		
-		for (i = 0; i < result.size(); ++i) {
-			Task task = result.get(i);
-			
-			String description = task.getDescription();
-
-			output += String.format(DISPLAY_FORMAT, index, description);			
-			++index;
-		}
-		
-		output += "\n";
-		return output;
 	}
 }

@@ -1,51 +1,46 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Map;
 
-public class Adder {
+public class Editor {
 	
 	private Storage storage;
 	
-	private final String ADD_DESCRIPTION = "description";
-	private final String ADD_START = "startDate";
-	private final String ADD_END = "endDate";
+	private final String EDIT_INDEX = "index";
+	private final String EDIT_FIELD = "field";
+	private final String EDIT_VALUE = "value";
 	
 	private final String DATE_FORMAT1 = "HHmm dd/MM/yyyy";
 	private final String DATE_FORMAT2 = "HHmm dd/M/yyyy";
 	
-	private final String ADD_OUTPUT = "Added new Task to TaskBuddy\n";
-	
-	public Adder(Storage storage) {
-			this.storage = storage;
+	public Editor(Storage storage) {
+		this.storage = storage;
 	}
 	
-	public String add(Map<String, String> parsedCommand) {
-		String description = parsedCommand.get(ADD_DESCRIPTION);
-		String startDate = parsedCommand.get(ADD_START);
-		String endDate = parsedCommand.get(ADD_END);
+	public String edit(Map<String, String> parsedCommand, ArrayList<Task> tasks) {
+		int displayIndex = Integer.parseInt(parsedCommand.get(EDIT_INDEX)) - 1;
+		String field = parsedCommand.get(EDIT_FIELD);
+		String value = parsedCommand.get(EDIT_VALUE);
 		
-		LocalDateTime start = convertDateTime(startDate);
-		LocalDateTime end = convertDateTime(endDate);
+		Task taskToEdit = tasks.get(displayIndex);
 		
-		Task task;
+//		int storageIndex = taskToEdit.getIndex();
 		
-		if (endDate == null) {
-			System.out.println("Floating)");
-			task = new Task(description);
-			//Floating Task
-		} else if (startDate == null) {
-			System.out.println("DeadLine");
-			task = new Task(description, end);
-			//DeadLine
-		} else {
-			System.out.println("Event");
-			task = new Task(description, start, end);
-			//Event
+		switch (field) {
+		case "description":
+			storage.updateDescription(Integer.parseInt(storageIndex), value);
+			break;
+		case "start":
+			LocalDateTime newValue = convertDateTime(value);
+			storage.updateStartDate(Integer.parseInt(storageIndex), newValue);
+		case "end":
+			LocalDateTime newValue2 = convertDateTime(value);
+			storage.updateEndDate(Integer.parseInt(storageIndex), newValue2);
+			break;
 		}
 		
-		storage.add(task);
-		
-		return ADD_OUTPUT;
+		return "command: edit " + "index: " + index + " field: " + field + " value: " + value + "\n";
 	}
 	
 	private LocalDateTime convertDateTime(String dateTime) {
@@ -84,4 +79,5 @@ public class Adder {
 		}
 	
 	}
+	
 }

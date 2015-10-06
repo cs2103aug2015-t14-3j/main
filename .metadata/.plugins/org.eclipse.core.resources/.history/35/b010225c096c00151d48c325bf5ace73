@@ -13,8 +13,6 @@ public class Adder {
 	private final String DATE_FORMAT1 = "HHmm dd/MM/yyyy";
 	private final String DATE_FORMAT2 = "HHmm dd/M/yyyy";
 	
-	private final String ADD_OUTPUT = "Added new Task to TaskBuddy\n";
-	
 	public Adder(Storage storage) {
 			this.storage = storage;
 	}
@@ -45,7 +43,7 @@ public class Adder {
 		
 		storage.add(task);
 		
-		return ADD_OUTPUT;
+		return "added new task\n";
 	}
 	
 	private LocalDateTime convertDateTime(String dateTime) {
