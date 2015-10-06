@@ -57,8 +57,7 @@ public class Content {
 			arr = userInput.split("-");
 			
 			for(int i=0; i<arr.length;i++) {
-				//System.out.print("arr="+arr[i]);
-				arr[i] = arr[i].trim();
+				System.out.print("arr="+arr[i]);
 			}
 			System.out.println();
 		} else {
@@ -94,6 +93,7 @@ public class Content {
 	}
 
 	private void extractAddContent(Map<String,String> dictionary) {
+		//System.out.println("add arr length=" + arr.length);
 		if(arr.length == ARR_SIZE_EVENT) {
 			extractEventContent(dictionary);
 		} else if (arr.length == ARR_SIZE_DEADLINES) {
@@ -179,13 +179,15 @@ public class Content {
 			} else if (isNumeric(arr[i])) {
 				dictionary.put(DICTIONARY_EDIT_INDEX, arr[i]);
 			} else {
+				System.out.println(1);
 				dictionary.put(DICTIONARY_EDIT_NEW, arr[i]);
 			}
 		}
 	}
 	
 	public boolean isNumeric(String str) {  
-		String regex = "[0-9]+";
+		String regex = "\\d+";
+		System.out.println(str.matches(regex));
 	    return str.matches(regex);  
 	}  
 	

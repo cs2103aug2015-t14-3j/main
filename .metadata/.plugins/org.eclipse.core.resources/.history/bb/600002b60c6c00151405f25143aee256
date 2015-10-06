@@ -94,6 +94,7 @@ public class Content {
 	}
 
 	private void extractAddContent(Map<String,String> dictionary) {
+		//System.out.println("add arr length=" + arr.length);
 		if(arr.length == ARR_SIZE_EVENT) {
 			extractEventContent(dictionary);
 		} else if (arr.length == ARR_SIZE_DEADLINES) {
