@@ -1,5 +1,37 @@
 package com.cs2013t143j.TaskBuddyM;
 
-public class TBGUI {
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
+
+import com.alee.laf.WebLookAndFeel;
+
+public class TBGUI {
+    public static void main ( String[] args )
+    {
+        // You should work with UI (including installing L&F) inside Event Dispatch Thread (EDT)
+        SwingUtilities.invokeLater ( new Runnable ()
+        {
+            public void run ()
+            {
+                // Install WebLaF as application L&F
+                WebLookAndFeel.install ();
+
+                JFrame myFrame = new JFrame("TaskBuddy");
+                myFrame.setLocationRelativeTo(null);
+                myFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                myFrame.setSize(800,600);
+                //myFrame.setPreferredSize(new Dimension(800,600));
+                myFrame.setLayout(new BorderLayout());
+                MainPanel menuPanel = new MainPanel();
+                myFrame.add(menuPanel,BorderLayout.CENTER);
+                myFrame.setVisible(true);
+            }
+        } );
+    }
 }

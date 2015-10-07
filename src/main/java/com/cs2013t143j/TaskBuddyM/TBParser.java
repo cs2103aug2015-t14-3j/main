@@ -77,28 +77,27 @@ public class TBParser {
 	}
 	
 	private void extractAddContent(Map<String,String> dictionary) {
-		// code
-		if (userInput.contains("from")) {
+		List<String> dateStringList = parseDateToStringArray(userInput);
+		int countList = dateStringList.size();
+		if (countList == 2) {
 			// code
-			dictionary.put("description", userInput.substring(1,userInput.indexOf("from")));
-			dictionary.put("startDate", 
-					userInput.substring(userInput.indexOf("from")+5, userInput.indexOf("to")-1));
-			dictionary.put("endDate", 
-					userInput.substring(userInput.indexOf("to")+3, userInput.length()));
-		} else if (userInput.contains("by")) {
+			dictionary.put("description", userInput);
+			dictionary.put("startDate", dateStringList.get(0));
+			dictionary.put("endDate", dateStringList.get(1));
+		} else if (countList == 1) {
 			// code
-			dictionary.put("description", userInput.substring(1,userInput.indexOf("by")));
-			dictionary.put("endDate", userInput.substring(userInput.indexOf("by")+3,userInput.length()));
-			dictionary.put("startDate", null);
+			dictionary.put("description", userInput);
+			dictionary.put("startDate", dateStringList.get(0));
+			dictionary.put("endDate", null);
 		} else {
 			dictionary.put("description",userInput.substring(1));
-			dictionary.put("startDate", null);
+			dictionary.put("startDate", convertDateToString(new Date()));
 			dictionary.put("endDate", null);
 		}
 	}
 	
 	private void extractDeleteContent(Map<String,String> dictionary) {
-		dictionary.put("index", userInput.substring(1));
+		dictionary.put("index", userInput.substring(7));
 	}
 	
 	private void extractDisplayContent(Map<String,String> dictionary) {
