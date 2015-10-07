@@ -1,10 +1,10 @@
 package com.cs2013t143j.TaskBuddyM;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Map;
 
 public class Helper {
 	
@@ -18,8 +18,12 @@ public class Helper {
 	
 	private final String INVALID_COMMAND = "Invalid Commmand Specified\n\n";
 	
-	public String help(String command) {
+	private final String HELP_COMMAND = "target";
+	
+	public String help(Map<String, String> parsedCommand) {
 		String output = "\n";
+		
+		String command = parsedCommand.get(HELP_COMMAND);
 		
 		switch(command) {
 		case "add":

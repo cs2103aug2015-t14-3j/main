@@ -3,9 +3,13 @@ package com.cs2013t143j.TaskBuddyM;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Image;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
@@ -21,14 +25,15 @@ public class TBGUI {
             {
                 // Install WebLaF as application L&F
                 WebLookAndFeel.install ();
-
+                Logic logic = new TBLogic();
                 JFrame myFrame = new JFrame("TaskBuddy");
                 myFrame.setLocationRelativeTo(null);
                 myFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                 myFrame.setSize(800,600);
                 //myFrame.setPreferredSize(new Dimension(800,600));
                 myFrame.setLayout(new BorderLayout());
-                MainPanel menuPanel = new MainPanel();
+                MainPanel menuPanel = new MainPanel(logic);
+
                 myFrame.add(menuPanel,BorderLayout.CENTER);
                 myFrame.setVisible(true);
             }
