@@ -29,6 +29,7 @@ public class Displayer {
 		String date = parsedCommand.get(DISPLAY_DATE);
 
 		ArrayList<Task> allTasks = storage.display();
+		System.out.println(allTasks.size());
 		
 		if (subCommand == null) {
 			//Display All

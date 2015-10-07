@@ -48,13 +48,13 @@ public class StorageStub extends Storage {
 		Task task = null;
 		
 		switch(splitString.length) {
-		case 1:
+		case 2:
 			task = createFloating(splitString);
 			break;
-		case 2:
+		case 3:
 			task = createDeadline(splitString);
 			break;
-		case 3:
+		case 4:
 			task = createEvent(splitString);
 			break;
 		}
@@ -104,12 +104,10 @@ public class StorageStub extends Storage {
 
 	public void add(Task newTask) {
 		tasks.add(newTask);
-		writeTasksToFile();
 	}
 	
 	public void delete(int index) {
 		tasks.remove(index);
-		writeTasksToFile();
 	}
 	
 	public ArrayList<Task> display() {
@@ -119,69 +117,18 @@ public class StorageStub extends Storage {
 	public void updateDescription(int index, String newdescription){
 		Task task = tasks.get(index);
 		task.setDescription(newdescription);
-		writeTasksToFile();
 	}
 
 	public void updateStartDate(int index,LocalDateTime newStartDate) {
 		Task task = tasks.get(index);
 		task.setStartDateTime(newStartDate);
-		writeTasksToFile();
 	}
 
 	public void updateEndDate(int index,LocalDateTime newEndDate) {
 		Task task = tasks.get(index);
 		task.setEndDateTime(newEndDate);
-		writeTasksToFile();
 	}
 	
-	private void writeTasksToFile() {
-		
-		ArrayList<String> lines = new ArrayList<String>();
-		
-		int i;
-		
-		File fileToRead = new File(dataFile);
-		
-		for(i=0; i<tasks.size(); ++i) {
-			Task task = tasks.get(i);
-			String line = convertTaskToString(task);
-			lines.add(line);
-		}
-		
-		createNewFile();
-		
-		try{
-			PrintWriter writer = new PrintWriter(new FileWriter(fileToRead, true));
-			for(i=0; i<lines.size(); ++i) {
-				writer.println(lines.get(i));
-			}
-			writer.close();
-			} catch (IOException ex) {
-			System.out.println(ex);
-			}
-
-		
-	}
 	
-	private String convertTaskToString(Task task) {
-		
-		String description = task.getDescription();
-		String startDate = task.getStartDateTimeInString();
-		String endDate = task.getEndDateTimeInString();
-		
-		String line = description;
-		
-		if (startDate != "") {
-			line += "&&";
-			line += startDate;
-		}
-		
-		if (endDate != "") {
-			line += "&&";
-			line += endDate;
-		}
-		
-		return line;
-	}
 
 }

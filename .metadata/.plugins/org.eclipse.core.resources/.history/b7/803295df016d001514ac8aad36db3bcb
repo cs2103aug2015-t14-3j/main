@@ -29,6 +29,7 @@ public class Displayer {
 		String date = parsedCommand.get(DISPLAY_DATE);
 
 		ArrayList<Task> allTasks = storage.display();
+		System.out.println(allTasks.size());
 		
 		if (subCommand == null) {
 			//Display All
@@ -104,7 +105,7 @@ public class Displayer {
 		for (i=0; i<allTasks.size(); ++i) {
 			
 			Task task = allTasks.get(i);
-						
+			
 			startDate = task.getStartDateTimeInString();
 			endDate = task.getEndDateTimeInString();
 			

@@ -48,13 +48,13 @@ public class StorageStub extends Storage {
 		Task task = null;
 		
 		switch(splitString.length) {
-		case 1:
+		case 2:
 			task = createFloating(splitString);
 			break;
-		case 2:
+		case 3:
 			task = createDeadline(splitString);
 			break;
-		case 3:
+		case 4:
 			task = createEvent(splitString);
 			break;
 		}
@@ -104,12 +104,10 @@ public class StorageStub extends Storage {
 
 	public void add(Task newTask) {
 		tasks.add(newTask);
-		writeTasksToFile();
 	}
 	
 	public void delete(int index) {
 		tasks.remove(index);
-		writeTasksToFile();
 	}
 	
 	public ArrayList<Task> display() {
@@ -119,19 +117,16 @@ public class StorageStub extends Storage {
 	public void updateDescription(int index, String newdescription){
 		Task task = tasks.get(index);
 		task.setDescription(newdescription);
-		writeTasksToFile();
 	}
 
 	public void updateStartDate(int index,LocalDateTime newStartDate) {
 		Task task = tasks.get(index);
 		task.setStartDateTime(newStartDate);
-		writeTasksToFile();
 	}
 
 	public void updateEndDate(int index,LocalDateTime newEndDate) {
 		Task task = tasks.get(index);
 		task.setEndDateTime(newEndDate);
-		writeTasksToFile();
 	}
 	
 	private void writeTasksToFile() {
