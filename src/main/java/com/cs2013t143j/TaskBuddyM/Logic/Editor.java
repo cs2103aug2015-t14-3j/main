@@ -1,9 +1,10 @@
-package com.cs2013t143j.TaskBuddyM;
+package com.cs2013t143j.TaskBuddyM.Logic;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Map;
-
+import com.cs2013t143j.TaskBuddyM.Storage.Storage;
+import com.cs2013t143j.TaskBuddyM.Storage.Task;
 public class Editor {
 	
 	private Storage storage;

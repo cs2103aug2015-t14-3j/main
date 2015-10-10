@@ -1,6 +1,8 @@
-package com.cs2013t143j.TaskBuddyM;
+package com.cs2013t143j.TaskBuddyM.Logic;
 import java.time.LocalDateTime;
 import java.util.Comparator;
+
+import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
 class TaskSorter implements Comparator<Task> {
 	

@@ -1,15 +1,13 @@
-package com.cs2013t143j.TaskBuddyM;
+package com.cs2013t143j.TaskBuddyM.Logic;
 import java.util.ArrayList;
 import java.util.Map;
 
-abstract class Logic {
+import com.cs2013t143j.TaskBuddyM.Parser.TBParserStub;
+import com.cs2013t143j.TaskBuddyM.Storage.History;
+import com.cs2013t143j.TaskBuddyM.Storage.Storage;
+import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
-	abstract public String executeCommand(String command);
-
-}
-
-class TBLogic extends Logic {
-	
+public class Logic {
 	private String output;
 	private static ArrayList<Task> lastDisplay;
 
@@ -29,7 +27,7 @@ class TBLogic extends Logic {
 	
 	private String dataFile = "data.txt";
 	
-	public TBLogic() {
+	public Logic() {
 		output = new String();
 		parser = new TBParserStub();
 		
@@ -54,7 +52,7 @@ class TBLogic extends Logic {
 		commandType = parsedCommand.get("command");
 
 		//Edit this out; Used to check if contents of dictionary are correct
-//		System.out.println(parsedCommand.toString());
+		//System.out.println(parsedCommand.toString());
 		
 		if (commandType == null) {
 			return "";

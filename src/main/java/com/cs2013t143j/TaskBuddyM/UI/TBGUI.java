@@ -1,4 +1,4 @@
-package com.cs2013t143j.TaskBuddyM;
+package com.cs2013t143j.TaskBuddyM.UI;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -14,7 +14,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import com.alee.laf.WebLookAndFeel;
-
+import com.cs2013t143j.TaskBuddyM.Logic.Logic;;
 public class TBGUI {
     public static void main ( String[] args )
     {
@@ -25,7 +25,7 @@ public class TBGUI {
             {
                 // Install WebLaF as application L&F
                 WebLookAndFeel.install ();
-                Logic logic = new TBLogic();
+                Logic logic = new Logic();
                 JFrame myFrame = new JFrame("TaskBuddy");
                 myFrame.setLocationRelativeTo(null);
                 myFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

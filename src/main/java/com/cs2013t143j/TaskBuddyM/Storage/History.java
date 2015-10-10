@@ -1,4 +1,4 @@
-package com.cs2013t143j.TaskBuddyM;
+package com.cs2013t143j.TaskBuddyM.Storage;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -16,7 +16,7 @@ public class History {
 	private String fileName = null;
 	private List<List<String>> history;
 	
-	History(String fileString){
+	public History(String fileString){
 		fileName = fileString;
 		history = new ArrayList();
 	}

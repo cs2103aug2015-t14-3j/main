@@ -1,4 +1,4 @@
-package com.cs2013t143j.TaskBuddyM;
+package com.cs2013t143j.TaskBuddyM.Logic;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;

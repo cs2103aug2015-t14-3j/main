@@ -1,9 +1,10 @@
-package com.cs2013t143j.TaskBuddyM;
+package com.cs2013t143j.TaskBuddyM.UI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
-
-class UI {
+import com.cs2013t143j.TaskBuddyM.Logic.Logic;
+import com.cs2013t143j.TaskBuddyM.Logic.UserName;;
+public class UI {
 	
 	Scanner sc = new Scanner(System.in);
 	private String output;
@@ -24,7 +25,7 @@ class UI {
 	private final String TO_DO_TODAY_COMMAND = "display on %s";
 	
 	public UI() {
-		logic = new TBLogic();
+		logic = new Logic();
 		name = new UserName(usernameFile);
 		output = new String();
 		userName = name.getUserName();

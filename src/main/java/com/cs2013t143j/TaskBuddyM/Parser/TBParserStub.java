@@ -1,4 +1,4 @@
-package com.cs2013t143j.TaskBuddyM;
+package com.cs2013t143j.TaskBuddyM.Parser;
 import java.util.*;
 
 import com.joestelmach.natty.DateGroup;
@@ -14,9 +14,8 @@ public class TBParserStub {
 	}
 	
 	// parse input to a dict
-	Map<String, String> getDictionary (String input) {
+	public Map<String, String> getDictionary (String input) {
 		Map<String, String> dictionary = new HashMap<String,String>();
-		
 		userInput = input;
 		String command = matchCommand(dictionary);
 		String content = removeCommand(command);

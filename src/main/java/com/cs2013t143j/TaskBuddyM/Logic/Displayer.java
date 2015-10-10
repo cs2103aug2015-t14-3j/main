@@ -1,8 +1,9 @@
-package com.cs2013t143j.TaskBuddyM;
+package com.cs2013t143j.TaskBuddyM.Logic;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
-
+import com.cs2013t143j.TaskBuddyM.Storage.Storage;
+import com.cs2013t143j.TaskBuddyM.Storage.Task;
 public class Displayer {
 	
 	private Storage storage;

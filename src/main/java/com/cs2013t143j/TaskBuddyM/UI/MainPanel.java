@@ -1,4 +1,4 @@
-package com.cs2013t143j.TaskBuddyM;
+package com.cs2013t143j.TaskBuddyM.UI;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -12,6 +12,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.alee.laf.label.WebLabel;
 import com.alee.laf.text.WebTextField;
+import com.cs2013t143j.TaskBuddyM.Logic.Logic;
 
 public class MainPanel extends JPanel implements ActionListener {
 
