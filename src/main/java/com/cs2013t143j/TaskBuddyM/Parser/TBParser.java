@@ -19,7 +19,7 @@ public class TBParser {
 	public TBParser() {
 	}
 	
-	Map<String, String> getDictionary (String input) {
+	public Map<String, String> getDictionary (String input) {
 		Map<String, String> dictionary = new HashMap<String,String>();
 		userInput = input.toLowerCase();
 		

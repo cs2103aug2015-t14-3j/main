@@ -1,5 +1,8 @@
 package com.cs2013t143j.TaskBuddyM.Logic;
+
 import java.util.ArrayList;
+
+
 import java.util.Map;
 
 import com.cs2013t143j.TaskBuddyM.Parser.TBParserStub;
@@ -34,7 +37,7 @@ public class Logic {
 		lastDisplay = new ArrayList<Task>();
 		
 		storage = new Storage();
-		//storage.loadTasks();
+		
 		
 		history = new History(dataFile);
 		helper = new Helper();
