@@ -17,12 +17,18 @@ public class TBParserStub {
 	public Map<String, String> getDictionary (String input) {
 		Map<String, String> dictionary = new HashMap<String,String>();
 		userInput = input;
-		String command = matchCommand(dictionary);
+		String command = "";
+		try {
+			command = matchCommand(dictionary);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String content = removeCommand(command);
 		return dictionary;
 	}
 
-	public String matchCommand(Map<String,String> dictionary) {
+	public String matchCommand(Map<String,String> dictionary) throws Exception {
 		String command = "";
 		if (userInput.startsWith("add") || userInput.startsWith("create") || userInput.startsWith("insert")) {
 			command = "add";
@@ -52,6 +58,7 @@ public class TBParserStub {
 			dictionary.put("command", "help");
 		} else {
 			System.out.println(ERROR_COMMAND);
+			throw new Exception();
 		}
 		return command;
 	}
@@ -137,4 +144,14 @@ public class TBParserStub {
         String dateString = String.format("%02d %02d/%02d/%d", cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.YEAR));
         return dateString;
     }
+	
+	public String testDatePraser(String testString) {
+		List<String> tList = parseDateToStringArray(testString);
+		String tS = "";
+		for(String s : tList){
+			tS = s;
+		}
+		return tS;
+		
+	}
 }

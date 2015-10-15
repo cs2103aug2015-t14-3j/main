@@ -34,7 +34,7 @@ public class Logic {
 		lastDisplay = new ArrayList<Task>();
 		
 		storage = new Storage();
-		storage.loadTasks();
+		//storage.loadTasks();
 		
 		history = new History(dataFile);
 		helper = new Helper();
