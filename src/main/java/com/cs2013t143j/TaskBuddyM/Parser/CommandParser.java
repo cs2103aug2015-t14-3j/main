@@ -40,7 +40,7 @@ public class CommandParser {
 		arr = userInput.split(" ");
 	}
 	
-	public void extractShortcutCommand(Map<String,String> dictionary) throws InvalidInputException {	
+	public void extractShortcutCommand(Map<String,String> dictionary) {	
 		if (arr[0].equalsIgnoreCase("a") || arr[0].equalsIgnoreCase("c") || arr[0].equalsIgnoreCase("i")) {
 			dictionary.put(DIC_COMMAND, COMMAND_ADD);
 		} else if (arr[0].equalsIgnoreCase("del") || arr[0].equalsIgnoreCase("r")) {
@@ -61,7 +61,7 @@ public class CommandParser {
 		}
 	}
 	
-	private void extractCommand(Map<String,String> dictionary) throws InvalidInputException {
+	private void extractCommand(Map<String,String> dictionary) {
 		for (int i = 0; i < arr.length; i++) {
 			if (arr[i].equalsIgnoreCase(COMMAND_ADD) || arr[i].equalsIgnoreCase(COMMAND_CREATE) || arr[i].equalsIgnoreCase(COMMAND_INSERT)) {
 				dictionary.put(DIC_COMMAND, COMMAND_ADD);
@@ -71,7 +71,7 @@ public class CommandParser {
 				break;
 			} else if (arr[i].equalsIgnoreCase(COMMAND_DISPLAY) || arr[i].equalsIgnoreCase(COMMAND_SHOW)) {
 				dictionary.put(DIC_COMMAND, COMMAND_DISPLAY);
-				index = i+1;
+				index = ++i;
 				break;
 			} else if (arr[i].equalsIgnoreCase(COMMAND_EDIT) || arr[i].equalsIgnoreCase(COMMAND_UPDATE)) {
 				dictionary.put(DIC_COMMAND, COMMAND_EDIT);
@@ -86,21 +86,35 @@ public class CommandParser {
 				dictionary.put(DIC_COMMAND, COMMAND_HELP);
 				break;
 			} else if (i == arr.length - 1){
-				throw new InvalidInputException(INVALID_COMMAND);
+				//sthrow new InvalidInputException(INVALID_COMMAND);
 			}
 		}
 	}
 	
 	public void extractSubCommand(Map<String,String> dictionary) {
 		String command = dictionary.get(DIC_COMMAND);
-		if(command.equals(COMMAND_DISPLAY)) {
-			dictionary.put(DIC_SUBCOMMAND, arr[index]);
+		
+		if (index < arr.length) {
+			if (command.equals(COMMAND_DISPLAY)) {
+				switch (arr[index].toLowerCase()) {
+				case "on":
+				case "from":
+				case "after":
+				case "due":
+				case "incomplete":
+				case "floating":
+					dictionary.put(DIC_SUBCOMMAND, arr[index]);
+					break;
+				default:
+					dictionary.put(DIC_SUBCOMMAND, "color");
+				}
+			}
 		}
 	}
 	
 	public String removeCommand(String command) {
 		String regex = "\\s*\\b" + command + "\\b";
-		return userInput.replace(regex,"").trim();
+		return userInput.replaceAll(regex,"").trim();
 	}
 
 }
