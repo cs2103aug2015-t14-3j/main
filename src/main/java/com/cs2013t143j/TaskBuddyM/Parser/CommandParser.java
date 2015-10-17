@@ -27,24 +27,27 @@ public class CommandParser {
 	private static final String COMMAND_UNDO = "undo";
 
 	private static final String DIC_COMMAND = "command";
+	private static final String DIC_SUBCOMMAND = "subCommand";
 	
 	private static final String INVALID_COMMAND = "Invalid command entered.";
 	
-	private String userInput;
+	private String userInput=null;
+	private String[] arr;
+	private int index=-1;
 	
 	public CommandParser (String str) {
 		userInput = str;
+		arr = userInput.split(" ");
 	}
 	
-	public void extractShortcutCommand(Map<String,String> dictionary) throws InvalidInputException {
-		String[] arr = userInput.split(" ");
-		
+	public void extractShortcutCommand(Map<String,String> dictionary) throws InvalidInputException {	
 		if (arr[0].equalsIgnoreCase("a") || arr[0].equalsIgnoreCase("c") || arr[0].equalsIgnoreCase("i")) {
 			dictionary.put(DIC_COMMAND, COMMAND_ADD);
 		} else if (arr[0].equalsIgnoreCase("del") || arr[0].equalsIgnoreCase("r")) {
 			dictionary.put(DIC_COMMAND, COMMAND_DELETE);
 		} else if (arr[0].equalsIgnoreCase("d")) {
 			dictionary.put(DIC_COMMAND, COMMAND_DISPLAY);
+			index = 1;
 		} else if (arr[0].equalsIgnoreCase("e")) {
 			dictionary.put(DIC_COMMAND,COMMAND_EDIT);
 		} else if (arr[0].equalsIgnoreCase("s")) {
@@ -54,12 +57,11 @@ public class CommandParser {
 		} else if (arr[0].equalsIgnoreCase("h")) {
 			dictionary.put(DIC_COMMAND, COMMAND_HELP);
 		} else {
-			extractCommand(arr, dictionary);
+			extractCommand(dictionary);
 		}
 	}
 	
-	private void extractCommand(String[] arr, Map<String,String> dictionary) throws InvalidInputException {
-		
+	private void extractCommand(Map<String,String> dictionary) throws InvalidInputException {
 		for (int i = 0; i < arr.length; i++) {
 			if (arr[i].equalsIgnoreCase(COMMAND_ADD) || arr[i].equalsIgnoreCase(COMMAND_CREATE) || arr[i].equalsIgnoreCase(COMMAND_INSERT)) {
 				dictionary.put(DIC_COMMAND, COMMAND_ADD);
@@ -69,6 +71,7 @@ public class CommandParser {
 				break;
 			} else if (arr[i].equalsIgnoreCase(COMMAND_DISPLAY) || arr[i].equalsIgnoreCase(COMMAND_SHOW)) {
 				dictionary.put(DIC_COMMAND, COMMAND_DISPLAY);
+				index = i+1;
 				break;
 			} else if (arr[i].equalsIgnoreCase(COMMAND_EDIT) || arr[i].equalsIgnoreCase(COMMAND_UPDATE)) {
 				dictionary.put(DIC_COMMAND, COMMAND_EDIT);
@@ -90,9 +93,8 @@ public class CommandParser {
 	
 	public void extractSubCommand(Map<String,String> dictionary) {
 		String command = dictionary.get(DIC_COMMAND);
-		
 		if(command.equals(COMMAND_DISPLAY)) {
-			
+			dictionary.put(DIC_SUBCOMMAND, arr[index]);
 		}
 	}
 	
