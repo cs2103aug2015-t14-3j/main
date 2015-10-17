@@ -1,44 +1,41 @@
 package com.cs2013t143j.TaskBuddyM.Parser;
 import java.util.*;
 
-// Things to note: 
-// 1) First word of userInput should be command
-// 2) Commands: add,insert,create,delete,remove,display,show,edit,search,undo,help
-// 3) For add and edit, user will have to include '-' before every keywords
-//		e.g. add -submit report -by 25/9/2015
-//		e.g. edit -2 -description -submit CS2010 report
-// 4) date format return to logic will be in the following format: HHmm dd/MM/yyyy
-
 public class TBParser {
 	
+	private static final String INVALID_INPUT = "Invalid input entered.";
 	private CommandParser cmd;
-	private Content content;
+//	private Content content;
 
 	private String userInput;
 
 	public TBParser() {
 	}
 	
-	public Map<String, String> getDictionary (String input) {
+	public Map<String, String> getDictionary (String input) throws InvalidInputException {
 		Map<String, String> dictionary = new HashMap<String,String>();
-		userInput = input.toLowerCase();
+		userInput = input;
 		
-		String command = retrieveCommand(dictionary);
-		retrieveContent(dictionary, command);
+		if (userInput.equals(null)) {
+			throw new InvalidInputException(INVALID_INPUT);
+		}
+		
+		retrieveCommand(dictionary);
+		//retrieveContent(dictionary, command);
 		return dictionary;
 	}
 
-	private void retrieveContent(Map<String, String> dictionary, String command) {
-		if (!userInput.equals(null)) {
-			content = new Content(userInput,command);
-			content.extractContent(dictionary);
-		}
-	}
+//	private void retrieveContent(Map<String, String> dictionary, String command) {
+//		if (!userInput.equals(null)) {
+//			content = new Content(userInput,command);
+//			content.extractContent(dictionary);
+//		}
+//	}
 
-	private String retrieveCommand(Map<String, String> dictionary) {
+	private void retrieveCommand(Map<String, String> dictionary) throws InvalidInputException {
 		cmd = new CommandParser(userInput);
-		String command = cmd.extractCommand(dictionary);
-		userInput = cmd.removeCommand(command);
-		return command;
+		cmd.extractShortcutCommand(dictionary);
+		cmd.extractSubCommand(dictionary);
+		userInput = cmd.removeCommand(dictionary.get("command"));
 	} 
 }

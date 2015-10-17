@@ -1,47 +1,104 @@
+/* Types of command (shortcut): 
+ * 1. add/create/insert		(a/c/i)
+ * 2. delete/remove			(del/r)
+ * 3. display/show			(d)
+ * 4. edit/update			(e)
+ * 5. search				(s)
+ * 6. undo					(u)
+ * 7. help					(h)
+ */
+
 package com.cs2013t143j.TaskBuddyM.Parser;
 import java.util.Map;
 
 public class CommandParser {
 	
-	private static final String ERROR_COMMAND = "Invalid User Command.";
+	private static final String COMMAND_ADD = "add";
+	private static final String COMMAND_CREATE = "create";
+	private static final String COMMAND_DELETE = "delete";
+	private static final String COMMAND_DISPLAY = "display";
+	private static final String COMMAND_EDIT = "edit";
+	private static final String COMMAND_HELP = "help";
+	private static final String COMMAND_INSERT = "insert";
+	private static final String COMMAND_REMOVE = "remove";
+	private static final String COMMAND_SEARCH= "search";
+	private static final String COMMAND_SHOW = "show";
+	private static final String COMMAND_UPDATE = "update";
+	private static final String COMMAND_UNDO = "undo";
+
+	private static final String DIC_COMMAND = "command";
 	
-	String userInput;
+	private static final String INVALID_COMMAND = "Invalid command entered.";
+	
+	private String userInput;
 	
 	public CommandParser (String str) {
 		userInput = str;
 	}
 	
-	public String extractCommand(Map<String,String> dictionary) {
-		String command = "";
-		if (userInput.startsWith("add") || userInput.startsWith("create") || userInput.startsWith("insert")) {
-			command = "add";
-			dictionary.put("command", "add");
-		} else if (userInput.startsWith("delete") || userInput.startsWith("remove")) {
-			command = "delete";
-			dictionary.put("command", "delete");
-		} else if (userInput.startsWith("display") || userInput.startsWith("show")) {
-			command = "display";
-			dictionary.put("command", "display");
-		} else if (userInput.startsWith("edit")) {
-			command = "edit";
-			dictionary.put("command", "edit");
-		} else if (userInput.startsWith("search") || userInput.startsWith("look for")) {
-			command = "search";
-			dictionary.put("command", "search");
-		} else if (userInput.startsWith("undo")) {
-			command = "undo";
-			dictionary.put("command", "undo");
-		} else if (userInput.startsWith("help")) {
-			command = "help";
-			dictionary.put("command", "help");
+	public void extractShortcutCommand(Map<String,String> dictionary) throws InvalidInputException {
+		String[] arr = userInput.split(" ");
+		
+		if (arr[0].equalsIgnoreCase("a") || arr[0].equalsIgnoreCase("c") || arr[0].equalsIgnoreCase("i")) {
+			dictionary.put(DIC_COMMAND, COMMAND_ADD);
+		} else if (arr[0].equalsIgnoreCase("del") || arr[0].equalsIgnoreCase("r")) {
+			dictionary.put(DIC_COMMAND, COMMAND_DELETE);
+		} else if (arr[0].equalsIgnoreCase("d")) {
+			dictionary.put(DIC_COMMAND, COMMAND_DISPLAY);
+		} else if (arr[0].equalsIgnoreCase("e")) {
+			dictionary.put(DIC_COMMAND,COMMAND_EDIT);
+		} else if (arr[0].equalsIgnoreCase("s")) {
+			dictionary.put(DIC_COMMAND, COMMAND_SEARCH);
+		} else if (arr[0].equalsIgnoreCase("u")) {
+			dictionary.put(DIC_COMMAND, COMMAND_UNDO);
+		} else if (arr[0].equalsIgnoreCase("h")) {
+			dictionary.put(DIC_COMMAND, COMMAND_HELP);
 		} else {
-			System.out.println(ERROR_COMMAND);
+			extractCommand(arr, dictionary);
 		}
-		return command;
+	}
+	
+	private void extractCommand(String[] arr, Map<String,String> dictionary) throws InvalidInputException {
+		
+		for (int i = 0; i < arr.length; i++) {
+			if (arr[i].equalsIgnoreCase(COMMAND_ADD) || arr[i].equalsIgnoreCase(COMMAND_CREATE) || arr[i].equalsIgnoreCase(COMMAND_INSERT)) {
+				dictionary.put(DIC_COMMAND, COMMAND_ADD);
+				break;
+			} else if (arr[i].equalsIgnoreCase(COMMAND_DELETE) || arr[i].equalsIgnoreCase(COMMAND_REMOVE)) {
+				dictionary.put(DIC_COMMAND, COMMAND_DELETE);
+				break;
+			} else if (arr[i].equalsIgnoreCase(COMMAND_DISPLAY) || arr[i].equalsIgnoreCase(COMMAND_SHOW)) {
+				dictionary.put(DIC_COMMAND, COMMAND_DISPLAY);
+				break;
+			} else if (arr[i].equalsIgnoreCase(COMMAND_EDIT) || arr[i].equalsIgnoreCase(COMMAND_UPDATE)) {
+				dictionary.put(DIC_COMMAND, COMMAND_EDIT);
+				break;
+			} else if (arr[i].equalsIgnoreCase(COMMAND_SEARCH)) {
+				dictionary.put(DIC_COMMAND, COMMAND_SEARCH);
+				break;
+			} else if (arr[i].equalsIgnoreCase(COMMAND_UNDO)) {
+				dictionary.put(DIC_COMMAND, COMMAND_UNDO);
+				break;
+			} else if (arr[i].equalsIgnoreCase(COMMAND_HELP)) {
+				dictionary.put(DIC_COMMAND, COMMAND_HELP);
+				break;
+			} else if (i == arr.length - 1){
+				throw new InvalidInputException(INVALID_COMMAND);
+			}
+		}
+	}
+	
+	public void extractSubCommand(Map<String,String> dictionary) {
+		String command = dictionary.get(DIC_COMMAND);
+		
+		if(command.equals(COMMAND_DISPLAY)) {
+			
+		}
 	}
 	
 	public String removeCommand(String command) {
-		return userInput.replace(command, "").trim();
+		String regex = "\\s*\\b" + command + "\\b";
+		return userInput.replace(regex,"").trim();
 	}
 
 }
