@@ -17,6 +17,10 @@ public class TBParserStub {
 	public Map<String, String> getDictionary (String input)  {
 		Map<String, String> dictionary = new HashMap<String,String>();
 		userInput = input;
+		
+		/*if (userInput.equals(null)) {
+			throw new InvalidInputException(ERROR_COMMAND);
+		}*/
 
 		retrieveCommand(dictionary);
 		retrieveContent(dictionary);
@@ -51,6 +55,7 @@ public class TBParserStub {
 	}
 	
 	private void extractAddContent(Map<String,String> dictionary) {
+		//assert userInput != null;
 		String[] inputs = userInput.split(" ",2);
 		List<String> dateStringList = parseDateToStringArray(userInput);
     	for(String s : dateStringList){
@@ -75,6 +80,7 @@ public class TBParserStub {
 	}
 	
 	private void extractDeleteContent(Map<String,String> dictionary) {
+		//assert userInput != null;
 		String[] inputs = userInput.split(" ",2);
 		dictionary.put("index", inputs[1]);
 	}
@@ -84,6 +90,8 @@ public class TBParserStub {
 	}
 	
 	private void extractEditContent(Map<String,String> dictionary) {
+		//assert userInput != null;
+		
 		String[] inputs = userInput.split(" ",3);
 		if(inputs.length == 3){
 			dictionary.put("field", inputs[1]);
@@ -103,6 +111,7 @@ public class TBParserStub {
 	}
 	
 	private void extractSearchContent(Map<String,String> dictionary) {
+		//assert userInput != null;
 		dictionary.put("searchKey", userInput.substring(1));
 	}
 	

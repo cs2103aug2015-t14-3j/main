@@ -29,7 +29,7 @@ public class CommandParser {
 	private static final String DIC_COMMAND = "command";
 	private static final String DIC_SUBCOMMAND = "subCommand";
 	
-	private static final String INVALID_COMMAND = "Invalid command entered.";
+	private static final String ERROR_COMMAND = "Invalid command entered.";
 	
 	private String userInput=null;
 	private String[] arr;
