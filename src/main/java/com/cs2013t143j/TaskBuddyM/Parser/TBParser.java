@@ -11,7 +11,7 @@ import java.util.*;
 
 public class TBParser {
 	
-	private CommandMatch cmd;
+	private CommandParser cmd;
 	private Content content;
 
 	private String userInput;
@@ -36,7 +36,7 @@ public class TBParser {
 	}
 
 	private String retrieveCommand(Map<String, String> dictionary) {
-		cmd = new CommandMatch(userInput);
+		cmd = new CommandParser(userInput);
 		String command = cmd.extractCommand(dictionary);
 		userInput = cmd.removeCommand(command);
 		return command;

@@ -1,13 +1,13 @@
 package com.cs2013t143j.TaskBuddyM.Parser;
 import java.util.Map;
 
-public class CommandMatch {
+public class CommandParser {
 	
 	private static final String ERROR_COMMAND = "Invalid User Command.";
 	
 	String userInput;
 	
-	public CommandMatch (String str) {
+	public CommandParser (String str) {
 		userInput = str;
 	}
 	
