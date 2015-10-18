@@ -10,64 +10,52 @@ public class TBParserStub {
 	final String ERROR_COMMAND = "Invalid User Command.";
 	String userInput;
 
-	public TBParserStub() {		
+	public TBParserStub() {	
 	}
 	
 	// parse input to a dict
-	public Map<String, String> getDictionary (String input) {
+	public Map<String, String> getDictionary (String input)  {
 		Map<String, String> dictionary = new HashMap<String,String>();
 		userInput = input;
-		String command = "";
-		try {
-			command = matchCommand(dictionary);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String content = removeCommand(command);
+		
+		/*if (userInput.equals(null)) {
+			throw new InvalidInputException(ERROR_COMMAND);
+		}*/
+
+		retrieveCommand(dictionary);
+		retrieveContent(dictionary);
 		return dictionary;
 	}
-
-	public String matchCommand(Map<String,String> dictionary) throws Exception {
-		String command = "";
-		if (userInput.startsWith("add") || userInput.startsWith("create") || userInput.startsWith("insert")) {
-			command = "add";
-			dictionary.put("command", "add");
-			extractAddContent(dictionary);
-		} else if (userInput.startsWith("delete") || userInput.startsWith("remove")) {
-			command = "delete";
-			dictionary.put("command", "delete");
-			extractDeleteContent(dictionary);
-		} else if (userInput.startsWith("display") || userInput.startsWith("show")) {
-			command = "display";
-			dictionary.put("command", "display");
-			extractDisplayContent(dictionary);
-		} else if (userInput.startsWith("edit")) {
-			command = "edit";
-			dictionary.put("command", "edit");
-			extractEditContent(dictionary);
-		} else if (userInput.startsWith("search") || userInput.startsWith("look for")) {
-			command = "search";
-			dictionary.put("command", "search");
-			extractSearchContent(dictionary);
-		} else if (userInput.startsWith("undo")) {
-			command = "undo";
-			dictionary.put("command", "undo");
-		} else if (userInput.startsWith("help")) {
-			command = "help";
-			dictionary.put("command", "help");
-		} else {
-			System.out.println(ERROR_COMMAND);
-			throw new Exception();
-		}
-		return command;
-	}
 	
-	public String removeCommand(String command) {
-		return userInput.replace(command+" ", "").trim();
+	private void retrieveCommand(Map<String, String> dictionary) {
+		CommandParser cmd = new CommandParser(userInput);
+		cmd.extractShortcutCommand(dictionary);
+		cmd.extractSubCommand(dictionary);
+		userInput = cmd.removeCommand(dictionary.get("command"));
+	} 
+	
+	private void retrieveContent(Map<String,String> dictionary) {
+		switch(dictionary.get("command")) {
+		case "add":
+			extractAddContent(dictionary);
+			break;
+		case "delete":
+			extractDeleteContent(dictionary);
+			break;
+		case "display":
+			extractDisplayContent(dictionary);
+			break;
+		case "edit":
+			extractEditContent(dictionary);
+			break;
+		default:
+			extractSearchContent(dictionary);
+			break;
+		}
 	}
 	
 	private void extractAddContent(Map<String,String> dictionary) {
+		//assert userInput != null;
 		String[] inputs = userInput.split(" ",2);
 		List<String> dateStringList = parseDateToStringArray(userInput);
     	for(String s : dateStringList){
@@ -92,6 +80,7 @@ public class TBParserStub {
 	}
 	
 	private void extractDeleteContent(Map<String,String> dictionary) {
+		//assert userInput != null;
 		String[] inputs = userInput.split(" ",2);
 		dictionary.put("index", inputs[1]);
 	}
@@ -101,6 +90,8 @@ public class TBParserStub {
 	}
 	
 	private void extractEditContent(Map<String,String> dictionary) {
+		//assert userInput != null;
+		
 		String[] inputs = userInput.split(" ",3);
 		if(inputs.length == 3){
 			dictionary.put("field", inputs[1]);
@@ -120,6 +111,7 @@ public class TBParserStub {
 	}
 	
 	private void extractSearchContent(Map<String,String> dictionary) {
+		//assert userInput != null;
 		dictionary.put("searchKey", userInput.substring(1));
 	}
 	

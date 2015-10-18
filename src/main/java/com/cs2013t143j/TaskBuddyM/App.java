@@ -38,7 +38,7 @@ public class App
     private static List<String> parseDateToStringArray(String userInput){
 		Parser p = new Parser();
     	List<DateGroup> groups = p.parse(userInput);
-    	List<String> returnList = new ArrayList<>();
+    	List<String> returnList = new ArrayList();
     	for(DateGroup group:groups) {
     	  List<Date> dates = group.getDates();
     	  for(Date d : dates){

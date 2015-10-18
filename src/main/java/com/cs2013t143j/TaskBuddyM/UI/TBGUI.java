@@ -1,6 +1,7 @@
 package com.cs2013t143j.TaskBuddyM.UI;
 
 import java.awt.BorderLayout;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
@@ -14,7 +15,12 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import com.alee.laf.WebLookAndFeel;
-import com.cs2013t143j.TaskBuddyM.Logic.Logic;;
+import com.cs2013t143j.TaskBuddyM.Logic.Logic;
+
+
+import com.joestelmach.natty.DateGroup;
+import com.joestelmach.natty.Parser;
+
 public class TBGUI {
     public static void main ( String[] args )
     {

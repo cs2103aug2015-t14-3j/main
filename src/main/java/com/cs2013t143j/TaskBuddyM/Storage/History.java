@@ -28,7 +28,7 @@ public class History {
 				newData = extractTodoFromFile();
 				history.add(newData);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 			
