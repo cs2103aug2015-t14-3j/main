@@ -1,17 +1,16 @@
 package com.cs2013t143j.TaskBuddyM.Logic;
 import java.util.ArrayList;
 import java.util.Map;
-import com.cs2013t143j.TaskBuddyM.Storage.Storage;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 public class Deleter {
 
-	private Storage storage;
+	private StorageAccess storage;
 	
 	private final String DELETE_INDEX = "index";
 	private final String DELETE_OUTPUT = "Deleted task no.%d\n\n";
 	private final String INVALID_INDEX = "Invalid Index specified\n\n";
 	
-	public Deleter(Storage storage) {
+	public Deleter(StorageAccess storage) {
 		this.storage = storage;
 	}
 	

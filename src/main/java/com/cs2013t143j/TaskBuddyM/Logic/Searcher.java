@@ -1,12 +1,11 @@
 package com.cs2013t143j.TaskBuddyM.Logic;
 import java.util.Map;
-import com.cs2013t143j.TaskBuddyM.Storage.Storage;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 import java.util.ArrayList;
 
 public class Searcher {
 
-	private Storage storage;
+	private StorageAccess storage;
 	
 	private final String SEARCH_HEADER = "Search returned %d result(s):\n";
 	private final String DISPLAY_FORMAT = "%d.%s\n";
@@ -16,7 +15,7 @@ public class Searcher {
 	
 	private final String SEARCH_KEY = "searchKey";
 	
-	public Searcher(Storage storage) {
+	public Searcher(StorageAccess storage) {
 		this.storage = storage;
 	}
 	

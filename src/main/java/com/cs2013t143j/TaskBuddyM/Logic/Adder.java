@@ -3,13 +3,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
-import com.cs2013t143j.TaskBuddyM.Storage.Storage;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
 
 public class Adder {
 	
-	private Storage storage;
+	private StorageAccess storage;
 	
 	private final String ADD_DESCRIPTION = "description";
 	private final String ADD_START = "startDate";
@@ -20,7 +19,7 @@ public class Adder {
 	
 	private final String ADD_OUTPUT = "Added new Task to TaskBuddy\n\n";
 	
-	public Adder(Storage storage) {
+	public Adder(StorageAccess storage) {
 			this.storage = storage;
 	}
 	
@@ -34,15 +33,15 @@ public class Adder {
 		
 		Task task;
 		
-		if (endDate == null) {
+		if (startDate != null) {
+			task = new Task(description,start,end);
+			//Event
+		}	else if (endDate == null) {
 			task = new Task(description);
 			//Floating Task
-		} else if (startDate == null) {
+		} else {
 			task = new Task(description, end);
 			//DeadLine
-		} else {
-			task = new Task(description, start, end);
-			//Event
 		}
 		
 		storage.add(task);
@@ -63,10 +62,10 @@ public class Adder {
 			//No time specified
 			try {
 				formatter = DateTimeFormatter.ofPattern(DATE_FORMAT1);
-				dt = LocalDateTime.parse("2359 " + dateTime, formatter);
+				dt = LocalDateTime.parse("23 " + dateTime, formatter);
 			} catch (Exception e) {
 				formatter = DateTimeFormatter.ofPattern(DATE_FORMAT2);
-				dt = LocalDateTime.parse("2359 " + dateTime, formatter);
+				dt = LocalDateTime.parse("23 " + dateTime, formatter);
 			}
 			
 			

@@ -1,0 +1,16 @@
+Adding tasks
+The following types of tasks are supported: Events, Deadlines, Floating Tasks
+
+To add a task, you have to provide its description: location, start time and end time (wherever applicable) 
+
+Event
+command: add <description> from <start period> to <ending period>
+e.g. add birthday party from 9 Sept 5PM to 9PM
+
+Deadline
+add <description> by <deadline>
+e.g. add finish assignment by thursday
+
+Floating Tasks
+add <description>
+e.g. add go for a jog

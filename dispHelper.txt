@@ -1,0 +1,35 @@
+Display
+The display command is used to have a view of all the uncompleted tasks.
+
+Display
+Display all the tasks that are not completed
+Command: display
+
+Display On
+Display tasks that falls on a particular date including events and deadlines
+Command: display on 7 Sept 2015
+
+Display From
+Display all the events that starts on a particular date
+Command: display from 101015
+
+Display After
+Display all tasks on and after a particular date
+Command: display after 16 July 2015
+
+Display Due
+Display all tasks that have a deadline on the specified date
+Command: display due 14/03/2015
+
+Display Color
+Display all tasks with specified color code
+Command: display <color-code>
+e.g. display green tasks
+
+Display Uncompleted
+Display all tasks that are incomplete
+Command: display incomplete
+
+Display Floating Tasks
+Display all tasks with no end date
+Command: display floating

@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import com.cs2013t143j.TaskBuddyM.Parser.TBParserStub;
-import com.cs2013t143j.TaskBuddyM.Storage.History;
 import com.cs2013t143j.TaskBuddyM.Storage.Storage;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
@@ -11,10 +10,9 @@ public class Logic {
 	private String output;
 	private static ArrayList<Task> lastDisplay;
 
-	
 	private Storage storage;
-	private History history;
 	private TBParserStub parser;
+	private StorageAccess storageAccess;
 	
 	private Helper helper;
 	private Adder adder;
@@ -24,25 +22,40 @@ public class Logic {
 	private Searcher searcher;
 	
 	private final String INVALID_COMMAND = "Invalid Command\n";
-	
-	private String dataFile = "data.txt";
-	
+		
 	public Logic() {
 		output = new String();
-		parser = new TBParserStub();
 		
 		lastDisplay = new ArrayList<Task>();
 		
 		storage = new Storage();
-		//storage.loadTasks();
+		parser = new TBParserStub();
+		storageAccess = new StorageAccess(storage);
 		
-		history = new History(dataFile);
 		helper = new Helper();
-		adder = new Adder(storage);
-		editor = new Editor(storage);
-		displayer = new Displayer(storage);
-		deleter = new Deleter(storage);
-		searcher = new Searcher(storage);		
+		adder = new Adder(storageAccess);
+		editor = new Editor(storageAccess);
+		displayer = new Displayer(storageAccess);
+		deleter = new Deleter(storageAccess);
+		searcher = new Searcher(storageAccess);		
+	}
+	
+	//Constructor to use storageStub for jUnit testing
+	public Logic(boolean a) {
+		storage = new StorageStub();
+		storageAccess = new StorageAccess(storage);
+		output = new String();
+		
+		lastDisplay = new ArrayList<Task>();
+		
+		parser = new TBParserStub();
+		
+		helper = new Helper();
+		adder = new Adder(storageAccess);
+		editor = new Editor(storageAccess);
+		displayer = new Displayer(storageAccess);
+		deleter = new Deleter(storageAccess);
+		searcher = new Searcher(storageAccess);	
 	}
 	
 	public String executeCommand(String command) {
@@ -52,10 +65,10 @@ public class Logic {
 		commandType = parsedCommand.get("command");
 
 		//Edit this out; Used to check if contents of dictionary are correct
-		//System.out.println(parsedCommand.toString());
+		System.out.println(parsedCommand.toString());
 		
 		if (commandType == null) {
-			return "";
+			return INVALID_COMMAND;
 		}
 		
 		switch (commandType) {

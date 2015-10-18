@@ -3,11 +3,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Map;
-import com.cs2013t143j.TaskBuddyM.Storage.Storage;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 public class Editor {
 	
-	private Storage storage;
+	private StorageAccess storage;
 	
 	private final String EDIT_INDEX = "index";
 	private final String EDIT_FIELD = "field";
@@ -20,7 +19,7 @@ public class Editor {
 	private final String INVALID_INDEX = "Invalid Index specified\n\n";
 	private final String INVALID_FIELD = "Invalid field specified\n\n";
 	
-	public Editor(Storage storage) {
+	public Editor(StorageAccess storage) {
 		this.storage = storage;
 	}
 	
