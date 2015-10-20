@@ -18,7 +18,7 @@ public class TBParserStub {
 		Map<String, String> dictionary = new HashMap<String,String>();
 		userInput = input;
 		
-		/*if (userInput.equals(null)) {
+		/*if (userInput.equals("")) {
 			throw new InvalidInputException(ERROR_COMMAND);
 		}*/
 

@@ -86,7 +86,7 @@ public class CommandParser {
 				dictionary.put(DIC_COMMAND, COMMAND_HELP);
 				break;
 			} else if (i == arr.length - 1){
-				//sthrow new InvalidInputException(INVALID_COMMAND);
+				//throw new InvalidInputException(INVALID_COMMAND);
 			}
 		}
 	}
@@ -104,9 +104,12 @@ public class CommandParser {
 				case "incomplete":
 				case "floating":
 					dictionary.put(DIC_SUBCOMMAND, arr[index]);
+					removeCommand(arr[index]);
 					break;
 				default:
 					dictionary.put(DIC_SUBCOMMAND, "color");
+					removeCommand(arr[index]);
+					break;
 				}
 			}
 		}
