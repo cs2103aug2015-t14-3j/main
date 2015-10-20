@@ -18,6 +18,10 @@ public class Displayer {
 	
 	private final String DISPLAY_HEADER_DATE = "Here is your schedule for %s:\n\nDescription                 Start Date             End Date            Done\n";
 	private final String DISPLAY_HEADER_ALL = "Here is your entire schedule:\n\nDescription                 Start Date             End Date            Done\n";
+	private final String DISPLAY_HEADER_FROM = "Here are your events on %s:\n\nDescription                 Start Date             End Date            Done\n";
+	private final String DISPLAY_HEADER_AFTER = "Here are your tasks due after %s:\n\nDescription                 Start Date             End Date            Done\n";
+	private final String DISPLAY_HEADER_DUE = "Here are your tasks due on %s:\n\nDescription                 Start Date             End Date            Done\n";
+	private final String DISPLAY_HEADER_FLOAT = "Here are all your floating tasks:\n\nDescription                 Start Date             End Date            Done\n";
 	private final String DISPLAY_FORMAT = "%d.%-20s%-25s%-25s%s\n";
 	private final String FREE_DAY = "Looks like there is nothing on your schedule. Enjoy your day!!!\n\n";
 	
@@ -122,9 +126,9 @@ public class Displayer {
 			startDate = task.getStartDateTimeInString();
 			endDate = task.getEndDateTimeInString();
 			
-			if (startDate != null && startDate.contains(date)) {
+			if (startDate.contains(date)) {
 				result.add(task);
-			} else if (endDate != null && endDate.contains(date)) {
+			} else if (endDate.contains(date)) {
 				result.add(task);
 			} 
 		}
@@ -136,7 +140,7 @@ public class Displayer {
 		ArrayList<Task> result = new ArrayList<Task>();
 		
 		String date = convertDate(_date);
-		output = String.format(DISPLAY_HEADER_DATE, _date);
+		output = String.format(DISPLAY_HEADER_DUE, _date);
 		
 		int i;
 		String endDate;
@@ -147,7 +151,7 @@ public class Displayer {
 			
 			endDate = task.getEndDateTimeInString();
 			
-			if (endDate != null && endDate.contains(date)) {
+			if (endDate.contains(date)) {
 				result.add(task);
 			} 
 		}
@@ -159,20 +163,19 @@ public class Displayer {
 	private ArrayList<Task> extractFrom(ArrayList<Task> allTasks, String _date) {
 		ArrayList<Task> result = new ArrayList<Task>();
 		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
-		LocalDateTime date = LocalDateTime.parse("00 " + _date, formatter);
-		output = String.format(DISPLAY_HEADER_DATE, _date);
+		String date = convertDate(_date);
+		output = String.format(DISPLAY_HEADER_FROM, _date);
 		
 		int i;
-		LocalDateTime startDate;
+		String startDate;
 		
 		for (i=0; i<allTasks.size(); ++i) {
 			
 			Task task = allTasks.get(i);
 			
-			startDate = task.getStartDateTime();
+			startDate = task.getStartDateTimeInString();
 			
-			if (startDate != null && startDate.isAfter(date)) {
+			if (startDate.contains(date)) {
 				result.add(task);
 			} 
 		}
@@ -185,22 +188,18 @@ public class Displayer {
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
 		LocalDateTime date = LocalDateTime.parse("00 " + _date, formatter);
-		output = String.format(DISPLAY_HEADER_DATE, _date);
+		output = String.format(DISPLAY_HEADER_AFTER, _date);
 		
 		int i;
-		LocalDateTime startDate;
 		LocalDateTime endDate;
 		
 		for (i=0; i<allTasks.size(); ++i) {
 			
 			Task task = allTasks.get(i);
 			
-			startDate = task.getStartDateTime();
 			endDate = task.getEndDateTime();
 			
-			if (startDate != null && startDate.isAfter(date)) {
-				result.add(task);
-			} else if (endDate != null && endDate.isAfter(date)) {
+			if (endDate != null && endDate.isAfter(date)) {
 				result.add(task);
 			}
 		}
@@ -227,6 +226,7 @@ public class Displayer {
 	
 	private ArrayList<Task> extractFloating(ArrayList<Task> allTasks) {
 		ArrayList<Task> result = new ArrayList<Task>();
+		output = DISPLAY_HEADER_FLOAT;
 		
 		int i = 0;
 		String startDate;
@@ -238,7 +238,7 @@ public class Displayer {
 			startDate = task.getStartDateTimeInString();
 			endDate = task.getEndDateTimeInString();
 			
-			if (startDate == null &&  endDate == null) {
+			if (startDate == "" && endDate == "") {
 				result.add(task);
 			}
 		}

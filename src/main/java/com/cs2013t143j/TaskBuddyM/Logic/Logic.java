@@ -120,6 +120,66 @@ public class Logic {
 		}
 	}
 	
+	public String test(Map<String,String> parsedCommand) {
+		String commandType;
+		
+		commandType = parsedCommand.get("command");
+
+		//Edit this out; Used to check if contents of dictionary are correct
+		System.out.println(parsedCommand.toString());
+		
+		if (commandType == null) {
+			return INVALID_COMMAND;
+		}
+		
+		switch (commandType) {
+		case "add":
+			try {
+				output = adder.add(parsedCommand);
+			} catch (ParserContentError e) {
+				output = parseError(e);
+				return output;
+			}
+			return output;
+		case "display":
+			output = displayer.display(parsedCommand);
+			lastDisplay = displayer.getLastDisplay();
+			return output;
+		case "delete":
+			try {
+				output = deleter.delete(parsedCommand, lastDisplay);
+			} catch (ParserContentError e) {
+				output = parseError(e);
+				return output;
+			}
+			return output;			
+		case "edit":
+			try {
+				output = editor.edit(parsedCommand,  lastDisplay);
+			} catch (ParserContentError e) {
+				output = parseError(e);
+				return output;
+			}
+			return output;
+		case "search":
+			output = searcher.search(parsedCommand);
+			return output;
+		case "undo":
+			output = undo(parsedCommand);
+			return output;
+		case "help":
+			try {
+				output = helper.help(parsedCommand);
+			} catch (ParserContentError e) {
+				output = parseError(e);
+				return output;
+			}
+			return output;
+		default:
+			return INVALID_COMMAND;
+		}
+	}
+	
 	private String undo(Map<String, String> parsedCommand) {
 		return "command: undo\n";
 	}
