@@ -23,10 +23,16 @@ public class Editor {
 		this.storage = storage;
 	}
 	
-	public String edit(Map<String, String> parsedCommand, ArrayList<Task> lastDisplay) {
+	public String edit(Map<String, String> parsedCommand, ArrayList<Task> lastDisplay) throws ParserContentError {
 		int index = Integer.parseInt(parsedCommand.get(EDIT_INDEX));
 		String field = parsedCommand.get(EDIT_FIELD);
 		String value = parsedCommand.get(EDIT_VALUE);
+		
+		if (field == null) {
+			throw new ParserContentError("Edit field is null");
+		} else if (value == null) {
+			throw new ParserContentError("Edit new value is null");
+		}
 		
 		if (index > lastDisplay.size()){
 			return INVALID_INDEX;

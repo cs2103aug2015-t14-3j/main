@@ -15,7 +15,6 @@ public class Adder {
 	private final String ADD_END = "endDate";
 	
 	private final String DATE_FORMAT1 = "HH dd/MM/yyyy";
-	private final String DATE_FORMAT2 = "HH dd/M/yyyy";
 	
 	private final String ADD_OUTPUT = "Added new Task to TaskBuddy\n\n";
 	
@@ -23,10 +22,14 @@ public class Adder {
 			this.storage = storage;
 	}
 	
-	public String add(Map<String, String> parsedCommand) {
+	public String add(Map<String, String> parsedCommand) throws ParserContentError {
 		String description = parsedCommand.get(ADD_DESCRIPTION);
 		String startDate = parsedCommand.get(ADD_START);
 		String endDate = parsedCommand.get(ADD_END);
+		
+		if (description == null) {
+			throw new ParserContentError("No Description in add");
+		}
 		
 		LocalDateTime start = convertDateTime(startDate);
 		LocalDateTime end = convertDateTime(endDate);
@@ -60,26 +63,15 @@ public class Adder {
 		
 		if (splitDateTime.length == 1) {
 			//No time specified
-			try {
-				formatter = DateTimeFormatter.ofPattern(DATE_FORMAT1);
-				dt = LocalDateTime.parse("23 " + dateTime, formatter);
-			} catch (Exception e) {
-				formatter = DateTimeFormatter.ofPattern(DATE_FORMAT2);
-				dt = LocalDateTime.parse("23 " + dateTime, formatter);
-			}
 			
+			formatter = DateTimeFormatter.ofPattern(DATE_FORMAT1);
+			dt = LocalDateTime.parse("23 " + dateTime, formatter);
 			
 			return dt;
 		} else {
 			//Time specified
-			try {
-				formatter = DateTimeFormatter.ofPattern(DATE_FORMAT1);
-				dt = LocalDateTime.parse(dateTime, formatter);
-			} catch (Exception e) {
-				formatter = DateTimeFormatter.ofPattern(DATE_FORMAT2);
-				dt = LocalDateTime.parse(dateTime, formatter);
-			}
-			
+			formatter = DateTimeFormatter.ofPattern(DATE_FORMAT1);
+			dt = LocalDateTime.parse(dateTime, formatter);
 			
 			return dt;
 		}

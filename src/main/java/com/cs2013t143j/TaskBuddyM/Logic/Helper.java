@@ -20,10 +20,14 @@ public class Helper {
 	
 	private final String HELP_COMMAND = "target";
 	
-	public String help(Map<String, String> parsedCommand) {
+	public String help(Map<String, String> parsedCommand) throws ParserContentError {
 		String output = "\n";
 		
 		String command = parsedCommand.get(HELP_COMMAND);
+		
+		if (command == null) {
+			throw new ParserContentError("Help target is null");
+		}
 		
 		switch(command) {
 		case "add":

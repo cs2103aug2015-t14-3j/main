@@ -14,8 +14,20 @@ public class Deleter {
 		this.storage = storage;
 	}
 	
-	public String delete(Map<String,String> parsedCommand, ArrayList<Task> lastDisplay) {
-		int index = Integer.parseInt(parsedCommand.get(DELETE_INDEX));
+	public String delete(Map<String,String> parsedCommand, ArrayList<Task> lastDisplay) throws ParserContentError {
+		
+		String delIndex = parsedCommand.get(DELETE_INDEX);
+		
+		if (delIndex == null) {
+			throw new ParserContentError("Delete Index is null");
+		}
+		
+		int index = -1;
+		try	{
+			index = Integer.parseInt(parsedCommand.get(DELETE_INDEX));
+		} catch (NumberFormatException e) {
+			throw new ParserContentError("Integer cannot be parsed");
+		}
 		
 		if (index > lastDisplay.size()){
 			return INVALID_INDEX;

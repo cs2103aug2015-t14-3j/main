@@ -22,6 +22,7 @@ public class Logic {
 	private Searcher searcher;
 	
 	private final String INVALID_COMMAND = "Invalid Command\n";
+	private final String ERROR = "Error: %s\n";
 		
 	public Logic() {
 		output = new String();
@@ -73,17 +74,32 @@ public class Logic {
 		
 		switch (commandType) {
 		case "add":
-			output = adder.add(parsedCommand);
+			try {
+				output = adder.add(parsedCommand);
+			} catch (ParserContentError e) {
+				output = parseError(e);
+				return output;
+			}
 			return output;
 		case "display":
 			output = displayer.display(parsedCommand);
 			lastDisplay = displayer.getLastDisplay();
 			return output;
 		case "delete":
-			output = deleter.delete(parsedCommand, lastDisplay);
+			try {
+				output = deleter.delete(parsedCommand, lastDisplay);
+			} catch (ParserContentError e) {
+				output = parseError(e);
+				return output;
+			}
 			return output;			
 		case "edit":
-			output = editor.edit(parsedCommand,  lastDisplay);
+			try {
+				output = editor.edit(parsedCommand,  lastDisplay);
+			} catch (ParserContentError e) {
+				output = parseError(e);
+				return output;
+			}
 			return output;
 		case "search":
 			output = searcher.search(parsedCommand);
@@ -92,7 +108,12 @@ public class Logic {
 			output = undo(parsedCommand);
 			return output;
 		case "help":
-			output = helper.help(parsedCommand);
+			try {
+				output = helper.help(parsedCommand);
+			} catch (ParserContentError e) {
+				output = parseError(e);
+				return output;
+			}
 			return output;
 		default:
 			return INVALID_COMMAND;
@@ -101,6 +122,10 @@ public class Logic {
 	
 	private String undo(Map<String, String> parsedCommand) {
 		return "command: undo\n";
+	}
+	
+	private String parseError(Exception e) {
+		return String.format(ERROR, e.toString());
 	}
 
 }
