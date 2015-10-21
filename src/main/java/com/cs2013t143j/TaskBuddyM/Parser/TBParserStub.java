@@ -147,10 +147,12 @@ public class TBParserStub {
 		} else if (userInput.contains("start date")) {
 			dictionary.put("field","start date");
 			userInput = cmd.removeWord("start date");
-		} else {
+		} else if (userInput.contains("description")){
 			dictionary.put("field","description");
 			userInput = cmd.removeWord("description");
-		} 
+		} else {
+			//throw new InvalidInputException("Invalid field");
+		}
 		
 		// need to parse to date parser
 		dictionary.put("newValue",userInput);
