@@ -54,7 +54,7 @@ public class MainPanel extends JPanel implements ActionListener {
         textArea = new JTextArea ("Welcome to TaskBuddy!\n you could:\n  add\n  display\n  delete\n  .......");
         textArea.setBorder(new EmptyBorder(10, 20, 20, 20));
         textArea.setEditable(false);
-        textArea.setOpaque(true);
+        textArea.setOpaque(false);
         textArea.setFont(new Font("Crystal",Font.PLAIN, 18));
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
