@@ -36,6 +36,6 @@ public class TBParser {
 		cmd = new CommandParser(userInput);
 		cmd.extractShortcutCommand(dictionary);
 		cmd.extractSubCommand(dictionary);
-		userInput = cmd.removeCommand(dictionary.get("command"));
+		userInput = cmd.removeWord(dictionary.get("command"));
 	} 
 }
