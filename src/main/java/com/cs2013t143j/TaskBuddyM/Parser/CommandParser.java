@@ -29,6 +29,8 @@ public class CommandParser {
 	private static final String DIC_COMMAND = "command";
 	private static final String DIC_SUBCOMMAND = "subCommand";
 	
+	private static final String DISPLAY_COLOR = "color";
+	
 	private static final String ERROR_COMMAND = "Invalid command entered.";
 	
 	private String userInput=null;
@@ -86,7 +88,8 @@ public class CommandParser {
 				dictionary.put(DIC_COMMAND, COMMAND_HELP);
 				break;
 			} else if (i == arr.length - 1){
-				//throw new InvalidInputException(INVALID_COMMAND);
+				dictionary.put(DIC_COMMAND,null);
+				//throw new InvalidInputException(ERROR_COMMAND);
 			}
 		}
 	}
@@ -107,7 +110,7 @@ public class CommandParser {
 					removeCommand(arr[index]);
 					break;
 				default:
-					dictionary.put(DIC_SUBCOMMAND, "color");
+					dictionary.put(DIC_SUBCOMMAND, DISPLAY_COLOR);
 					removeCommand(arr[index]);
 					break;
 				}
