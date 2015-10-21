@@ -72,7 +72,6 @@ public class TBParserStub {
 		dictionary.put("index", userInput);
 	}
 	
-
 	private void extractDisplayContent(Map<String,String> dictionary) {
 		// need to pass to date parser
 		if (userInput.length() != 0) {
@@ -137,37 +136,5 @@ public class TBParserStub {
 	
 	private void extractDoneContent(Map<String, String> dictionary) {
 		dictionary.put("index", userInput);
-	}
-	
-	private List<String> parseDateToStringArray(String userInput){
-		Parser p = new Parser();
-    	List<DateGroup> groups = p.parse(userInput);
-    	List<String> returnList = new ArrayList<>();
-    	for(DateGroup group:groups) {
-    	  List<Date> dates = group.getDates();
-    	  for(Date d : dates){
-    		  String timeString = convertDateToString(d);
-    		  returnList.add(timeString);
-    	  }
-    	}
-    	return returnList;
-	}
-	
-	private String convertDateToString(Date date){
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        // Note: zero based!
-        String dateString = String.format("%02d %02d/%02d/%d", cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.YEAR));
-        return dateString;
-    }
-	
-	public String testDateParser(String testString) {
-		List<String> tList = parseDateToStringArray(testString);
-		String tS = "";
-		for(String s : tList){
-			tS = s;
-		}
-		return tS;
-		
 	}
 }
