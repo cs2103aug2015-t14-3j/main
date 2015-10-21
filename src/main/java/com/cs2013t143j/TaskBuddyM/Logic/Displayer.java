@@ -36,6 +36,17 @@ public class Displayer {
 		output = new String();
 		String subCommand = parsedCommand.get(DISPLAY_SUB);
 		String date = parsedCommand.get(DISPLAY_DATE);
+		
+		String[] splitDate = new String[10];
+		
+		if (date != null && date != ""){
+			splitDate = date.split(" ");
+		}
+		
+		if (splitDate.length != 1) {
+			//If time is given, only take the date component
+			date = splitDate[1];
+		}
 
 		ArrayList<Task> allTasks = storage.display();
 		

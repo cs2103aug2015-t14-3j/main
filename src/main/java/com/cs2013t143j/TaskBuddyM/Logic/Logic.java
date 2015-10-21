@@ -1,5 +1,6 @@
 package com.cs2013t143j.TaskBuddyM.Logic;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.cs2013t143j.TaskBuddyM.Parser.TBParserStub;
@@ -60,7 +61,14 @@ public class Logic {
 	}
 	
 	public String executeCommand(String command) {
-		Map<String, String> parsedCommand = parser.getDictionary(command);
+		
+		Map<String, String> parsedCommand = new HashMap<String,String>();
+		try {
+		parsedCommand = parser.getDictionary(command);
+		} catch (Exception e) {
+			return e.toString();
+		}
+		
 		String commandType;
 		
 		commandType = parsedCommand.get("command");

@@ -1,0 +1,22 @@
+package com.cs2013t143j.TaskBuddyM.Command;
+
+import java.util.ArrayList;
+
+import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
+import com.cs2013t143j.TaskBuddyM.Storage.Task;
+
+public class AddFloating extends AddCommand {
+	
+	public AddFloating(String _description) {
+		description = _description;
+	}
+	
+	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) {
+
+		Task task = new Task(description);
+		
+		sAccess.add(task);
+		
+		return ADD_OUTPUT;
+	}
+}
