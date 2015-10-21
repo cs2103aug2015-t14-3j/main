@@ -9,6 +9,7 @@ public class TBParserStub {
 	
 	final String ERROR_NO_COMMAND = "No command entered.";
 	CommandParser cmd;
+	DateParser date;
 	String userInput;
 
 	public TBParserStub() {	
@@ -17,6 +18,7 @@ public class TBParserStub {
 	// parse input to a dict
 	public Map<String, String> getDictionary (String input)  {
 		Map<String, String> dictionary = new HashMap<String,String>();
+		date = new DateParser(dictionary);
 		userInput = input;
 		
 		/*if (userInput.equals("")) {
@@ -85,7 +87,7 @@ public class TBParserStub {
 	}*/
 	
 	private void extractAddContent(Map<String,String> dictionary) {
-		String[] input = userInput.split(" ");
+		/*String[] input = userInput.split(" ");
 		int start = -1, end =-1;
 		if (userInput.contains("by")) {
 			userInput = cmd.removeWord("by");
@@ -115,9 +117,9 @@ public class TBParserStub {
 			userInput = cmd.removeWord(input[start]);
 			dictionary.put("endDate",input[end]); 
 			userInput = cmd.removeWord(input[end]);
-		}
-		
+		}*/
 		dictionary.put("description",userInput);
+		dictionary = date.parse(dictionary);
 	}
 	
 	private void extractDeleteContent(Map<String,String> dictionary) {
@@ -125,6 +127,7 @@ public class TBParserStub {
 			throw InvalidInputException("Invalid index entered");
 		}*/
 		dictionary.put("index", userInput);
+		
 	}
 	
 	private void extractDisplayContent(Map<String,String> dictionary) {
