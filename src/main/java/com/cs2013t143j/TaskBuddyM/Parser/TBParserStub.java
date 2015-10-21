@@ -72,7 +72,7 @@ public class TBParserStub {
 		dictionary.put("index", userInput);
 	}
 	
-	// REFACTOR!!
+
 	private void extractDisplayContent(Map<String,String> dictionary) {
 		// need to pass to date parser
 		if (userInput.length() != 0) {
@@ -88,7 +88,6 @@ public class TBParserStub {
 		}
 	}
 	
-	// REFACTOR!!
 	private void extractEditContent(Map<String,String> dictionary) {
 		//assert userInput != null;
 		int whiteSpaceIndex = userInput.indexOf(" ");
