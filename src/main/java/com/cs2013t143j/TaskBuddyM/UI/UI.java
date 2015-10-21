@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 import com.cs2013t143j.TaskBuddyM.Logic.Logic;
-import com.cs2013t143j.TaskBuddyM.Logic.UserName;
 
 
 import com.joestelmach.natty.DateGroup;
@@ -25,7 +24,6 @@ public class UI {
 	private String usernameFile = "UserName.txt";
 	
 	private Logic logic;
-	private UserName name;
 	
 	private final String REQUEST_NAME = "Please enter your Name: ";
 	private final String REQUEST_COMMAND = "Enter Command: ";
@@ -37,9 +35,7 @@ public class UI {
 	
 	public UI() {
 		logic = new Logic();
-		name = new UserName(usernameFile);
 		output = new String();
-		userName = name.getUserName();
 		
 		welcomeUser();
 		
@@ -90,7 +86,6 @@ public class UI {
 		userName = sc.nextLine();
 		output = "\n";
 		display(output);
-		name.setUserName(userName);
 		
 		return userName;
 	}

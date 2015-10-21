@@ -31,7 +31,7 @@ public class App
 //    	  System.out.println( dates.get(1).toString() );
 //    	}
     	Map<String, String> dMap = new HashMap<>();
-    	dMap.put("description", "sing began by 10102015");
+    	dMap.put("description", "sing today");
     	DateParser dateParser = new DateParser(dMap);
     	dMap = dateParser.parse();
     	//for (String t : dMap.keySet()) {
