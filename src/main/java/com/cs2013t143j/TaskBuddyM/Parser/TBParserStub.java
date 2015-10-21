@@ -7,20 +7,20 @@ import com.joestelmach.natty.Parser;
 public class TBParserStub {
 	
 	
-	final String ERROR_COMMAND = "Invalid User Command.";
+	final String ERROR_NO_COMMAND = "No command entered.";
 	String userInput;
 
 	public TBParserStub() {	
 	}
 	
 	// parse input to a dict
-	public Map<String, String> getDictionary (String input)  {
+	public Map<String, String> getDictionary (String input) throws InvalidInputException  {
 		Map<String, String> dictionary = new HashMap<String,String>();
 		userInput = input;
 		
-		/*if (userInput.equals("")) {
-			throw new InvalidInputException(ERROR_COMMAND);
-		}*/
+		if (userInput.equals("")) {
+			throw new InvalidInputException(ERROR_NO_COMMAND);
+		}
 
 		retrieveCommand(dictionary);
 		retrieveContent(dictionary);
