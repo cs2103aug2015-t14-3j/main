@@ -36,21 +36,21 @@ public class Storage {
 	public void updateDescription(int index, String newdescription){
 		Task task = tasks.get(index);
 		task.setDescription(newdescription);
-		tasks.add(index,task);
+		//tasks.add(index,task);
 		writeToFile();
 	}
 	
 	public void updateStartDate(int index,LocalDateTime newStartDate) {
 		Task task = tasks.get(index);
 		task.setStartDateTime(newStartDate);
-		tasks.add(index,task);
+		//tasks.add(index,task);
 		writeToFile();
 	}
 	
 	public void updateEndDate(int index,LocalDateTime newEndDate) {
 		Task task = tasks.get(index);
 		task.setEndDateTime(newEndDate);
-		tasks.add(index,task);
+		//tasks.add(index,task);
 		
 		writeToFile();
 	}
