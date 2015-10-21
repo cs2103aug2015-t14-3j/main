@@ -22,7 +22,7 @@ public class DisplayOn extends DisplayCommand {
 		
 		tasks = extractOn(allTasks, date);
 		
-		parseTasks(output);
+		output = parseTasks(output);
 
 		return output;
 	}

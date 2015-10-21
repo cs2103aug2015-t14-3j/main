@@ -3,13 +3,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.cs2013t143j.TaskBuddyM.Command.Command;
+import com.cs2013t143j.TaskBuddyM.Command.DisplayCommand;
 import com.cs2013t143j.TaskBuddyM.Parser.TBParserStub;
 import com.cs2013t143j.TaskBuddyM.Storage.Storage;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
 public class Logic {
 	private String output;
-	private static ArrayList<Task> lastDisplay;
+	private static ArrayList<Task> lastDisplay = new ArrayList<Task>();
 
 	private Storage storage;
 	private TBParserStub parser;
@@ -68,6 +70,10 @@ public class Logic {
 		} catch (Exception e) {
 			return e.toString();
 		}
+		
+		//Code for v0.3
+//		Command toExecute = parser.getCommand(command);
+//		toExecute.eexecute();
 		
 		String commandType;
 		
@@ -186,6 +192,13 @@ public class Logic {
 		default:
 			return INVALID_COMMAND;
 		}
+	}
+	
+	public String test2(Command command) {
+		output = command.execute(lastDisplay, storageAccess);
+		lastDisplay = DisplayCommand.getLastDisplay();
+		
+		return output;
 	}
 	
 	private String undo(Map<String, String> parsedCommand) {

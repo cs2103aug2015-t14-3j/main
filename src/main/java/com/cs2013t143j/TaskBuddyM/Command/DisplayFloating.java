@@ -18,7 +18,7 @@ public class DisplayFloating extends DisplayCommand {
 		
 		tasks = extractFloating(allTasks);
 		
-		parseTasks(output);
+		output = parseTasks(output);
 
 		return output;
 	}

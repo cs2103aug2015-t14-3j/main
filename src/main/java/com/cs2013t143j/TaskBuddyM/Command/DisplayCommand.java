@@ -20,11 +20,17 @@ public class DisplayCommand implements Command {
 		return splitDate[0] + "-" + splitDate[1] + "-" + splitDate[2];
 	}
 	
-	public ArrayList<Task> getLastDisplay() {
+	public static ArrayList<Task> getLastDisplay() {
 		return tasks;
 	}
 	
 	protected String parseTasks(String output) {
+		
+		if (tasks.size() == 0) {
+			output = FREE_DAY;
+			return output;
+		}
+		
 		Collections.sort(tasks, new TaskSorter());
 	
 		int index = 1;

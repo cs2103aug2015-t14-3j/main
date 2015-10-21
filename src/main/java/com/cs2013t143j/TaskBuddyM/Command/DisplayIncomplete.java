@@ -15,7 +15,7 @@ public class DisplayIncomplete extends DisplayCommand {
 		
 		tasks = extractIncomplete(allTasks);
 		
-		parseTasks(output);
+		output = parseTasks(output);
 
 		return output;
 	}

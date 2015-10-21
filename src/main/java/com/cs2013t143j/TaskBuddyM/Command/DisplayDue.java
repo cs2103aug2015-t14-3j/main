@@ -22,7 +22,7 @@ public class DisplayDue extends DisplayCommand {
 		
 		tasks = extractDue(allTasks, date);
 		
-		parseTasks(output);
+		output = parseTasks(output);
 
 		return output;
 	}

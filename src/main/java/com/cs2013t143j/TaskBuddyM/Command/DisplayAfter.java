@@ -26,7 +26,7 @@ public class DisplayAfter extends DisplayCommand {
 		
 		tasks = extractAfter(allTasks, date);
 		
-		parseTasks(output);
+		output = parseTasks(output);
 
 		return output;
 	}

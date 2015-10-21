@@ -19,7 +19,7 @@ public class DisplayAll extends DisplayCommand {
 		
 		String output = DISPLAY_HEADER_ALL;
 		
-		parseTasks(output);
+		output = parseTasks(output);
 
 		return output;
 	}
