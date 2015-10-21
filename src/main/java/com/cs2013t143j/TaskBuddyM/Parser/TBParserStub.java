@@ -8,19 +8,22 @@ public class TBParserStub {
 	
 	
 	final String ERROR_NO_COMMAND = "No command entered.";
+	CommandParser cmd;
+	DateParser date;
 	String userInput;
 
 	public TBParserStub() {	
 	}
 	
 	// parse input to a dict
-	public Map<String, String> getDictionary (String input) throws InvalidInputException  {
+	public Map<String, String> getDictionary (String input)  {
 		Map<String, String> dictionary = new HashMap<String,String>();
+		date = new DateParser(dictionary);
 		userInput = input;
 		
-		if (userInput.equals("")) {
+		/*if (userInput.equals("")) {
 			throw new InvalidInputException(ERROR_NO_COMMAND);
-		}
+		}*/
 
 		retrieveCommand(dictionary);
 		retrieveContent(dictionary);
@@ -28,10 +31,10 @@ public class TBParserStub {
 	}
 	
 	private void retrieveCommand(Map<String, String> dictionary) {
-		CommandParser cmd = new CommandParser(userInput);
+		cmd = new CommandParser(userInput);
 		cmd.extractShortcutCommand(dictionary);
 		cmd.extractSubCommand(dictionary);
-		userInput = cmd.removeCommand(dictionary.get("command"));
+		userInput = cmd.removeWord(dictionary.get("command"));
 	} 
 	
 	private void retrieveContent(Map<String,String> dictionary) {
@@ -48,14 +51,18 @@ public class TBParserStub {
 		case "edit":
 			extractEditContent(dictionary);
 			break;
+		case "done":
+			extractDoneContent(dictionary);
+			break;
 		default:
 			extractSearchContent(dictionary);
 			break;
 		}
 	}
-	
-	private void extractAddContent(Map<String,String> dictionary) {
+
+	/*private void extractAddContent(Map<String,String> dictionary) {
 		//assert userInput != null;
+		System.out.println("userInput="+userInput);
 		String[] inputs = userInput.split(" ",2);
 		List<String> dateStringList = parseDateToStringArray(userInput);
     	for(String s : dateStringList){
@@ -77,42 +84,90 @@ public class TBParserStub {
 			dictionary.put("startDate", convertDateToString(new Date()));
 			dictionary.put("endDate", null);
 		}
+	}*/
+	
+	private void extractAddContent(Map<String,String> dictionary) {
+		/*String[] input = userInput.split(" ");
+		int start = -1, end =-1;
+		if (userInput.contains("by")) {
+			userInput = cmd.removeWord("by");
+			dictionary.put("startDate", null);
+			for(int i =0; i < input.length; i++) {
+				if(input[i].equals("by")) {
+					end = i+1;
+				}
+			}
+			
+			dictionary.put("endDate", input[end]);
+			userInput = cmd.removeWord(input[end]);
+			
+		} else if (userInput.contains("from")) {
+			userInput = cmd.removeWord("from");
+			userInput = cmd.removeWord("to");
+			
+			for (int i=0; i < input.length; i++) {
+				if(input[i].equals("from")) {
+					start = i+1;
+				} else if (input[i].equals("to")) {
+					end = i+1;
+				}
+			}
+			
+			dictionary.put("startDate",input[start]);
+			userInput = cmd.removeWord(input[start]);
+			dictionary.put("endDate",input[end]); 
+			userInput = cmd.removeWord(input[end]);
+		}*/
+		dictionary.put("description",userInput);
+		dictionary = date.parse(dictionary);
 	}
 	
 	private void extractDeleteContent(Map<String,String> dictionary) {
-		//assert userInput != null;
-		String[] inputs = userInput.split(" ",2);
-		dictionary.put("index", inputs[1]);
+		/*if (userInput.equals("")) {
+			throw InvalidInputException("Invalid index entered");
+		}*/
+		dictionary.put("index", userInput);
+		
 	}
 	
 	private void extractDisplayContent(Map<String,String> dictionary) {
-				dictionary.put("subCommand", null);
+		// need to pass to date parser
+		if (userInput.length() != 0) {
+			dictionary.put("date", userInput);
+		}
 	}
 	
 	private void extractEditContent(Map<String,String> dictionary) {
 		//assert userInput != null;
-		
-		String[] inputs = userInput.split(" ",3);
-		if(inputs.length == 3){
-			dictionary.put("field", inputs[1]);
-			dictionary.put("newValue", inputs[2]);
-		}else if(inputs.length == 2){
-			dictionary.put("field", "description");
-			dictionary.put("newValue", inputs[1]);
-		}else{
-			dictionary.put("field", "description");
-			dictionary.put("newValue", "stub");
-		}
 		int whiteSpaceIndex = userInput.indexOf(" ");
+		String index = userInput.substring(0, whiteSpaceIndex);
+		userInput = cmd.removeWord(index);
+		dictionary.put("index",index);
 		
-		dictionary.put("field", userInput.substring(0,whiteSpaceIndex));
-		dictionary.put("newValue", 
-				userInput.substring(whiteSpaceIndex+1,userInput.length()));
+		if(userInput.contains("end date")) {
+			dictionary.put("field","end date");
+			userInput = cmd.removeWord("end date");
+		} else if (userInput.contains("start date")) {
+			dictionary.put("field","start date");
+			userInput = cmd.removeWord("start date");
+		} else if (userInput.contains("description")){
+			dictionary.put("field","description");
+			userInput = cmd.removeWord("description");
+		} else {
+			//throw new InvalidInputException("Invalid field");
+		}
+		
+		// need to parse to date parser
+		dictionary.put("newValue",userInput);
 	}
-	
+
 	private void extractSearchContent(Map<String,String> dictionary) {
 		//assert userInput != null;
-		dictionary.put("searchKey", userInput.substring(1));
+		dictionary.put("searchKey", userInput);
+	}
+	
+	private void extractDoneContent(Map<String, String> dictionary) {
+		dictionary.put("index", userInput);
 	}
 	
 	private List<String> parseDateToStringArray(String userInput){
@@ -137,7 +192,7 @@ public class TBParserStub {
         return dateString;
     }
 	
-	public String testDatePraser(String testString) {
+	public String testDateParser(String testString) {
 		List<String> tList = parseDateToStringArray(testString);
 		String tS = "";
 		for(String s : tList){

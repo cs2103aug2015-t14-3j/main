@@ -17,6 +17,7 @@ public class CommandParser {
 	private static final String COMMAND_CREATE = "create";
 	private static final String COMMAND_DELETE = "delete";
 	private static final String COMMAND_DISPLAY = "display";
+	private static final String COMMAND_DONE = "done";
 	private static final String COMMAND_EDIT = "edit";
 	private static final String COMMAND_HELP = "help";
 	private static final String COMMAND_INSERT = "insert";
@@ -87,6 +88,9 @@ public class CommandParser {
 			} else if (arr[i].equalsIgnoreCase(COMMAND_HELP)) {
 				dictionary.put(DIC_COMMAND, COMMAND_HELP);
 				break;
+			} else if (arr[i].equalsIgnoreCase(COMMAND_DONE)) {
+				dictionary.put(DIC_COMMAND,COMMAND_DONE);
+				break;
 			} else if (i == arr.length - 1){
 				dictionary.put(DIC_COMMAND,null);
 				//throw new InvalidInputException(ERROR_COMMAND);
@@ -107,20 +111,33 @@ public class CommandParser {
 				case "incomplete":
 				case "floating":
 					dictionary.put(DIC_SUBCOMMAND, arr[index]);
-					removeCommand(arr[index]);
+					userInput = removeWord(arr[index]);
 					break;
 				default:
 					dictionary.put(DIC_SUBCOMMAND, DISPLAY_COLOR);
-					removeCommand(arr[index]);
+					userInput = removeWord(arr[index]);
 					break;
 				}
 			}
 		}
 	}
 	
-	public String removeCommand(String command) {
-		String regex = "\\s*\\b" + command + "\\b";
-		return userInput.replaceAll(regex,"").trim();
+	public String removeWord(String word) {
+		String regex = "\\s*\\b" + word + "\\b";
+		String temp = userInput.replaceAll(regex,"").trim();
+		if(temp.equals(userInput)) {
+			temp = removeShortcutCommand();
+		}
+		userInput = temp;
+		return temp;
 	}
 
+	private String removeShortcutCommand() {
+		if(userInput.length() == 1) {
+			return "";
+		} else {
+			int whiteSpaceIndex = userInput.indexOf(" ");
+			return userInput.substring(++whiteSpaceIndex);
+		}
+	}
 }
