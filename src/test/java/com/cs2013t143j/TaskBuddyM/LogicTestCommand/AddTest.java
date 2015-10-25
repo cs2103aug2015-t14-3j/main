@@ -22,13 +22,8 @@ public class AddTest {
 		
 		command = new AddFloating("aaa");
 		output = logic.test2(command);
-		//Test add output
-		assertEquals("Added new Task to TaskBuddy\n\n", output);
-
-		command = new DisplayAll();
-		output = logic.test2(command);
 		
-		assertEquals("Here is your entire schedule:\n\nDescription                 Start Date             End Date            Done\n1.aaa                                                                   No\n\n", output);
+		assertEquals("Here is your entire schedule:\n1.aaa\t-\t-\tNo\n", output);
 
 	}
 	
@@ -42,7 +37,7 @@ public class AddTest {
 		command = new DisplayAll();
 		output = logic.test2(command);
 		
-		assertEquals("Here is your entire schedule:\n\nDescription                 Start Date             End Date            Done\n1.aaa                 20-10-2015 23:00         21-10-2015 23:00         No\n\n", output);
+		assertEquals("Here is your entire schedule:\n1.aaa\t20-10-2015 23:00\t21-10-2015 23:00\tNo\n", output);
 
 	}
 	
@@ -56,7 +51,7 @@ public class AddTest {
 		command = new DisplayAll();
 		output = logic.test2(command);
 		
-		assertEquals("Here is your entire schedule:\n\nDescription                 Start Date             End Date            Done\n1.aaa                                          21-10-2015 23:00         No\n\n", output);
+		assertEquals("Here is your entire schedule:\n1.aaa\t-\t21-10-2015 23:00\tNo\n", output);
 
 	}
 

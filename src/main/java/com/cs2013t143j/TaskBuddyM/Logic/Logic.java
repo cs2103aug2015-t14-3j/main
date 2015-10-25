@@ -64,74 +64,12 @@ public class Logic {
 	
 	public String executeCommand(String command) {
 		
-		Map<String, String> parsedCommand = new HashMap<String,String>();
-		try {
-		parsedCommand = parser.getDictionary(command);
-		} catch (Exception e) {
-			return e.toString();
-		}
+		Command commandToExecute = parser.getCommand(command);
 		
-		//Code for v0.3
-//		Command toExecute = parser.getCommand(command);
-//		toExecute.eexecute();
+		output = commandToExecute.execute(lastDisplay, storageAccess);
+		lastDisplay = DisplayCommand.getLastDisplay();
 		
-		String commandType;
-		
-		commandType = parsedCommand.get("command");
-
-		//Edit this out; Used to check if contents of dictionary are correct
-		System.out.println(parsedCommand.toString());
-		
-		if (commandType == null) {
-			return INVALID_COMMAND;
-		}
-		
-		switch (commandType) {
-		case "add":
-			try {
-				output = adder.add(parsedCommand);
-			} catch (ParserContentError e) {
-				output = parseError(e);
-				return output;
-			}
-			return output;
-		case "display":
-			output = displayer.display(parsedCommand);
-			lastDisplay = displayer.getLastDisplay();
-			return output;
-		case "delete":
-			try {
-				output = deleter.delete(parsedCommand, lastDisplay);
-			} catch (ParserContentError e) {
-				output = parseError(e);
-				return output;
-			}
-			return output;			
-		case "edit":
-			try {
-				output = editor.edit(parsedCommand,  lastDisplay);
-			} catch (ParserContentError e) {
-				output = parseError(e);
-				return output;
-			}
-			return output;
-		case "search":
-			output = searcher.search(parsedCommand);
-			return output;
-		case "undo":
-			output = undo(parsedCommand);
-			return output;
-		case "help":
-			try {
-				output = helper.help(parsedCommand);
-			} catch (ParserContentError e) {
-				output = parseError(e);
-				return output;
-			}
-			return output;
-		default:
-			return INVALID_COMMAND;
-		}
+		return output;		
 	}
 	
 	public String test(Map<String,String> parsedCommand) {

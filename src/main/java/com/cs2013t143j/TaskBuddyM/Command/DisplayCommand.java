@@ -11,7 +11,7 @@ public class DisplayCommand implements Command {
 	
 	protected static ArrayList<Task> tasks = new ArrayList<Task>();
 	
-	protected final String DISPLAY_FORMAT = "%d.%-20s%-25s%-25s%s\n";
+	protected final String DISPLAY_FORMAT = "%d.%s\t%s\t%s\t%s\n";
 	protected final String FREE_DAY = "Looks like there is nothing on your schedule. Enjoy your day!!!\n\n";
 
 	protected String convertDate(String date) {
@@ -43,6 +43,15 @@ public class DisplayCommand implements Command {
 			String description = task.getDescription();
 			String start = task.getStartDateTimeInString();
 			String end = task.getEndDateTimeInString();
+			
+			if (start == "") {
+				start = "-";
+			}
+			
+			if (end == "") {
+				end = "-";
+			}
+			
 			boolean done = task.isDone();
 			String isDone = "No";
 			
@@ -56,7 +65,6 @@ public class DisplayCommand implements Command {
 			++index;
 		}
 		
-		output += "\n";
 //		System.out.print(output);
 		return output;
 	}

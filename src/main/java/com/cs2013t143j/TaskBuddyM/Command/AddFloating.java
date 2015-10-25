@@ -17,6 +17,9 @@ public class AddFloating extends AddCommand {
 		
 		sAccess.add(task);
 		
-		return ADD_OUTPUT;
+		Command command = new DisplayAll();
+		String output = command.execute(lastDisplay, sAccess);
+		
+		return output;
 	}
 }

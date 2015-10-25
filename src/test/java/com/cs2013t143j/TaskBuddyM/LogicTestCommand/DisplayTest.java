@@ -25,7 +25,7 @@ public class DisplayTest {
 	private String output;
 
 	@Test
-	public void testDisplay() {
+	public void testDisplayAll() {
 		Logic logic = new Logic(false);
 		
 		command = new AddFloating("aaa");
@@ -40,7 +40,7 @@ public class DisplayTest {
 		command = new DisplayAll();
 		output = logic.test2(command);
 		
-		assertEquals("Here is your entire schedule:\n\nDescription                 Start Date             End Date            Done\n1.submit report                                21-09-2015 23:00         No\n2.recess week         20-09-2015 23:00         22-09-2015 23:00         No\n3.aaa                                                                   No\n\n", output);
+		assertEquals("Here is your entire schedule:\n1.submit report\t-\t21-09-2015 23:00\tNo\n2.recess week\t20-09-2015 23:00\t22-09-2015 23:00\tNo\n3.aaa\t-\t-\tNo\n", output);
 		
 		command = new AddDeadline("bbb", "05/09/2015");
 		logic.test2(command);
@@ -48,8 +48,8 @@ public class DisplayTest {
 		command = new DisplayAll();
 		output = logic.test2(command);
 		
-		assertEquals("Here is your entire schedule:\n\nDescription                 Start Date             End Date            Done\n1.bbb                                          05-09-2015 23:00         No\n2.submit report                                21-09-2015 23:00         No\n3.recess week         20-09-2015 23:00         22-09-2015 23:00         No\n4.aaa                                                                   No\n\n", output);
-	}
+		assertEquals("Here is your entire schedule:\n1.bbb\t-\t05-09-2015 23:00\tNo\n2.submit report\t-\t21-09-2015 23:00\tNo\n3.recess week\t20-09-2015 23:00\t22-09-2015 23:00\tNo\n4.aaa\t-\t-\tNo\n", output);
+		}
 	
 	@Test
 	public void testDisplayOn() {
@@ -76,7 +76,14 @@ public class DisplayTest {
 		command = new DisplayOn("20/09/2015");
 		output = logic.test2(command);
 		
-		assertEquals("Here is your schedule for 20/09/2015:\n\nDescription                 Start Date             End Date            Done\n1.ddd                 10-09-2015 23:00         20-09-2015 23:00         No\n2.ccc                                          20-09-2015 23:00         No\n3.recess week         20-09-2015 23:00         22-09-2015 23:00         No\n\n", output);
+		//Check that events starting or ending and deadlines on the date are extracted
+		assertEquals("Here is your schedule for 20/09/2015:\n1.ddd\t10-09-2015 23:00\t20-09-2015 23:00\tNo\n2.ccc\t-\t20-09-2015 23:00\tNo\n3.recess week\t20-09-2015 23:00\t22-09-2015 23:00\tNo\n", output);
+
+		command = new DisplayOn("30/09/2015");
+		output = logic.test2(command);
+		
+		//Check on a date that has no tasks
+		assertEquals("Looks like there is nothing on your schedule. Enjoy your day!!!\n\n", output);
 	}
 	
 	@Test
@@ -101,8 +108,14 @@ public class DisplayTest {
 		command = new DisplayFrom("20/09/2015");
 		output = logic.test2(command);
 		
-		assertEquals("Here are your events on 20/09/2015:\n\nDescription                 Start Date             End Date            Done\n1.recess week         20-09-2015 23:00         22-09-2015 23:00         No\n2.finals              20-09-2015 23:00         25-09-2015 23:00         No\n\n", output);
+		//Check that only events starting on 20/09/2015 are displayed
+		assertEquals("Here are your events on 20/09/2015:\n1.recess week\t20-09-2015 23:00\t22-09-2015 23:00\tNo\n2.finals\t20-09-2015 23:00\t25-09-2015 23:00\tNo\n", output);		
+
+		command = new DisplayFrom("30/09/2015");
+		output = logic.test2(command);
 		
+		//Check on a date that has no tasks
+		assertEquals("Looks like there is nothing on your schedule. Enjoy your day!!!\n\n", output);
 	}
 	
 	@Test
@@ -127,17 +140,23 @@ public class DisplayTest {
 		command = new DisplayAfter("20/09/2015");
 		output = logic.test2(command);
 		
-		assertEquals("Here are your tasks due after 20/09/2015:\n\nDescription                 Start Date             End Date            Done\n1.submit report                                20-09-2015 23:00         No\n2.ddd                 10-09-2015 23:00         20-09-2015 23:00         No\n3.recess week         20-09-2015 23:00         22-09-2015 23:00         No\n4.finals              20-09-2015 23:00         25-09-2015 23:00         No\n\n", output);
+		assertEquals("Here are your tasks due after 20/09/2015:\n1.submit report\t-\t20-09-2015 23:00\tNo\n2.ddd\t10-09-2015 23:00\t20-09-2015 23:00\tNo\n3.recess week\t20-09-2015 23:00\t22-09-2015 23:00\tNo\n4.finals\t20-09-2015 23:00\t25-09-2015 23:00\tNo\n", output);
 
 		command = new DisplayAfter("22/09/2015");
 		output = logic.test2(command);
 		
-		assertEquals("Here are your tasks due after 22/09/2015:\n\nDescription                 Start Date             End Date            Done\n1.recess week         20-09-2015 23:00         22-09-2015 23:00         No\n2.finals              20-09-2015 23:00         25-09-2015 23:00         No\n\n", output);
+		assertEquals("Here are your tasks due after 22/09/2015:\n1.recess week\t20-09-2015 23:00\t22-09-2015 23:00\tNo\n2.finals\t20-09-2015 23:00\t25-09-2015 23:00\tNo\n", output);
 
 		command = new DisplayAfter("23/09/2015");
 		output = logic.test2(command);
 		
-		assertEquals("Here are your tasks due after 23/09/2015:\n\nDescription                 Start Date             End Date            Done\n1.finals              20-09-2015 23:00         25-09-2015 23:00         No\n\n", output);
+		assertEquals("Here are your tasks due after 23/09/2015:\n1.finals\t20-09-2015 23:00\t25-09-2015 23:00\tNo\n", output);
+
+		command = new DisplayAfter("30/09/2015");
+		output = logic.test2(command);
+		
+		//Check on a date that has no tasks
+		assertEquals("Looks like there is nothing on your schedule. Enjoy your day!!!\n\n", output);
 	}
 	
 	@Test
@@ -162,8 +181,7 @@ public class DisplayTest {
 		command = new DisplayDue("20/09/2015");
 		output = logic.test2(command);
 		
-		assertEquals("Here are your tasks due on 20/09/2015:\n\nDescription                 Start Date             End Date            Done\n1.submit report                                20-09-2015 23:00         No\n2.ddd                 10-09-2015 23:00         20-09-2015 23:00         No\n\n", output);
-	
+		assertEquals("Here are your tasks due on 20/09/2015:\n1.submit report\t-\t20-09-2015 23:00\tNo\n2.ddd\t10-09-2015 23:00\t20-09-2015 23:00\tNo\n", output);
 		command = new DisplayDue("21/09/2015");
 		output = logic.test2(command);
 		
@@ -198,7 +216,7 @@ public class DisplayTest {
 		command = new DisplayFloating();
 		output = logic.test2(command);
 		
-		assertEquals("Here are all your floating tasks:\n\nDescription                 Start Date             End Date            Done\n1.aaa                                                                   No\n\n", output);
+		assertEquals("Here are all your floating tasks:\n1.aaa\t-\t-\tNo\n", output);
 
 	}
 	

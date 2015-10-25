@@ -10,7 +10,7 @@ public class DisplayFrom extends DisplayCommand {
 	private String date;
 	private String output = new String();
 	
-	private final String DISPLAY_HEADER_FROM = "Here are your events on %s:\n\nDescription                 Start Date             End Date            Done\n";
+	private final String DISPLAY_HEADER_FROM = "Here are your events on %s:\n";
 	
 	public DisplayFrom(String _date) {
 		date = _date;
@@ -42,7 +42,7 @@ public class DisplayFrom extends DisplayCommand {
 			
 			startDate = task.getStartDateTimeInString();
 			
-			if (startDate.contains(date)) {
+			if (startDate.contains(date) && task.isDone() == false) {
 				result.add(task);
 			} 
 		}

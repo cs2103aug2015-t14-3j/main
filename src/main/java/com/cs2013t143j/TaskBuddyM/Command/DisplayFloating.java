@@ -10,7 +10,7 @@ public class DisplayFloating extends DisplayCommand {
 	
 	private String output = new String();
 	
-	private final String DISPLAY_HEADER_FLOAT = "Here are all your floating tasks:\n\nDescription                 Start Date             End Date            Done\n";
+	private final String DISPLAY_HEADER_FLOAT = "Here are all your floating tasks:\n";
 		
 	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) {
 		
@@ -37,7 +37,7 @@ public class DisplayFloating extends DisplayCommand {
 			startDate = task.getStartDateTimeInString();
 			endDate = task.getEndDateTimeInString();
 			
-			if (startDate == "" && endDate == "") {
+			if (startDate == "" && endDate == "" && task.isDone() == false) {
 				result.add(task);
 			}
 		}
