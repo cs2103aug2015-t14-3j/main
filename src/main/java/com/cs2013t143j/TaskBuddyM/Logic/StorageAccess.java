@@ -1,6 +1,7 @@
 package com.cs2013t143j.TaskBuddyM.Logic;
 
 import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 
 import com.cs2013t143j.TaskBuddyM.Storage.Storage;
@@ -22,6 +23,12 @@ public class StorageAccess {
 		storage.delete(index);
 	}
 	
+	public void done(int index) {
+		storage.done(index);
+	}
+	
+	
+	
 	public ArrayList<Task> display() {
 		return storage.display();
 	}
@@ -40,5 +47,10 @@ public class StorageAccess {
 	
 	public void writeToFile() {
 		storage.writeToFile();
+	}
+
+	public ArrayList<Task> displayDone() {
+		// TODO Auto-generated method stub
+		return storage.displayDoneTasks();
 	}
 }

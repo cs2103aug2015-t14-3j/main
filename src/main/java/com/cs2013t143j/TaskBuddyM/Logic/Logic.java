@@ -1,5 +1,6 @@
 package com.cs2013t143j.TaskBuddyM.Logic;
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,7 +9,7 @@ import com.cs2013t143j.TaskBuddyM.Command.DisplayCommand;
 import com.cs2013t143j.TaskBuddyM.Parser.TBParserStub;
 import com.cs2013t143j.TaskBuddyM.Storage.Storage;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
-
+import com.cs2013t143j.TaskBuddyM.Logic.DoneCommand;
 public class Logic {
 	private String output;
 	private static ArrayList<Task> lastDisplay = new ArrayList<Task>();
@@ -23,6 +24,7 @@ public class Logic {
 	private Displayer displayer;
 	private Deleter deleter;
 	private Searcher searcher;
+	private DoneCommand done;
 	private boolean commPatt  = true;
 	
 	private final String INVALID_COMMAND = "Invalid Command\n";
@@ -42,8 +44,10 @@ public class Logic {
 		editor = new Editor(storageAccess);
 		displayer = new Displayer(storageAccess);
 		deleter = new Deleter(storageAccess);
-		searcher = new Searcher(storageAccess);		
-	}
+		searcher = new Searcher(storageAccess);	
+		done = new DoneCommand(storageAccess);
+		
+}
 	
 	//Constructor to use storageStub for jUnit testing
 	public Logic(boolean a) {
@@ -61,7 +65,9 @@ public class Logic {
 		displayer = new Displayer(storageAccess);
 		deleter = new Deleter(storageAccess);
 		searcher = new Searcher(storageAccess);	
-	}
+		done = 	new DoneCommand(storageAccess);
+		
+}
 	
 	public String executeCommand(String command) {
 		
@@ -99,7 +105,13 @@ public class Logic {
 					output = parseError(e);
 					return output;
 				}
-				return output;			
+				return output;
+			case "done":
+				output = done.execute(parsedCommand);
+				 //catch(ParserContentError e) {
+					//output = parseError(e);
+				//	return output;
+				return output;
 			case "edit":
 				try {
 					output = editor.edit(parsedCommand,  lastDisplay);
