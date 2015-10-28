@@ -4,6 +4,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
+
+import com.cs2013t143j.TaskBuddyM.Command.TaskSorter;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 public class Displayer {
 	
@@ -16,13 +18,13 @@ public class Displayer {
 	private final String DISPLAY_SUB = "subCommand";
 	private final String DISPLAY_DATE = "date";
 	
-	private final String DISPLAY_HEADER_DATE = "Here is your schedule for %s:\n\nDescription                 Start Date             End Date            Done\n";
-	private final String DISPLAY_HEADER_ALL = "Here is your entire schedule:\n\nDescription                 Start Date             End Date            Done\n";
-	private final String DISPLAY_HEADER_FROM = "Here are your events on %s:\n\nDescription                 Start Date             End Date            Done\n";
-	private final String DISPLAY_HEADER_AFTER = "Here are your tasks due after %s:\n\nDescription                 Start Date             End Date            Done\n";
-	private final String DISPLAY_HEADER_DUE = "Here are your tasks due on %s:\n\nDescription                 Start Date             End Date            Done\n";
-	private final String DISPLAY_HEADER_FLOAT = "Here are all your floating tasks:\n\nDescription                 Start Date             End Date            Done\n";
-	private final String DISPLAY_FORMAT = "%d.%-20s%-25s%-25s%s\n";
+	private final String DISPLAY_HEADER_DATE = "Here is your schedule for %s:\n";
+	private final String DISPLAY_HEADER_ALL = "Here is your entire schedule:\n";
+	private final String DISPLAY_HEADER_FROM = "Here are your events on %s:\n";
+	private final String DISPLAY_HEADER_AFTER = "Here are your tasks due after %s:\n";
+	private final String DISPLAY_HEADER_DUE = "Here are your tasks due on %s:\n";
+	private final String DISPLAY_HEADER_FLOAT = "Here are all your floating tasks:\n";
+	private final String DISPLAY_FORMAT = "%d.%s\t%s\t%s\t%s\n";
 	private final String FREE_DAY = "Looks like there is nothing on your schedule. Enjoy your day!!!\n\n";
 	
 	private final String INVALID_DISPLAY_SUB = "Invalid display subcommand specified\n";
@@ -78,13 +80,14 @@ public class Displayer {
 			}
 		}		
 		
+		
 		if (tasks.size() == 0) {
 			output = FREE_DAY;
 			return output;
 		}
 		
 		Collections.sort(tasks, new TaskSorter());
-		
+	
 		int index = 1;
 		
 		int i = 0;
@@ -95,6 +98,15 @@ public class Displayer {
 			String description = task.getDescription();
 			String start = task.getStartDateTimeInString();
 			String end = task.getEndDateTimeInString();
+			
+			if (start == "") {
+				start = "-";
+			}
+			
+			if (end == "") {
+				end = "-";
+			}
+			
 			boolean done = task.isDone();
 			String isDone = "No";
 			
@@ -108,8 +120,7 @@ public class Displayer {
 			++index;
 		}
 		
-		output += "\n";
-		System.out.print(output);
+//		System.out.print(output);
 		return output;
 
 		
