@@ -11,12 +11,19 @@ public class AddFloating extends AddCommand {
 		description = _description;
 	}
 	
-	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) {
+	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) throws CommandAttributeError {
+		
+		if (description == null || description == "" || description == " ") {
+			throw new CommandAttributeError(ERROR_DESCRIPTION);
+		}
 
 		Task task = new Task(description);
 		
 		sAccess.add(task);
 		
-		return ADD_OUTPUT;
+		Command command = new DisplayAll();
+		String output = command.execute(lastDisplay, sAccess);
+		
+		return output;
 	}
 }

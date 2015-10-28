@@ -15,7 +15,15 @@ public class AddDeadline extends AddCommand {
 		endDate = _endDate;
 	}
 	
-	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) {
+	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) throws CommandAttributeError {
+		
+		if (description == null || description == "" || description == " ") {
+			throw new CommandAttributeError(ERROR_DESCRIPTION);
+		}
+		
+		if (endDate == null || endDate == "" || endDate == " ") {
+			throw new CommandAttributeError(ERROR_END);
+		}
 		
 		LocalDateTime end = convertDateTime(endDate);
 		
@@ -23,6 +31,9 @@ public class AddDeadline extends AddCommand {
 		
 		sAccess.add(task);
 		
-		return ADD_OUTPUT;
+		Command command = new DisplayAll();
+		String output = command.execute(lastDisplay, sAccess);
+		
+		return output;
 	}
 }

@@ -7,16 +7,19 @@ import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
 public class DisplayOn extends DisplayCommand {
 	
-	private String date;
 	private String output = new String();
 	
-	private final String DISPLAY_HEADER_DATE = "Here is your schedule for %s:\n\nDescription                 Start Date             End Date            Done\n";
+	private final String DISPLAY_HEADER_DATE = "Here is your schedule for %s:\n";
 	
 	public DisplayOn(String _date) {
 		date = _date;
 	}
 	
-	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) {
+	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) throws CommandAttributeError {
+		
+		if (date == null || date == "" || date == " ") {
+			throw new CommandAttributeError(ERROR_DATE);
+		}
 		
 		ArrayList<Task> allTasks = sAccess.display();
 		
@@ -27,11 +30,21 @@ public class DisplayOn extends DisplayCommand {
 		return output;
 	}
 	
+	private String convertDate(String _date) {
+		
+		String[] splitDate = _date.split(" ");
+		this.date = splitDate[splitDate.length-1];
+		
+		splitDate = date.split("/");
+		
+		return splitDate[0] + "-" + splitDate[1] + "-" + splitDate[2];
+	}
+	
 	private ArrayList<Task> extractOn(ArrayList<Task> allTasks, String _date) {
 		ArrayList<Task> result = new ArrayList<Task>();
 		
 		String date = convertDate(_date);
-		output = String.format(DISPLAY_HEADER_DATE, _date);
+		output = String.format(DISPLAY_HEADER_DATE, this.date);
 		
 		int i;
 		String startDate;
@@ -44,9 +57,9 @@ public class DisplayOn extends DisplayCommand {
 			startDate = task.getStartDateTimeInString();
 			endDate = task.getEndDateTimeInString();
 			
-			if (startDate.contains(date)) {
+			if (startDate.contains(date) && task.isDone() == false) {
 				result.add(task);
-			} else if (endDate.contains(date)) {
+			} else if (endDate.contains(date) && task.isDone() == false) {
 				result.add(task);
 			} 
 		}

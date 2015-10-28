@@ -33,8 +33,7 @@ public class SearchTest {
 		command = new SearchCommand("he");
 		output = logic.test2(command);
 		
-		assertEquals("Search returned 3 result(s):\n1.hello\n2.hello world\n3.he-man\n\n", output);
-
+		assertEquals("Search returned 3 result(s):\n1.hello\t-\t-\tNo\n2.hello world\t-\t-\tNo\n3.he-man\t-\t-\tNo\n", output);
 	}
 
 }

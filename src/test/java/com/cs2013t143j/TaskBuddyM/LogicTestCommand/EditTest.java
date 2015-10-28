@@ -36,7 +36,7 @@ public class EditTest {
 		command = new DisplayAll();
 		output = logic.test2(command);
 		
-		assertEquals("Here is your entire schedule:\n\nDescription                 Start Date             End Date            Done\n1.ccc                                                                   No\n2.bbb                                                                   No\n\n", output);
+		assertEquals("Here is your entire schedule:\n1.ccc\t-\t-\tNo\n2.bbb\t-\t-\tNo\n", output);
 	}
 	
 	@Test
@@ -58,7 +58,7 @@ public class EditTest {
 		command = new DisplayAll();
 		output = logic.test2(command);
 		
-		assertEquals("Here is your entire schedule:\n\nDescription                 Start Date             End Date            Done\n1.aaa                 20-10-2015 23:59                                  No\n2.bbb                                                                   No\n\n", output);
+		assertEquals("Here is your entire schedule:\n1.aaa\t20-10-2015 23:59\t-\tNo\n2.bbb\t-\t-\tNo\n", output);
 	}
 	
 	@Test
@@ -80,6 +80,6 @@ public class EditTest {
 		command = new DisplayAll();
 		output = logic.test2(command);
 		
-		assertEquals("Here is your entire schedule:\n\nDescription                 Start Date             End Date            Done\n1.aaa                                          21-10-2015 23:59         No\n2.bbb                                                                   No\n\n", output);
+		assertEquals("Here is your entire schedule:\n1.aaa\t-\t21-10-2015 23:59\tNo\n2.bbb\t-\t-\tNo\n", output);
 	}
 }
