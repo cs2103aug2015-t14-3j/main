@@ -5,10 +5,14 @@ import java.time.format.DateTimeFormatter;
 
 public abstract class EditCommand implements Command {
 	
-	protected int index;
+	protected String index;
 	protected final String EDIT_OUTPUT = "Edited task no.%d %s to %s\n\n";
 	private final String DATE_FORMAT1 = "HHmm dd/MM/yyyy";
 	protected final String INVALID_INDEX = "Invalid Index specified\n\n";
+	
+	protected final String ERROR_INT = "Index provided is not an Integer";
+	protected final String ERROR_NEGATIVE = "Index provided must be larger than 0";
+	protected final String ERROR_RANGE = "Index providded is larger than last display";
 
 	protected LocalDateTime convertDateTime(String dateTime) {
 		

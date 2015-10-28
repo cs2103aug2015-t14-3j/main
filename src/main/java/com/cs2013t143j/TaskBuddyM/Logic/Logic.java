@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.cs2013t143j.TaskBuddyM.Command.Command;
+import com.cs2013t143j.TaskBuddyM.Command.CommandAttributeError;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayCommand;
 import com.cs2013t143j.TaskBuddyM.Parser.TBParserStub;
 import com.cs2013t143j.TaskBuddyM.Storage.Storage;
@@ -130,8 +131,12 @@ public class Logic {
 		return "";
 		
 //			Command commandToExecute = parser.getCommand(command);
-
+			
+//		try {
 //			output = commandToExecute.execute(lastDisplay, storageAccess);
+//	} catch (CommandAttributeError e) {
+//		return e.toString();
+//	}
 //			lastDisplay = DisplayCommand.getLastDisplay();
 
 //			return output;
@@ -198,7 +203,12 @@ public class Logic {
 	}
 	
 	public String test2(Command command) {
+		
+		try{
 		output = command.execute(lastDisplay, storageAccess);
+		} catch (CommandAttributeError e) {
+			return e.toString();
+		}
 		lastDisplay = DisplayCommand.getLastDisplay();
 		
 		return output;

@@ -2,6 +2,7 @@ package com.cs2013t143j.TaskBuddyM.Command;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public abstract class AddCommand implements Command {
 	
@@ -11,7 +12,13 @@ public abstract class AddCommand implements Command {
 	
 	protected final String ADD_OUTPUT = "Added new Task to TaskBuddy\n\n";
 	
-	protected LocalDateTime convertDateTime(String dateTime) {
+	protected final String ERROR_DESCRIPTION = "Invalid Description(Cannot be empty)";
+	protected final String ERROR_START = "Invalid Start Date";
+	protected final String ERROR_END = "Invalid End Date";
+	
+	private final String ERROR_FORMAT = "Invalid date format(Should be dd/mm/yyyy)";
+	
+	protected LocalDateTime convertDateTime(String dateTime) throws CommandAttributeError {
 		
 		if (dateTime == null) {
 			return null;
@@ -23,13 +30,23 @@ public abstract class AddCommand implements Command {
 		if (splitDateTime.length == 1) {
 			//No time specified	
 			formatter = DateTimeFormatter.ofPattern(DATE_FORMAT1);
-			dt = LocalDateTime.parse("23 " + dateTime, formatter);
+			
+			try{
+				dt = LocalDateTime.parse("23 " + dateTime, formatter);
+			} catch (DateTimeParseException e) {
+				throw new CommandAttributeError(ERROR_FORMAT);
+			}
 			
 			return dt;
 		} else {
 			//Time specified
 			formatter = DateTimeFormatter.ofPattern(DATE_FORMAT1);
-			dt = LocalDateTime.parse(dateTime, formatter);
+			
+			try {
+				dt = LocalDateTime.parse(dateTime, formatter);
+			} catch (DateTimeParseException e) {
+				throw new CommandAttributeError(ERROR_FORMAT);
+			}
 			
 			return dt;
 		}

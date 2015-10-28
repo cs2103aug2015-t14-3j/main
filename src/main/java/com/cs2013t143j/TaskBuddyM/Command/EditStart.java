@@ -12,18 +12,28 @@ public class EditStart extends EditCommand {
 	
 	public EditStart(String _index, String _newValue) {
 		newValue = _newValue;
-		index = Integer.parseInt(_index);
+		index = _index;
 	}
 	
-	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) {
+	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) throws CommandAttributeError {
 		
-		if (index > lastDisplay.size()){
-			return INVALID_INDEX;
-		}		
+		int editIndex = 0;
+		
+		try {
+			editIndex = Integer.parseInt(index);
+		} catch (NumberFormatException e) {
+			throw new CommandAttributeError(ERROR_INT);
+		}
+		
+		if (editIndex > lastDisplay.size()){
+			throw new CommandAttributeError(ERROR_RANGE);
+		} else if (editIndex <= 0) {
+			throw new CommandAttributeError(ERROR_NEGATIVE);
+		}
 		
 		LocalDateTime newDate = convertDateTime(newValue);
 
-		Task taskToEdit = lastDisplay.get(index - 1);
+		Task taskToEdit = lastDisplay.get(editIndex - 1);
 		
 		ArrayList<Task> allTasks = sAccess.display();
 		
@@ -31,7 +41,7 @@ public class EditStart extends EditCommand {
 		
 		sAccess.updateStartDate(storageIndex, newDate);
 		
-		String output = String.format(EDIT_OUTPUT, index, "start date", newValue);
+		String output = String.format(EDIT_OUTPUT, editIndex, "start date", newValue);
 		return output;
 	}
 }
