@@ -14,13 +14,13 @@ public class TBParserStub {
 	}
 	
 	// parse input to a dict
-	public Map<String, String> getDictionary (String input) throws InvalidInputException  {
+	public Map<String, String> getDictionary (String input)  {
 		Map<String, String> dictionary = new HashMap<String,String>();
 		userInput = input;
 		
-		if (userInput.trim().equals("")) {
+		/*if (userInput.trim().equals("")) {
 			throw new InvalidInputException(ERROR_NO_COMMAND);
-		}
+		}*/
 
 		retrieveCommand(dictionary);
 		
@@ -31,7 +31,7 @@ public class TBParserStub {
 		return dictionary;
 	}
 	
-	private void retrieveCommand(Map<String, String> dictionary) throws InvalidInputException {
+	private void retrieveCommand(Map<String, String> dictionary) {
 		cmd = new CommandParser(userInput);
 		cmd.extractShortcutCommand(dictionary);
 		cmd.extractSubCommand(dictionary);
