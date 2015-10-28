@@ -44,7 +44,7 @@ public class ContentParser {
 		return dictionary;
 	}
 	
-	public Map<String,String> extractDisplayContent() {
+	public Map<String,String> extractDisplayContent()  {
 		// need to pass to date parser
 		if (userInput.length() != 0) {
 			dictionary.put("description", userInput);
@@ -77,7 +77,7 @@ public class ContentParser {
 		
 	}
 	
-	public Map<String, String> extractEditContent() {
+	public Map<String, String> extractEditContent()  {
 		//assert userInput != null;
 		retrieveEditIndex();
 		

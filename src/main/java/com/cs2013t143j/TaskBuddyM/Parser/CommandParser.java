@@ -87,7 +87,7 @@ public class CommandParser {
 				dictionary.put(DIC_COMMAND, COMMAND_DISPLAY);
 				index = ++i;
 				break;
-			} else if (arr[i].equalsIgnoreCase(COMMAND_EDIT) || arr[i].equalsIgnoreCase(COMMAND_UPDATE)) {
+			}  else if (arr[i].equalsIgnoreCase(COMMAND_EDIT) || arr[i].equalsIgnoreCase(COMMAND_UPDATE)) {
 				dictionary.put(DIC_COMMAND, COMMAND_EDIT);
 				break;
 			} else if (arr[i].equalsIgnoreCase(COMMAND_SEARCH)) {
@@ -125,6 +125,7 @@ public class CommandParser {
 				case "from":
 				case "after":
 				case "due":
+				case "done":
 				case "incomplete":
 				case "floating":
 					dictionary.put(DIC_SUBCOMMAND, arr[index]);
