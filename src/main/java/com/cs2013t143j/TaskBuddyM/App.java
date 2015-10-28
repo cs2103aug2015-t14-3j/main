@@ -18,54 +18,54 @@ public class App
 {
     public static void main( String[] args )
     {
-    	Parser p = new Parser();
-    	int groupid = 0;
-    	List<DateGroup> groups = p.parse("sing from today to 12222022");
-    	for(DateGroup group:groups) {
-    	  List dates = group.getDates();
-    	  int line = group.getLine();
-    	  int column = group.getPosition();
-    	  String matchingValue = group.getText();
-    	  String syntaxTree = group.getSyntaxTree().toStringTree();
-    	  boolean isRecurreing = group.isRecurring();
-    	  Date recursUntil = group.getRecursUntil();
-    	  
-    	  System.out.println( "DateGroup # " + groupid);
-    	  System.out.println( dates.get(0).toString() );
-    	  //System.out.println( dates.get(1).toString() );
-    	  System.out.println( "line # " + line );
-    	  System.out.println( "column # " + line );
-    	  System.out.println( "matchingValue # " + matchingValue );
-    	  System.out.println( "syntaxTree # " + syntaxTree );
-    	  System.out.println( "AbsPosition # " + group.getAbsolutePosition() );
-
-    	  groupid++;
-    	}
-//    	Map<String, String> dMap = new HashMap<>();
-//    	dMap.put("description", "sing from 28021994 to today");
-//    	DateParser dateParser = new DateParser(dMap);
-//    	try {
-//			dMap = dateParser.parse();
-//		} catch (TooManyDateFoundException e1) {
-//			// TODO Auto-generated catch block
-//			System.out.println(e1.getMessage());
-//		}
-//    	//for (String t : dMap.keySet()) {
-//	    	// this check may be redundant 
-//    		String s = "None";
-//    		String e = "None";
-//    		String des = dMap.get("description");
-//    		if(dMap.get("startDate") != null){
-//    			s = dMap.get("startDate");
-//    		}
-//    		if(dMap.get("endDate") != null){
-//    			e = dMap.get("endDate");
-//    		}
-//    		System.out.println("This dict--------");
-//    		System.out.println("description is--------"+des);
-//    		System.out.println("start date is--------"+s);
-//    		System.out.println("end date is--------"+e);
-//	    //}
+//    	Parser p = new Parser();
+//    	int groupid = 0;
+//    	List<DateGroup> groups = p.parse("sing from today to xxxxxxx");
+//    	for(DateGroup group:groups) {
+//    	  List dates = group.getDates();
+//    	  int line = group.getLine();
+//    	  int column = group.getPosition();
+//    	  String matchingValue = group.getText();
+//    	  String syntaxTree = group.getSyntaxTree().toStringTree();
+//    	  boolean isRecurreing = group.isRecurring();
+//    	  Date recursUntil = group.getRecursUntil();
+//    	  
+//    	  System.out.println( "DateGroup # " + groupid);
+//    	  System.out.println( dates.get(0).toString() );
+//    	  //System.out.println( dates.get(1).toString() );
+//    	  System.out.println( "line # " + line );
+//    	  System.out.println( "column # " + line );
+//    	  System.out.println( "matchingValue # " + matchingValue );
+//    	  System.out.println( "syntaxTree # " + syntaxTree );
+//    	  System.out.println( "AbsPosition # " + group.getAbsolutePosition() );
+//
+//    	  groupid++;
+//    	}
+    	Map<String, String> dMap = new HashMap<>();
+    	dMap.put("description", "sing from today to 02102022");
+    	DateParser dateParser = new DateParser(dMap);
+    	try {
+			dMap = dateParser.parse();
+		} catch (TooManyDateFoundException e1) {
+			// TODO Auto-generated catch block
+			System.out.println(e1.getMessage());
+		}
+    	//for (String t : dMap.keySet()) {
+	    	// this check may be redundant 
+    		String s = "None";
+    		String e = "None";
+    		String des = dMap.get("description");
+    		if(dMap.get("startDate") != null){
+    			s = dMap.get("startDate");
+    		}
+    		if(dMap.get("endDate") != null){
+    			e = dMap.get("endDate");
+    		}
+    		System.out.println("This dict--------");
+    		System.out.println("description is--------"+des);
+    		System.out.println("start date is--------"+s);
+    		System.out.println("end date is--------"+e);
+	    //}
     	
     	
     }
