@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import com.alee.laf.label.WebLabel;
@@ -29,6 +30,8 @@ public class MainPanel extends JPanel implements ActionListener {
     private Logic logic;
     private JTable table;
     private JPanel main_1;
+    
+    private String[] columns = {"Description", "Start Date", "End Date", "Done"};
 
     MainPanel(Logic l){
         setLayout(new BorderLayout());
@@ -76,25 +79,22 @@ public class MainPanel extends JPanel implements ActionListener {
                         BorderFactory.createEmptyBorder(5,5,5,5)));
         
         main.add(textControlsPane,BorderLayout.CENTER);
-        String[] columns = {"Name", "Age", "Gender"};
-        
-        String[][] data = {{"Johnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn", "18", "Male"},
-                {"Daisy", "19", "Female"},
-                {"Dave", "23", "Male"},
-                {"Jake", "30", "Male"}};
-        table = new JTable(data,columns){
+               
+        String[][] data = null;
+        table = new JTable(new DefaultTableModel(data, columns)){
             {
             	setOpaque(false);
             	setShowGrid(false);
+            	//setShowHorizontalLines(true);
             	setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {{
                     setOpaque(false);
                 }});
             }
-            @Override
-            public boolean isCellEditable(int data, int columns)
-            {
-                return true;
-            }
+//            @Override
+//            public boolean isCellEditable(int data, int columns)
+//            {
+//                return true;
+//            }
 //            @Override
 //            public Component prepareRenderer(TableCellRenderer r, int data, int columns)
 //            {
@@ -108,7 +108,7 @@ public class MainPanel extends JPanel implements ActionListener {
 // 
 //                return c;
 //            }
-        };
+       };
         
 		JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scroll.setOpaque(false);
@@ -137,6 +137,20 @@ public class MainPanel extends JPanel implements ActionListener {
         main.add(commandLineTextField,BorderLayout.PAGE_END);
 	}
 	
+	private void updateMsgAndTable(String output) {
+		String[] lines = output.split("\\r?\\n");
+		int lineNumber = lines.length;
+		textArea.setText(lines[0]);
+		String[][] data = null;
+		DefaultTableModel defaultTableModel = new DefaultTableModel(data,columns);
+		for(int i = 1; i < lineNumber; i++){
+			String line = lines[i];
+			String[] fields = line.split("\\t");
+			defaultTableModel.addRow(fields);
+		}
+		table.setModel(defaultTableModel);
+	}
+	
 	@Override
     public void paintComponent(Graphics g) {
 		Image bg = new ImageIcon("src/main/res/papertexture14.jpg").getImage();
@@ -148,7 +162,7 @@ public class MainPanel extends JPanel implements ActionListener {
         String input = ((WebTextField)e.getSource()).getText();
         if ("commandLine".equals(e.getActionCommand())) {
         	String output = logic.executeCommand(input);
-        	textArea.setText(output);
+        	updateMsgAndTable(output);
         	WebTextField inputField = (WebTextField)e.getSource();
         	inputField.setText("");
         } 
