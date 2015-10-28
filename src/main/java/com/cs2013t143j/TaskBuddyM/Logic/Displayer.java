@@ -268,10 +268,10 @@ public class Displayer {
 	}
 	
 	private String convertDate(String _date) {
+	
+		//String date = _date.split(" ")[-1];
 		
-		String date = _date.split(" ")[-1];
-		
-		String[] splitDate = date.split("/");
+		String[] splitDate = _date.split("/");
 		
 		return splitDate[0] + "-" + splitDate[1] + "-" + splitDate[2];
 	}

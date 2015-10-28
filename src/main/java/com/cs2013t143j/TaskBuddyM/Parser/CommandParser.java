@@ -6,8 +6,9 @@
  * 5. search				(s)
  * 6. undo					(u)
  * 7. help					(h)
- * 8. redo					(z)
- * 9. clear					(x)
+ * 8. done					(f)
+ * 9. redo					(z)
+ * 10. clear				(x)
  */
 
 package com.cs2013t143j.TaskBuddyM.Parser;
@@ -47,7 +48,7 @@ public class CommandParser {
 		arr = userInput.split(" ");
 	}
 	
-	public void extractShortcutCommand(Map<String,String> dictionary) throws InvalidInputException {	
+	public void extractShortcutCommand(Map<String,String> dictionary) {	
 		if (arr[0].equalsIgnoreCase("a") || arr[0].equalsIgnoreCase("c") || arr[0].equalsIgnoreCase("i")) {
 			dictionary.put(DIC_COMMAND, COMMAND_ADD);
 		} else if (arr[0].equalsIgnoreCase("del") || arr[0].equalsIgnoreCase("r")) {
@@ -67,12 +68,14 @@ public class CommandParser {
 			dictionary.put(DIC_COMMAND,COMMAND_REDO);
 		} else if (arr[0].equalsIgnoreCase("x")) {
 			dictionary.put(DIC_COMMAND,COMMAND_CLEAR);
-		}else {
+		} else if (arr[0].equalsIgnoreCase("f")) {
+			dictionary.put(DIC_COMMAND,COMMAND_DONE);
+		} else {
 			extractCommand(dictionary);
 		}
 	}
 	
-	public void extractCommand(Map<String,String> dictionary) throws InvalidInputException {
+	public void extractCommand(Map<String,String> dictionary) {
 		for (int i = 0; i < arr.length; i++) {
 			if (arr[i].equalsIgnoreCase(COMMAND_ADD) || arr[i].equalsIgnoreCase(COMMAND_CREATE) || arr[i].equalsIgnoreCase(COMMAND_INSERT)) {
 				dictionary.put(DIC_COMMAND, COMMAND_ADD);
@@ -107,7 +110,7 @@ public class CommandParser {
 				break;
 			}else if (i == arr.length - 1) {
 				dictionary.put(DIC_COMMAND,null);
-				throw new InvalidInputException(ERROR_COMMAND);
+				//throw new InvalidInputException(ERROR_COMMAND);
 			}
 		}
 	}

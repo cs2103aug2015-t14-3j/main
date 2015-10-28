@@ -56,8 +56,25 @@ public class ContentParser {
 
 	private void retrieveDisplayDate() {
 		dictionary = date.parse(dictionary);
-		dictionary.put("start date", dictionary.remove("startDate"));
-		dictionary.put("end date", dictionary.remove("endDate"));
+		/*String temp = dictionary.remove("startDate");
+		if(temp != null) {
+			temp = temp.substring(temp.indexOf(" ")+1, temp.length());
+		}
+		dictionary.put("start date",temp);
+		
+		temp = dictionary.remove("endDate");
+		if(temp != null) {
+			temp = temp.substring(temp.indexOf(" ")+1, temp.length());
+		}
+		dictionary.put("end date", temp);*/
+		
+		String temp = dictionary.remove("startDate");
+		
+		if(temp == null) {
+			temp = dictionary.remove("endDate");
+		}
+		dictionary.put("date",temp);
+		
 	}
 	
 	public Map<String, String> extractEditContent() {
