@@ -1,7 +1,9 @@
 package com.cs2013t143j.TaskBuddyM.Command;
 
+import java.awt.List;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -18,12 +20,20 @@ public class DisplayRange extends DisplayCommand {
 	private final String DATE_FORMAT = "HH dd/MM/yyyy";
 	private final String DISPLAY_HEADER_AFTER = "Here are your tasks due after %s:\n";
 	
+	private final String ERROR_FORMAT = "Invalid date format(Should be dd/mm/yyyy)";
+	
 	public DisplayRange(String _startDate, String _endDate) {
 		startDate = _startDate;
 		endDate = _endDate;
 	}
 	
-	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) {
+	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) throws CommandAttributeError {
+		
+		if (startDate == null || startDate == "" || startDate == " ") {
+			throw new CommandAttributeError(ERROR_DATE);
+		} else if (endDate == null || endDate == "" || endDate == " ") {
+			throw new CommandAttributeError(ERROR_DATE);
+		}
 		
 		ArrayList<Task> allTasks = sAccess.display();
 		
@@ -37,11 +47,19 @@ public class DisplayRange extends DisplayCommand {
 		return output;
 	}
 	
-	private ArrayList<Task> extractAfter(ArrayList<Task> allTasks, String _date) {
+	private ArrayList<Task> extractAfter(ArrayList<Task> allTasks, String _date) throws CommandAttributeError {
 		ArrayList<Task> result = new ArrayList<Task>();
 		
+		LocalDateTime date;
+		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
-		LocalDateTime date = LocalDateTime.parse("00 " + _date, formatter);
+		
+		try {
+		date = LocalDateTime.parse("00 " + _date, formatter);
+		} catch (DateTimeParseException e) {
+			throw new CommandAttributeError(ERROR_FORMAT);
+		}
+		
 		output = String.format(DISPLAY_HEADER_AFTER, _date);
 		
 		int i;
@@ -61,10 +79,20 @@ public class DisplayRange extends DisplayCommand {
 		return result;
 	}
 	
-	private ArrayList<Task> removeAfter(ArrayList<Task> allTasks, String _date) {
+	private ArrayList<Task> removeAfter(ArrayList<Task> allTasks, String _date) throws CommandAttributeError {
+		
+		LocalDateTime date;
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
-		LocalDateTime date = LocalDateTime.parse("00 " + _date, formatter);
+		
+		ArrayList<Task> result = new ArrayList<Task>();
+		
+		try {
+		date = LocalDateTime.parse("00 " + _date, formatter);
+		} catch (DateTimeParseException e) {
+			throw new CommandAttributeError(ERROR_FORMAT);
+		}
+		
 		output = String.format(DISPLAY_HEADER_AFTER, _date);
 		
 		int i;
@@ -78,10 +106,12 @@ public class DisplayRange extends DisplayCommand {
 			
 			if (endDate == null || endDate.isAfter(date)) {
 				break;
+			} else {
+				result.add(task);
 			}
 		}
 		
-		return (ArrayList<Task>) allTasks.subList(0, i);
+		return result;
 	}
 	
 }

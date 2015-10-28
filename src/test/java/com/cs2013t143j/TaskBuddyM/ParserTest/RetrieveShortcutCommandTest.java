@@ -8,6 +8,7 @@ import java.util.Map;
 import org.junit.Test;
 
 import com.cs2013t143j.TaskBuddyM.Parser.CommandParser;
+import com.cs2013t143j.TaskBuddyM.Parser.InvalidInputException;
 
 public class RetrieveShortcutCommandTest {
 
@@ -15,7 +16,7 @@ public class RetrieveShortcutCommandTest {
 	private String userInput;
 	
 	@Test
-	public void test() {
+	public void test() throws InvalidInputException {
 		retrieveShorcutAdd();
 		retrieveShorcutDelete();
 		retrieveShorcutSearch();
@@ -23,7 +24,7 @@ public class RetrieveShortcutCommandTest {
 		retrieveShorcutDisplay();
 	}
 	
-	private void retrieveShorcutDisplay() {
+	private void retrieveShorcutDisplay() throws InvalidInputException {
 		userInput = "d incomplete";
 				
 		CommandParser cmdParser = new CommandParser(userInput);
@@ -33,7 +34,7 @@ public class RetrieveShortcutCommandTest {
 		System.out.println(dictionary.get("command"));
 	}
 	
-	private void retrieveShorcutEdit() {
+	private void retrieveShorcutEdit() throws InvalidInputException {
 		userInput = "e 1 description aaa";
 				
 		CommandParser cmdParser = new CommandParser(userInput);
@@ -43,7 +44,7 @@ public class RetrieveShortcutCommandTest {
 		System.out.println(dictionary.get("command"));
 	}
 	
-	private void retrieveShorcutSearch() {
+	private void retrieveShorcutSearch() throws InvalidInputException {
 		userInput = "s hello";
 				
 		CommandParser cmdParser = new CommandParser(userInput);
@@ -53,7 +54,7 @@ public class RetrieveShortcutCommandTest {
 		System.out.println(dictionary.get("command"));
 	}
 
-	private void retrieveShorcutDelete() {
+	private void retrieveShorcutDelete() throws InvalidInputException {
 		userInput = "r 1";
 		
 		CommandParser cmdParser = new CommandParser(userInput);
@@ -63,7 +64,7 @@ public class RetrieveShortcutCommandTest {
 		System.out.println(dictionary.get("command"));
 	}
 
-	private void retrieveShorcutAdd() {
+	private void retrieveShorcutAdd() throws InvalidInputException {
 		userInput = "a hello by next week";
 				
 		CommandParser cmdParser = new CommandParser(userInput);

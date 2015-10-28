@@ -22,13 +22,13 @@ public class HelpCommand implements Command {
 	
 	private File fileToRead;
 	
-	private final String INVALID_COMMAND = "Invalid Commmand Specified\n\n";
+	private final String ERROR_COMMAND = "Invalid Help Command Specified";
 	
 	public HelpCommand(String _command) {
 		command = _command;
 	}
 
-	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) {
+	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) throws CommandAttributeError {
 		String output = "\n";
 		
 		switch(command) {
@@ -48,8 +48,7 @@ public class HelpCommand implements Command {
 			fileToRead = new File(editHelp);
 			break;
 		default:
-			output += INVALID_COMMAND;
-			return output;
+			throw new CommandAttributeError(ERROR_COMMAND);
 		}
 		
 		try{
