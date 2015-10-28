@@ -1,7 +1,8 @@
 package com.cs2013t143j.TaskBuddyM.UI;
 
 import java.awt.BorderLayout;
-
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -10,6 +11,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 
 import com.alee.laf.label.WebLabel;
 import com.alee.laf.text.WebTextField;
@@ -24,23 +27,25 @@ public class MainPanel extends JPanel implements ActionListener {
     protected WebLabel actionLabel;
     protected JTextArea textArea;
     private Logic logic;
+    private JTable table;
+    private JPanel main_1;
 
     MainPanel(Logic l){
         setLayout(new BorderLayout());
         logic = l;
-        JPanel main = new JPanel();
-        main.setOpaque(false);
-        main.setLayout(new BorderLayout());
-        main.setBorder(new EmptyBorder(10, 10, 10, 10));
+        main_1 = new JPanel();
+        main_1.setOpaque(false);
+        main_1.setLayout(new BorderLayout());
+        main_1.setBorder(new EmptyBorder(10, 10, 10, 10));
         
-        initDisplayScreen(main);
+        initDisplayScreen(main_1);
         
-        initCommandLinePanel(main);
+        initCommandLinePanel(main_1);
 //        main.setBorder(
 //                BorderFactory.createCompoundBorder(
 //                        BorderFactory.createTitledBorder("Your tt"),
 //                        BorderFactory.createEmptyBorder(5,5,5,5)));
-        add(main);
+        add(main_1);
         
     }
 	
@@ -64,13 +69,51 @@ public class MainPanel extends JPanel implements ActionListener {
 //        scroll.setOpaque(false);
 //        actionLabel = new WebLabel("...Welcome to TaskBuddy....well, I'm not ready yet~\n check later");
 //        actionLabel.setBorder(BorderFactory.createEmptyBorder(10,0,0,0));
-        textControlsPane.add(textArea,BorderLayout.CENTER);
+        textControlsPane.add(textArea,BorderLayout.NORTH);
         textControlsPane.setBorder(
                 BorderFactory.createCompoundBorder(
                         BorderFactory.createTitledBorder("Your Screen"),
                         BorderFactory.createEmptyBorder(5,5,5,5)));
         
         main.add(textControlsPane,BorderLayout.CENTER);
+        String[] columns = {"Name", "Age", "Gender"};
+        
+        String[][] data = {{"Johnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn", "18", "Male"},
+                {"Daisy", "19", "Female"},
+                {"Dave", "23", "Male"},
+                {"Jake", "30", "Male"}};
+        table = new JTable(data,columns){
+            {
+            	setOpaque(false);
+            	setShowGrid(false);
+            	setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {{
+                    setOpaque(false);
+                }});
+            }
+            @Override
+            public boolean isCellEditable(int data, int columns)
+            {
+                return true;
+            }
+//            @Override
+//            public Component prepareRenderer(TableCellRenderer r, int data, int columns)
+//            {
+//                Component c = super.prepareRenderer(r, data, columns);
+// 
+//                if (data % 2 == 0)
+//                    c.setBackground(Color.WHITE);
+// 
+//                else
+//                    c.setBackground(Color.LIGHT_GRAY);
+// 
+//                return c;
+//            }
+        };
+        
+		JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.setOpaque(false);
+		scroll.getViewport().setOpaque(false);
+        textControlsPane.add(scroll, BorderLayout.CENTER);
 	}
 	
 	private void initCommandLinePanel(JPanel main) {
@@ -104,7 +147,7 @@ public class MainPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String input = ((WebTextField)e.getSource()).getText();
         if ("commandLine".equals(e.getActionCommand())) {
-        	String output = logic.executeCommand(input);
+        	String output = "lala";//logic.executeCommand(input);
         	textArea.setText(output);
         	WebTextField inputField = (WebTextField)e.getSource();
         	inputField.setText("");
