@@ -1,3 +1,5 @@
+package com.cs2013t143j.TaskBuddyM.LogicTestDictionary;
+
 import static org.junit.Assert.*;
 
 import java.util.HashMap;

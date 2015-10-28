@@ -16,7 +16,7 @@ class TaskSorter implements Comparator<Task> {
 		} else if (t2EndDateTime == null) {
 			return -1;
 		}
-		
+
 		return t1EndDateTime.compareTo(t2EndDateTime);
 		
 	}

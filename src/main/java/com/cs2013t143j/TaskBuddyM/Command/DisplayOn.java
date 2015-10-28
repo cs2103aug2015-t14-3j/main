@@ -10,7 +10,7 @@ public class DisplayOn extends DisplayCommand {
 	private String date;
 	private String output = new String();
 	
-	private final String DISPLAY_HEADER_DATE = "Here is your schedule for %s:\n\nDescription                 Start Date             End Date            Done\n";
+	private final String DISPLAY_HEADER_DATE = "Here is your schedule for %s:\n";
 	
 	public DisplayOn(String _date) {
 		date = _date;
@@ -22,7 +22,7 @@ public class DisplayOn extends DisplayCommand {
 		
 		tasks = extractOn(allTasks, date);
 		
-		parseTasks(output);
+		output = parseTasks(output);
 
 		return output;
 	}
@@ -44,9 +44,9 @@ public class DisplayOn extends DisplayCommand {
 			startDate = task.getStartDateTimeInString();
 			endDate = task.getEndDateTimeInString();
 			
-			if (startDate.contains(date)) {
+			if (startDate.contains(date) && task.isDone() == false) {
 				result.add(task);
-			} else if (endDate.contains(date)) {
+			} else if (endDate.contains(date) && task.isDone() == false) {
 				result.add(task);
 			} 
 		}

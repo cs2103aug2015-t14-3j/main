@@ -7,38 +7,29 @@ import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
 
-public class DisplayCommand implements Command {
-	
-	protected static ArrayList<Task> tasks = new ArrayList<Task>();
+public class SortDisplay implements Command {
 	
 	protected final String DISPLAY_FORMAT = "%d.%s\t%s\t%s\t%s\n";
+	private final String SORTED_HEADER = "Here are your tasks sorted by start date\n";
 	protected final String FREE_DAY = "Looks like there is nothing on your schedule. Enjoy your day!!!\n\n";
 
-	protected String convertDate(String date) {
-		String[] splitDate = date.split("/");
+	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) {
 		
-		return splitDate[0] + "-" + splitDate[1] + "-" + splitDate[2];
-	}
-	
-	public static ArrayList<Task> getLastDisplay() {
-		return tasks;
-	}
-	
-	protected String parseTasks(String output) {
+		String output = SORTED_HEADER;
 		
-		if (tasks.size() == 0) {
+		if (lastDisplay.size() == 0) {
 			output = FREE_DAY;
 			return output;
 		}
 		
-		Collections.sort(tasks, new TaskSorter());
+		Collections.sort(lastDisplay, new StartSorter());
 	
 		int index = 1;
 		
 		int i = 0;
 		
-		for (i = 0; i < tasks.size(); ++i) {
-			Task task = tasks.get(i);
+		for (i = 0; i < lastDisplay.size(); ++i) {
+			Task task = lastDisplay.get(i);
 			
 			String description = task.getDescription();
 			String start = task.getStartDateTimeInString();
@@ -65,11 +56,6 @@ public class DisplayCommand implements Command {
 			++index;
 		}
 		
-//		System.out.print(output);
 		return output;
-	}
-
-	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) {
-		return null;
 	}
 }

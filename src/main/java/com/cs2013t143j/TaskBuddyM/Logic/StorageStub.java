@@ -44,4 +44,7 @@ public class StorageStub extends Storage {
 		task.setEndDateTime(newEndDate);
 	}
 
+	public void writeToFile() {
+		return;
+	}
 }

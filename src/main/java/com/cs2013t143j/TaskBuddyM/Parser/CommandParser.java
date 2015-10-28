@@ -64,7 +64,7 @@ public class CommandParser {
 		}
 	}
 	
-	private void extractCommand(Map<String,String> dictionary) {
+	public void extractCommand(Map<String,String> dictionary) {
 		for (int i = 0; i < arr.length; i++) {
 			if (arr[i].equalsIgnoreCase(COMMAND_ADD) || arr[i].equalsIgnoreCase(COMMAND_CREATE) || arr[i].equalsIgnoreCase(COMMAND_INSERT)) {
 				dictionary.put(DIC_COMMAND, COMMAND_ADD);

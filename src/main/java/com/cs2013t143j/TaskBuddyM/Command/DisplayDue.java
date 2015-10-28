@@ -10,7 +10,7 @@ public class DisplayDue extends DisplayCommand {
 	private String date;
 	private String output = new String();
 	
-	private final String DISPLAY_HEADER_DUE = "Here are your tasks due on %s:\n\nDescription                 Start Date             End Date            Done\n";
+	private final String DISPLAY_HEADER_DUE = "Here are your tasks due on %s:\n";
 	
 	public DisplayDue(String _date) {
 		date = _date;
@@ -22,7 +22,7 @@ public class DisplayDue extends DisplayCommand {
 		
 		tasks = extractDue(allTasks, date);
 		
-		parseTasks(output);
+		output = parseTasks(output);
 
 		return output;
 	}
@@ -42,7 +42,7 @@ public class DisplayDue extends DisplayCommand {
 			
 			endDate = task.getEndDateTimeInString();
 			
-			if (endDate.contains(date)) {
+			if (endDate.contains(date) && task.isDone() == false) {
 				result.add(task);
 			} 
 		}

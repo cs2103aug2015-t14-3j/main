@@ -9,18 +9,34 @@ import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
 public class DisplayAll extends DisplayCommand {
 	
-	private final String DISPLAY_HEADER_ALL = "Here is your entire schedule:\n\nDescription                 Start Date             End Date            Done\n";
+	private final String DISPLAY_HEADER_ALL = "Here is your entire schedule:\n";
 	
 	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) {
 		
 		ArrayList<Task> allTasks = sAccess.display();
 		
-		tasks = allTasks;
+		tasks = extractAll(allTasks);
 		
 		String output = DISPLAY_HEADER_ALL;
 		
-		parseTasks(output);
+		output = parseTasks(output);
 
 		return output;
+	}
+	
+	private ArrayList<Task> extractAll(ArrayList<Task> allTasks) {
+
+		ArrayList<Task> results = new ArrayList<Task>();
+		
+		int i = 0;
+		
+		for (i=0; i<allTasks.size(); ++i) {
+			Task task = allTasks.get(i);
+			
+			if (task.isDone() == false) {
+				results.add(task);
+			}
+		}
+		return results;
 	}
 }

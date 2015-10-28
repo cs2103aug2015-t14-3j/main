@@ -13,7 +13,7 @@ public class Editor {
 	private final String EDIT_VALUE = "newValue";
 	
 	private final String DATE_FORMAT1 = "HHmm dd/MM/yyyy";
-	private final String DATE_FORMAT2 = "HHmm dd/M/yyyy";
+	private final String DATE_FORMAT2 = "HH dd/M/yyyy";
 	
 	private final String EDIT_OUTPUT = "Edited task no.%d %s to %s\n\n";
 	private final String INVALID_INDEX = "Invalid Index specified\n\n";

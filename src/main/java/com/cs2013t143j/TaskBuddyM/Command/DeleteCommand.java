@@ -20,7 +20,7 @@ public class DeleteCommand implements Command {
 		
 		int index = Integer.parseInt(delIndex);
 				
-		if (index > lastDisplay.size()){
+		if (index > lastDisplay.size() || index <= 0){
 			return INVALID_INDEX;
 		}
 		

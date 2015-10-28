@@ -37,4 +37,8 @@ public class StorageAccess {
 	public void updateEndDate(int index,LocalDateTime newEndDate) {
 		storage.updateEndDate(index, newEndDate);
 	}
+	
+	public void writeToFile() {
+		storage.writeToFile();
+	}
 }
