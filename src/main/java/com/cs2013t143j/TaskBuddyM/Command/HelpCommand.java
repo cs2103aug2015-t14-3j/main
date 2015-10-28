@@ -33,7 +33,6 @@ public class HelpCommand implements Command {
 		
 		switch(command) {
 		case "add":
-			System.out.print("add");
 			fileToRead = new File(addHelp);
 			break;
 		case "display":
