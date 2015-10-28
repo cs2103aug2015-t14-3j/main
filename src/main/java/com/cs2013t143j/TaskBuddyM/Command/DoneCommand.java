@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
-public class DoneCommand {
+public class DoneCommand implements Command {
 
 	private String doneIndex;
 	
