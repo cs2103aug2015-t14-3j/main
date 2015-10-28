@@ -1,6 +1,5 @@
 package com.cs2013t143j.TaskBuddyM.Logic;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 import com.cs2013t143j.TaskBuddyM.Command.Command;
@@ -17,17 +16,8 @@ public class Logic {
 	private Storage storage;
 	private TBParserStub parser;
 	private StorageAccess storageAccess;
-	
-	private Helper helper;
-	private Adder adder;
-	private Editor editor;
-	private Displayer displayer;
-	private Deleter deleter;
-	private Searcher searcher;
-	private boolean commPatt  = true;
-	
-	private final String INVALID_COMMAND = "Invalid Command\n";
-	private final String ERROR = "Error: %s\n";
+
+	private CommandCreate commandCreator;
 		
 	public Logic() {
 		output = new String();
@@ -38,12 +28,7 @@ public class Logic {
 		parser = new TBParserStub();
 		storageAccess = new StorageAccess(storage);
 		
-		helper = new Helper();
-		adder = new Adder(storageAccess);
-		editor = new Editor(storageAccess);
-		displayer = new Displayer(storageAccess);
-		deleter = new Deleter(storageAccess);
-		searcher = new Searcher(storageAccess);		
+		commandCreator = new CommandCreate();
 	}
 	
 	//Constructor to use storageStub for jUnit testing
@@ -55,151 +40,33 @@ public class Logic {
 		lastDisplay = new ArrayList<Task>();
 		
 		parser = new TBParserStub();
-		
-		helper = new Helper();
-		adder = new Adder(storageAccess);
-		editor = new Editor(storageAccess);
-		displayer = new Displayer(storageAccess);
-		deleter = new Deleter(storageAccess);
-		searcher = new Searcher(storageAccess);	
 	}
 	
 	public String executeCommand(String command) {
+
+		Map<String,String> parsedCommand = parser.getDictionary(command);
 		
-		if (commPatt) {
-			String commandType;
-
-			Map<String,String> parsedCommand = parser.getDictionary(command);
-
-			commandType = parsedCommand.get("command");
-
-			//Edit this out; Used to check if contents of dictionary are correct
-			System.out.println(parsedCommand.toString());
-
-			if (commandType == null) {
-				return INVALID_COMMAND;
-			}
-
-			switch (commandType) {
-			case "add":
-				try {
-					output = adder.add(parsedCommand);
-				} catch (ParserContentError e) {
-					output = parseError(e);
-					return output;
-				}
-				return output;
-			case "display":
-				output = displayer.display(parsedCommand);
-				lastDisplay = displayer.getLastDisplay();
-				return output;
-			case "delete":
-				try {
-					output = deleter.delete(parsedCommand, lastDisplay);
-				} catch (ParserContentError e) {
-					output = parseError(e);
-					return output;
-				}
-				return output;			
-			case "edit":
-				try {
-					output = editor.edit(parsedCommand,  lastDisplay);
-				} catch (ParserContentError e) {
-					output = parseError(e);
-					return output;
-				}
-				return output;
-			case "search":
-				output = searcher.search(parsedCommand);
-				return output;
-			case "undo":
-				output = undo(parsedCommand);
-				return output;
-			case "help":
-				try {
-					output = helper.help(parsedCommand);
-				} catch (ParserContentError e) {
-					output = parseError(e);
-					return output;
-				}
-				return output;
-			default:
-				return INVALID_COMMAND;
-			}
+		System.out.println(parsedCommand.toString());
+		Command commandToExecute;
+		
+		try{
+			commandToExecute = commandCreator.createCommand(parsedCommand);
+		} catch (CommandAttributeError e) {
+			return e.toString();
 		}
-
-		return "";
-		
-//			Command commandToExecute = parser.getCommand(command);
 			
-//		try {
-//			output = commandToExecute.execute(lastDisplay, storageAccess);
-//	} catch (CommandAttributeError e) {
-//		return e.toString();
-//	}
-//			lastDisplay = DisplayCommand.getLastDisplay();
+		try {
+			output = commandToExecute.execute(lastDisplay, storageAccess);
+		} catch (CommandAttributeError e) {
+			return e.toString();
+		}
+		lastDisplay = DisplayCommand.getLastDisplay();
 
-//			return output;
+		return output;
 	}
 
-	public String test(Map<String,String> parsedCommand) {
-		String commandType;
-		
-		commandType = parsedCommand.get("command");
-
-		//Edit this out; Used to check if contents of dictionary are correct
-		System.out.println(parsedCommand.toString());
-		
-		if (commandType == null) {
-			return INVALID_COMMAND;
-		}
-		
-		switch (commandType) {
-		case "add":
-			try {
-				output = adder.add(parsedCommand);
-			} catch (ParserContentError e) {
-				output = parseError(e);
-				return output;
-			}
-			return output;
-		case "display":
-			output = displayer.display(parsedCommand);
-			lastDisplay = displayer.getLastDisplay();
-			return output;
-		case "delete":
-			try {
-				output = deleter.delete(parsedCommand, lastDisplay);
-			} catch (ParserContentError e) {
-				output = parseError(e);
-				return output;
-			}
-			return output;			
-		case "edit":
-			try {
-				output = editor.edit(parsedCommand,  lastDisplay);
-			} catch (ParserContentError e) {
-				output = parseError(e);
-				return output;
-			}
-			return output;
-		case "search":
-			output = searcher.search(parsedCommand);
-			return output;
-		case "undo":
-			output = undo(parsedCommand);
-			return output;
-		case "help":
-			try {
-				output = helper.help(parsedCommand);
-			} catch (ParserContentError e) {
-				output = parseError(e);
-				return output;
-			}
-			return output;
-		default:
-			return INVALID_COMMAND;
-		}
+	public String test(Command command) {
+		return test2(command);
 	}
 	
 	public String test2(Command command) {
@@ -213,13 +80,4 @@ public class Logic {
 		
 		return output;
 	}
-	
-	private String undo(Map<String, String> parsedCommand) {
-		return "command: undo\n";
-	}
-	
-	private String parseError(Exception e) {
-		return String.format(ERROR, e.toString());
-	}
-
 }
