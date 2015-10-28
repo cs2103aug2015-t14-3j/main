@@ -14,7 +14,7 @@ public class TBParserStub {
 	}
 	
 	// parse input to a dict
-	public Map<String, String> getDictionary (String input) throws InvalidInputException, TooManyDateFoundException  {
+	public Map<String, String> getDictionary (String input) throws InvalidInputException  {
 		Map<String, String> dictionary = new HashMap<String,String>();
 		userInput = input;
 		
@@ -38,7 +38,7 @@ public class TBParserStub {
 		userInput = cmd.removeWord(dictionary.get("command"));
 	} 
 	
-	private void retrieveContent(Map<String,String> dictionary) throws TooManyDateFoundException {
+	private void retrieveContent(Map<String,String> dictionary) {
 		content = new ContentParser(userInput, dictionary);
 		switch(dictionary.get("command")) {
 		case "add":
