@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,16 +23,19 @@ public class DateParser {
 	
 	private String format;
 	
+	private static final Logger logger =
+	        Logger.getLogger(DateParser.class.getName());
+	
 	public DateParser(Map dict){
 		resDict = dict;
 	}
 	
-	public Map parse() {
+	public Map parse() throws TooManyDateFoundException {
 		parseDate();
 		return resDict;
 	}
 	
-	public Map parse(Map dict) {
+	public Map parse(Map dict) throws TooManyDateFoundException {
 		resDict = dict;
 		parseDate();
 		return resDict;
@@ -43,50 +48,59 @@ public class DateParser {
 		format = null;
 	}
 	
-	private void parseDate() {
+	private void parseDate() throws TooManyDateFoundException {
+		logger.entering(getClass().getName(), "parseDate");
 		init();
 		String description = (String)resDict.get("description");
 		Map<String, String> localizedParseResult = matchDateByLocalFormat(description);
 		switch (localizedParseResult.size()) {
 			case 0:
-				//System.out.println("parse1");
+				logger.log(Level.INFO, "parse case 0");
 				parseDateByNatty(0);
 				break;
 			case 1:
-				//System.out.println("parse2");
+				logger.log(Level.INFO, "parse case 0");
 				String dateString = null;
-				for (String dateFormat : localizedParseResult.keySet()) {
-					dateString = localizedParseResult.get(dateFormat);
+				for (String d : localizedParseResult.keySet()) {
+					dateString = d;
 				}
-				determineLocal(description, dateString);
+				determineStartOrEndDate(description, dateString);
 				parseDateByNatty(1);
 				break;
 			case 2:
-				//System.out.println("parse3");
+				logger.log(Level.INFO, "parse case 0");
 				// set by order, first is startDate second is endDate
-				for (String dateFormat : localizedParseResult.keySet()) {
+				for (String d : localizedParseResult.keySet()) {
 					if(resDict.get(STARTDATE) == null){
-						resDict.put(STARTDATE, localizedParseResult.get(dateFormat));
+						resDict.put(STARTDATE, d);
 					}else if(resDict.get(ENDDATE) == null){
-						resDict.put(ENDDATE, localizedParseResult.get(dateFormat));
+						resDict.put(ENDDATE, d);
 					}
 				}
 				break;
 			default:
 				// throw error
-				break;
+				logger.log(Level.WARNING, "parse case default");
+				throw new TooManyDateFoundException("More Than 2 date has been found in LocalParser");
 		}
+		logger.exiting(getClass().getName(), "parseDate");
 	}
 	
-	private void parseDateByNatty(int lastMatch) {
+	private void parseDateByNatty(int lastMatch) throws TooManyDateFoundException {
 		String description = (String)resDict.get("description");
 		List<String> NattyParseResult = matchDateByNatty(description);
 		int resultSize = NattyParseResult.size();
-		if(lastMatch >= resultSize){
+		if(resultSize == 0){
+			logger.log(Level.INFO, "parse Natty case result size is 0");
 			return;
+		}else if (resultSize > 2) {
+			logger.log(Level.WARNING, "parse Natty case result size greater than 2");
+			throw new TooManyDateFoundException("More Than 2 date has been found in NattyParser");
 		}else if (lastMatch == 0 && resultSize == 1) {
-			determineLocal(description, NattyParseResult.get(0));
+			logger.log(Level.INFO, "parse Natty case 01");
+			determineStartOrEndDate(description, NattyParseResult.get(0));
 		}else if (lastMatch == 0 && resultSize == 2) {
+			logger.log(Level.INFO, "parse Natty case 02");
 			for (String dateFormat : NattyParseResult) {
 				if(resDict.get(STARTDATE) == null){
 					resDict.put(STARTDATE, dateFormat);
@@ -94,8 +108,48 @@ public class DateParser {
 					resDict.put(ENDDATE, dateFormat);
 				}
 			}
+		}else if (lastMatch == 1 && resultSize == 1) {
+			logger.log(Level.INFO, "parse Natty case 11");
+			int pivat = description.indexOf("to");		
+			if(pivat<0){
+				Map<String, String> localizedParseResult = matchDateByLocalFormat(description);
+				for (String date : localizedParseResult.keySet()) {
+					determineStartOrEndDate(description, date);
+				}
+				
+			}else{
+				Map<String, String> localizedParseResult = matchDateByLocalFormat(description);
+				for (String date : localizedParseResult.keySet()) {
+					int numStringIndex = description.indexOf(date);
+					if(pivat-numStringIndex>0){
+						resDict.put(STARTDATE, date);
+						resDict.put(ENDDATE, NattyParseResult.get(1));
+					}else{
+						resDict.put(STARTDATE, NattyParseResult.get(0));
+						resDict.put(ENDDATE, date);
+					}
+				}
+				
+			}			
 		}else{
-			
+			logger.log(Level.INFO, "parse Natty case 12");
+			assert lastMatch == 1 : "LastMatch is "+lastMatch;
+			assert resultSize == 2 : "resultSize is "+resultSize;
+			//System.out.println("LastMatch is "+ lastMatch+" Resultsize is "+resultSize);
+			Map<String, String> localizedParseResult = matchDateByLocalFormat(description);
+			for (String date : localizedParseResult.keySet()) {
+				String trimedDescription = description.replace(date, "");
+				List<String> newNattyParseResult = matchDateByNatty(trimedDescription);
+				if(newNattyParseResult.get(0).equals(NattyParseResult.get(0))){
+					System.out.println("checkpoint");
+					resDict.put(STARTDATE, NattyParseResult.get(0));
+					resDict.put(ENDDATE, date);
+				}else{
+					System.out.println("checkpoint2");
+					resDict.put(STARTDATE, date);
+					resDict.put(ENDDATE, NattyParseResult.get(1));
+				}
+			}
 		}
 	}
 	
@@ -103,21 +157,21 @@ public class DateParser {
 		Map<String, String> res = new LinkedHashMap<>();
 	    for (String regexp : DATE_FORMAT_REGEXPS.keySet()) {
 	    	// this check may be redundant 
-	        if (dateString.toLowerCase().matches(".*"+regexp)) {
+	        if (dateString.toLowerCase().matches("^.*"+regexp+".*$")) {
+	        	System.out.println("hhhh1");
 	        	String format = DATE_FORMAT_REGEXPS.get(regexp);
 	        	Pattern p = Pattern.compile(regexp);
 	            Matcher m = p.matcher(dateString);
 	            while(m.find()) {
 	            	String matchDateString = m.group();
-	            	//System.out.println(matchDateString);
+	            	System.out.println(matchDateString);
 	            	SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
 	            	try {
 						Date matchDate = simpleDateFormat.parse(matchDateString);
 						String reformatInputDate = convertDateToString(matchDate);
-						res.put(regexp+reformatInputDate, reformatInputDate);
+						res.put(reformatInputDate, regexp);
 					} catch (ParseException e) {
-						System.out.println("Error when use SimpleDateFormat");
-						e.printStackTrace();
+						System.out.println("Invaild SimpleDateFormat: "+e.getMessage());
 					}
 	            	
 	            }
@@ -141,7 +195,7 @@ public class DateParser {
     	return returnList;
 	}	
 	
-	private void determineLocal(String input, String dateString) {
+	private void determineStartOrEndDate(String input, String dateString) {
 		for (String regexp : TIME_KEY_REGEXPS.keySet()) {
 	    	// this check may be redundant 
 			//System.out.println("Somet1");
@@ -220,3 +274,5 @@ public class DateParser {
 		
 	}
 }
+
+
