@@ -42,7 +42,7 @@ public class App
 //    	  groupid++;
 //    	}
     	Map<String, String> dMap = new HashMap<>();
-    	dMap.put("description", "sing from today to 02102022");
+    	dMap.put("description", "sing");
     	DateParser dateParser = new DateParser(dMap);
     	try {
 			dMap = dateParser.parse();
