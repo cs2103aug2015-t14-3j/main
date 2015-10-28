@@ -15,7 +15,7 @@ public class ContentParser {
 		date = new DateParser(dictionary);
 	}
 
-	public Map<String,String> extractAddContent() {
+	public Map<String,String> extractAddContent() throws TooManyDateFoundException {
 		replaceWhiteSpace();
 		dictionary.put("description",userInput);
 		dictionary = date.parse(dictionary);
@@ -44,7 +44,7 @@ public class ContentParser {
 		return dictionary;
 	}
 	
-	public Map<String,String> extractDisplayContent() {
+	public Map<String,String> extractDisplayContent() throws TooManyDateFoundException {
 		// need to pass to date parser
 		if (userInput.length() != 0) {
 			dictionary.put("description", userInput);
@@ -54,7 +54,7 @@ public class ContentParser {
 		return dictionary;
 	}
 
-	private void retrieveDisplayDate() {
+	private void retrieveDisplayDate() throws TooManyDateFoundException {
 		dictionary = date.parse(dictionary);
 		/*String temp = dictionary.remove("startDate");
 		if(temp != null) {
@@ -77,7 +77,7 @@ public class ContentParser {
 		
 	}
 	
-	public Map<String, String> extractEditContent() {
+	public Map<String, String> extractEditContent() throws TooManyDateFoundException {
 		//assert userInput != null;
 		retrieveEditIndex();
 		
@@ -107,7 +107,7 @@ public class ContentParser {
 		dictionary.put("newValue",userInput);
 	}
 
-	private void retrieveEditStartDate() {
+	private void retrieveEditStartDate() throws TooManyDateFoundException {
 		dictionary.put("field","start date");
 		userInput = userInput.replace("start date", "startdate");
 		dictionary.put("description",userInput);
@@ -115,7 +115,7 @@ public class ContentParser {
 		dictionary.put("newValue",dictionary.remove("startDate"));
 	}
 
-	private void retrieveEditEndDate() {
+	private void retrieveEditEndDate() throws TooManyDateFoundException {
 		dictionary.put("field","end date");
 		userInput = userInput.replace("end date", "enddate");
 		dictionary.put("description",userInput);

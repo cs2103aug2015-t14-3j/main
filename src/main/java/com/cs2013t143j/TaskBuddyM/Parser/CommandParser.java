@@ -48,7 +48,7 @@ public class CommandParser {
 		arr = userInput.split(" ");
 	}
 	
-	public void extractShortcutCommand(Map<String,String> dictionary) {	
+	public void extractShortcutCommand(Map<String,String> dictionary) throws InvalidInputException {	
 		if (arr[0].equalsIgnoreCase("a") || arr[0].equalsIgnoreCase("c") || arr[0].equalsIgnoreCase("i")) {
 			dictionary.put(DIC_COMMAND, COMMAND_ADD);
 		} else if (arr[0].equalsIgnoreCase("del") || arr[0].equalsIgnoreCase("r")) {
@@ -75,7 +75,7 @@ public class CommandParser {
 		}
 	}
 	
-	public void extractCommand(Map<String,String> dictionary) {
+	public void extractCommand(Map<String,String> dictionary) throws InvalidInputException {
 		for (int i = 0; i < arr.length; i++) {
 			if (arr[i].equalsIgnoreCase(COMMAND_ADD) || arr[i].equalsIgnoreCase(COMMAND_CREATE) || arr[i].equalsIgnoreCase(COMMAND_INSERT)) {
 				dictionary.put(DIC_COMMAND, COMMAND_ADD);
@@ -110,7 +110,7 @@ public class CommandParser {
 				break;
 			}else if (i == arr.length - 1) {
 				dictionary.put(DIC_COMMAND,null);
-				//throw new InvalidInputException(ERROR_COMMAND);
+				throw new InvalidInputException(ERROR_COMMAND);
 			}
 		}
 	}
