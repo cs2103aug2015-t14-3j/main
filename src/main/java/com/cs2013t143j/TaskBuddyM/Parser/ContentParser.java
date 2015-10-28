@@ -18,7 +18,12 @@ public class ContentParser {
 	public Map<String,String> extractAddContent() {
 		replaceWhiteSpace();
 		dictionary.put("description",userInput);
-		dictionary = date.parse(dictionary);
+		try {
+			dictionary = date.parse(dictionary);
+		} catch (TooManyDateFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		return dictionary;
 	}
@@ -55,7 +60,12 @@ public class ContentParser {
 	}
 
 	private void retrieveDisplayDate() {
-		dictionary = date.parse(dictionary);
+		try {
+			dictionary = date.parse(dictionary);
+		} catch (TooManyDateFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		/*String temp = dictionary.remove("startDate");
 		if(temp != null) {
 			temp = temp.substring(temp.indexOf(" ")+1, temp.length());
@@ -111,7 +121,12 @@ public class ContentParser {
 		dictionary.put("field","start date");
 		userInput = userInput.replace("start date", "startdate");
 		dictionary.put("description",userInput);
-		dictionary = date.parse(dictionary);
+		try {
+			dictionary = date.parse(dictionary);
+		} catch (TooManyDateFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		dictionary.put("newValue",dictionary.remove("startDate"));
 	}
 
@@ -119,7 +134,12 @@ public class ContentParser {
 		dictionary.put("field","end date");
 		userInput = userInput.replace("end date", "enddate");
 		dictionary.put("description",userInput);
-		dictionary = date.parse(dictionary);
+		try {
+			dictionary = date.parse(dictionary);
+		} catch (TooManyDateFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		dictionary.put("newValue",dictionary.remove("endDate"));
 	}
 
