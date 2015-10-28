@@ -6,6 +6,9 @@
  * 5. search				(s)
  * 6. undo					(u)
  * 7. help					(h)
+ * 8. done					(f)
+ * 9. redo					(z)
+ * 10. clear				(x)
  */
 
 package com.cs2013t143j.TaskBuddyM.Parser;
@@ -14,6 +17,7 @@ import java.util.Map;
 public class CommandParser {
 	
 	private static final String COMMAND_ADD = "add";
+	private static final String COMMAND_CLEAR = "clear";
 	private static final String COMMAND_CREATE = "create";
 	private static final String COMMAND_DELETE = "delete";
 	private static final String COMMAND_DISPLAY = "display";
@@ -26,13 +30,14 @@ public class CommandParser {
 	private static final String COMMAND_SHOW = "show";
 	private static final String COMMAND_UPDATE = "update";
 	private static final String COMMAND_UNDO = "undo";
+	private static final String COMMAND_REDO = "redo";
 
 	private static final String DIC_COMMAND = "command";
 	private static final String DIC_SUBCOMMAND = "subCommand";
 	
 	private static final String DISPLAY_COLOR = "color";
 	
-	private static final String ERROR_COMMAND = "Invalid command entered.";
+	private static final String ERROR_COMMAND = "Invalid command";
 	
 	private String userInput=null;
 	private String[] arr;
@@ -59,6 +64,12 @@ public class CommandParser {
 			dictionary.put(DIC_COMMAND, COMMAND_UNDO);
 		} else if (arr[0].equalsIgnoreCase("h")) {
 			dictionary.put(DIC_COMMAND, COMMAND_HELP);
+		} else if (arr[0].equalsIgnoreCase("z")) {
+			dictionary.put(DIC_COMMAND,COMMAND_REDO);
+		} else if (arr[0].equalsIgnoreCase("x")) {
+			dictionary.put(DIC_COMMAND,COMMAND_CLEAR);
+		} else if (arr[0].equalsIgnoreCase("f")) {
+			dictionary.put(DIC_COMMAND,COMMAND_DONE);
 		} else {
 			extractCommand(dictionary);
 		}
@@ -76,7 +87,7 @@ public class CommandParser {
 				dictionary.put(DIC_COMMAND, COMMAND_DISPLAY);
 				index = ++i;
 				break;
-			} else if (arr[i].equalsIgnoreCase(COMMAND_EDIT) || arr[i].equalsIgnoreCase(COMMAND_UPDATE)) {
+			}  else if (arr[i].equalsIgnoreCase(COMMAND_EDIT) || arr[i].equalsIgnoreCase(COMMAND_UPDATE)) {
 				dictionary.put(DIC_COMMAND, COMMAND_EDIT);
 				break;
 			} else if (arr[i].equalsIgnoreCase(COMMAND_SEARCH)) {
@@ -91,7 +102,13 @@ public class CommandParser {
 			} else if (arr[i].equalsIgnoreCase(COMMAND_DONE)) {
 				dictionary.put(DIC_COMMAND,COMMAND_DONE);
 				break;
-			} else if (i == arr.length - 1){
+			} else if (arr[i].equalsIgnoreCase(COMMAND_REDO)) {
+				dictionary.put(DIC_COMMAND,COMMAND_REDO);
+				break;
+			} else if (arr[i].equalsIgnoreCase(COMMAND_CLEAR)) {
+				dictionary.put(DIC_COMMAND,COMMAND_CLEAR);
+				break;
+			}else if (i == arr.length - 1) {
 				dictionary.put(DIC_COMMAND,null);
 				//throw new InvalidInputException(ERROR_COMMAND);
 			}
@@ -108,6 +125,7 @@ public class CommandParser {
 				case "from":
 				case "after":
 				case "due":
+				case "done":
 				case "incomplete":
 				case "floating":
 					dictionary.put(DIC_SUBCOMMAND, arr[index]);

@@ -1,5 +1,6 @@
 package com.cs2013t143j.TaskBuddyM.Logic;
 import java.time.LocalDateTime;
+
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,6 +8,11 @@ import java.util.Map;
 
 import com.cs2013t143j.TaskBuddyM.Command.TaskSorter;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
+import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
+
+
+
+
 public class Displayer {
 	
 	private StorageAccess storage;
@@ -51,10 +57,16 @@ public class Displayer {
 		}
 
 		ArrayList<Task> allTasks = storage.display();
+		ArrayList<Task> doneTasks = storage.displayDone();
+		
+		
 		
 		if (subCommand == null) {
 			//Display All
 			tasks = extractAll(allTasks);
+			
+			
+			
 		} else {
 			switch (subCommand) {
 			case "on":
@@ -74,7 +86,11 @@ public class Displayer {
 				break;
 			case "floating":
 				tasks = extractFloating(allTasks);
+			case "done":
+				tasks = extractDone(doneTasks);
 				break;
+				
+				
 			default:
 				return INVALID_DISPLAY_SUB;
 			}
@@ -267,8 +283,11 @@ public class Displayer {
 		return result;
 	}
 	
-	private String convertDate(String date) {
-		String[] splitDate = date.split("/");
+	private String convertDate(String _date) {
+	
+		//String date = _date.split(" ")[-1];
+		
+		String[] splitDate = _date.split("/");
 		
 		return splitDate[0] + "-" + splitDate[1] + "-" + splitDate[2];
 	}
@@ -277,5 +296,12 @@ public class Displayer {
 		output = DISPLAY_HEADER_ALL;
 		return allTasks;
 	}
+
+	
+	private ArrayList<Task> extractDone(ArrayList<Task> doneTasks) {
+		output = DISPLAY_HEADER_ALL;
+		return doneTasks;
+	}
+
 
 }
