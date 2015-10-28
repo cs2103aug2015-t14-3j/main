@@ -31,14 +31,14 @@ public class TBGUI {
             {
                 // Install WebLaF as application L&F
                 WebLookAndFeel.install ();
-                //Logic logic = new Logic();
+                Logic logic = new Logic();
                 JFrame myFrame = new JFrame("TaskBuddy");
                 myFrame.setLocationRelativeTo(null);
                 myFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                 myFrame.setSize(800,600);
                 //myFrame.setPreferredSize(new Dimension(800,600));
                 myFrame.setLayout(new BorderLayout());
-                MainPanel menuPanel = new MainPanel(null);
+                MainPanel menuPanel = new MainPanel(logic);
 
                 myFrame.add(menuPanel,BorderLayout.CENTER);
                 myFrame.setVisible(true);

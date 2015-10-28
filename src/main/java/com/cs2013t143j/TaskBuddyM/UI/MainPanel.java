@@ -147,7 +147,7 @@ public class MainPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String input = ((WebTextField)e.getSource()).getText();
         if ("commandLine".equals(e.getActionCommand())) {
-        	String output = "lala";//logic.executeCommand(input);
+        	String output = logic.executeCommand(input);
         	textArea.setText(output);
         	WebTextField inputField = (WebTextField)e.getSource();
         	inputField.setText("");
