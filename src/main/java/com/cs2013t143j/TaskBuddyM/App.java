@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.cs2013t143j.TaskBuddyM.Parser.DateParser;
+import com.cs2013t143j.TaskBuddyM.Parser.TooManyDateFoundException;
 import com.joestelmach.natty.*;
 /**
  * Hello world!
@@ -18,8 +19,8 @@ public class App
     public static void main( String[] args )
     {
 //    	Parser p = new Parser();
-//    	
-//    	List<DateGroup> groups = p.parse("the day before next thursday");
+//    	int groupid = 0;
+//    	List<DateGroup> groups = p.parse("sing from today to xxxxxxx");
 //    	for(DateGroup group:groups) {
 //    	  List dates = group.getDates();
 //    	  int line = group.getLine();
@@ -28,12 +29,27 @@ public class App
 //    	  String syntaxTree = group.getSyntaxTree().toStringTree();
 //    	  boolean isRecurreing = group.isRecurring();
 //    	  Date recursUntil = group.getRecursUntil();
-//    	  System.out.println( dates.get(1).toString() );
+//    	  
+//    	  System.out.println( "DateGroup # " + groupid);
+//    	  System.out.println( dates.get(0).toString() );
+//    	  //System.out.println( dates.get(1).toString() );
+//    	  System.out.println( "line # " + line );
+//    	  System.out.println( "column # " + line );
+//    	  System.out.println( "matchingValue # " + matchingValue );
+//    	  System.out.println( "syntaxTree # " + syntaxTree );
+//    	  System.out.println( "AbsPosition # " + group.getAbsolutePosition() );
+//
+//    	  groupid++;
 //    	}
     	Map<String, String> dMap = new HashMap<>();
-    	dMap.put("description", "sing today");
+    	dMap.put("description", "sing");
     	DateParser dateParser = new DateParser(dMap);
-    	dMap = dateParser.parse();
+    	try {
+			dMap = dateParser.parse();
+		} catch (TooManyDateFoundException e1) {
+			// TODO Auto-generated catch block
+			System.out.println(e1.getMessage());
+		}
     	//for (String t : dMap.keySet()) {
 	    	// this check may be redundant 
     		String s = "None";
