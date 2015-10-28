@@ -266,5 +266,4 @@ public class Displayer {
 		output = DISPLAY_HEADER_ALL;
 		return allTasks;
 	}
-
 }

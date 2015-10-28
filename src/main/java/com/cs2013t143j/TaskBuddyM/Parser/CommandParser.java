@@ -6,6 +6,8 @@
  * 5. search				(s)
  * 6. undo					(u)
  * 7. help					(h)
+ * 8. redo					(z)
+ * 9. clear					(x)
  */
 
 package com.cs2013t143j.TaskBuddyM.Parser;
@@ -14,6 +16,7 @@ import java.util.Map;
 public class CommandParser {
 	
 	private static final String COMMAND_ADD = "add";
+	private static final String COMMAND_CLEAR = "clear";
 	private static final String COMMAND_CREATE = "create";
 	private static final String COMMAND_DELETE = "delete";
 	private static final String COMMAND_DISPLAY = "display";
@@ -26,13 +29,14 @@ public class CommandParser {
 	private static final String COMMAND_SHOW = "show";
 	private static final String COMMAND_UPDATE = "update";
 	private static final String COMMAND_UNDO = "undo";
+	private static final String COMMAND_REDO = "redo";
 
 	private static final String DIC_COMMAND = "command";
 	private static final String DIC_SUBCOMMAND = "subCommand";
 	
 	private static final String DISPLAY_COLOR = "color";
 	
-	private static final String ERROR_COMMAND = "Invalid command entered.";
+	private static final String ERROR_COMMAND = "Invalid command";
 	
 	private String userInput=null;
 	private String[] arr;
@@ -43,7 +47,7 @@ public class CommandParser {
 		arr = userInput.split(" ");
 	}
 	
-	public void extractShortcutCommand(Map<String,String> dictionary) {	
+	public void extractShortcutCommand(Map<String,String> dictionary) throws InvalidInputException {	
 		if (arr[0].equalsIgnoreCase("a") || arr[0].equalsIgnoreCase("c") || arr[0].equalsIgnoreCase("i")) {
 			dictionary.put(DIC_COMMAND, COMMAND_ADD);
 		} else if (arr[0].equalsIgnoreCase("del") || arr[0].equalsIgnoreCase("r")) {
@@ -59,12 +63,16 @@ public class CommandParser {
 			dictionary.put(DIC_COMMAND, COMMAND_UNDO);
 		} else if (arr[0].equalsIgnoreCase("h")) {
 			dictionary.put(DIC_COMMAND, COMMAND_HELP);
-		} else {
+		} else if (arr[0].equalsIgnoreCase("z")) {
+			dictionary.put(DIC_COMMAND,COMMAND_REDO);
+		} else if (arr[0].equalsIgnoreCase("x")) {
+			dictionary.put(DIC_COMMAND,COMMAND_CLEAR);
+		}else {
 			extractCommand(dictionary);
 		}
 	}
 	
-	public void extractCommand(Map<String,String> dictionary) {
+	public void extractCommand(Map<String,String> dictionary) throws InvalidInputException {
 		for (int i = 0; i < arr.length; i++) {
 			if (arr[i].equalsIgnoreCase(COMMAND_ADD) || arr[i].equalsIgnoreCase(COMMAND_CREATE) || arr[i].equalsIgnoreCase(COMMAND_INSERT)) {
 				dictionary.put(DIC_COMMAND, COMMAND_ADD);
@@ -91,9 +99,15 @@ public class CommandParser {
 			} else if (arr[i].equalsIgnoreCase(COMMAND_DONE)) {
 				dictionary.put(DIC_COMMAND,COMMAND_DONE);
 				break;
-			} else if (i == arr.length - 1){
+			} else if (arr[i].equalsIgnoreCase(COMMAND_REDO)) {
+				dictionary.put(DIC_COMMAND,COMMAND_REDO);
+				break;
+			} else if (arr[i].equalsIgnoreCase(COMMAND_CLEAR)) {
+				dictionary.put(DIC_COMMAND,COMMAND_CLEAR);
+				break;
+			}else if (i == arr.length - 1) {
 				dictionary.put(DIC_COMMAND,null);
-				//throw new InvalidInputException(ERROR_COMMAND);
+				throw new InvalidInputException(ERROR_COMMAND);
 			}
 		}
 	}
