@@ -41,6 +41,19 @@ public class DeleteTest {
 	}
 	
 	@Test
+	public void testDeleteInvalidInt() {
+		Logic logic = new Logic(false);
+		
+		command = new AddFloating("aaa");
+		logic.test2(command);
+		
+		command = new DeleteCommand("Hello");
+		output = logic.test2(command);
+		
+		assertEquals("com.cs2013t143j.TaskBuddyM.Command.CommandAttributeError: Index provided is not an Integer", output);
+	}
+	
+	@Test
 	public void testDeleteBelowRange() {
 		Logic logic = new Logic(false);
 		
@@ -59,7 +72,7 @@ public class DeleteTest {
 		command = new DeleteCommand("-1");
 		output = logic.test2(command);
 		
-		assertEquals("Invalid Index specified\n\n", output);
+		assertEquals("com.cs2013t143j.TaskBuddyM.Command.CommandAttributeError: Index provided must be larger than 0", output);
 	}
 	
 	@Test
@@ -81,6 +94,6 @@ public class DeleteTest {
 		command = new DeleteCommand("4");
 		output = logic.test2(command);
 		
-		assertEquals("Invalid Index specified\n\n", output);
+		assertEquals("com.cs2013t143j.TaskBuddyM.Command.CommandAttributeError: Index providded is larger than last display", output);
 	}
 }

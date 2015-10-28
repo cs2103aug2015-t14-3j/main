@@ -11,14 +11,12 @@ public class DisplayCommand implements Command {
 	
 	protected static ArrayList<Task> tasks = new ArrayList<Task>();
 	
+	protected String date;
+	
 	protected final String DISPLAY_FORMAT = "%d.%s\t%s\t%s\t%s\n";
-	protected final String FREE_DAY = "Looks like there is nothing on your schedule. Enjoy your day!!!\n\n";
-
-	protected String convertDate(String date) {
-		String[] splitDate = date.split("/");
-		
-		return splitDate[0] + "-" + splitDate[1] + "-" + splitDate[2];
-	}
+	protected final String FREE_DAY = "Looks like there is nothing on your schedule. Enjoy your day!!!";
+	
+	protected final String ERROR_DATE = "Invalid or no date specified";
 	
 	public static ArrayList<Task> getLastDisplay() {
 		return tasks;
@@ -69,7 +67,7 @@ public class DisplayCommand implements Command {
 		return output;
 	}
 
-	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) {
+	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) throws CommandAttributeError {
 		return null;
 	}
 }

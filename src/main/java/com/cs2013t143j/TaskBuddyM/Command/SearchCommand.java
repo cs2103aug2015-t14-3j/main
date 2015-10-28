@@ -10,7 +10,7 @@ public class SearchCommand implements Command {
 	private String searchKey;
 	
 	private final String SEARCH_HEADER = "Search returned %d result(s):\n";
-	private final String DISPLAY_FORMAT = "%d.%s\n";
+	private final String DISPLAY_FORMAT = "%d.%s\t%s\t%s\t%s\n";
 	private final String NO_RESUTS = "Search returned no results\n\n";
 	
 	private ArrayList<Task> result = new ArrayList<Task>();
@@ -47,12 +47,29 @@ public class SearchCommand implements Command {
 			Task task = result.get(i);
 			
 			String description = task.getDescription();
-
-			output += String.format(DISPLAY_FORMAT, index, description);			
+			String start = task.getStartDateTimeInString();
+			String end = task.getEndDateTimeInString();
+			
+			if (start == "") {
+				start = "-";
+			}
+			
+			if (end == "") {
+				end = "-";
+			}
+			
+			boolean done = task.isDone();
+			String isDone = "No";
+			
+			if (done == true) {
+				isDone = "Yes";
+			}else {
+				isDone = "No";
+			}
+			
+			output += String.format(DISPLAY_FORMAT, index, description, start, end, isDone);			
 			++index;
 		}
-		
-		output += "\n";
 		return output;
 	}
 }

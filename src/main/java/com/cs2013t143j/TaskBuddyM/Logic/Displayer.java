@@ -283,8 +283,11 @@ public class Displayer {
 		return result;
 	}
 	
-	private String convertDate(String date) {
-		String[] splitDate = date.split("/");
+	private String convertDate(String _date) {
+	
+		//String date = _date.split(" ")[-1];
+		
+		String[] splitDate = _date.split("/");
 		
 		return splitDate[0] + "-" + splitDate[1] + "-" + splitDate[2];
 	}
@@ -293,9 +296,12 @@ public class Displayer {
 		output = DISPLAY_HEADER_ALL;
 		return allTasks;
 	}
+
 	
 	private ArrayList<Task> extractDone(ArrayList<Task> doneTasks) {
 		output = DISPLAY_HEADER_ALL;
 		return doneTasks;
 	}
+
+
 }
