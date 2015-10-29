@@ -1,20 +1,20 @@
 edit test
+delete test
 ddue1 &&20-10-2015 00:00
 ddue2 &&20-10-2015 00:00
-dfrom1&&18-10-2015 00:00&&23-10-2015 00:00
+dfrom1  &&18-10-2015 00:00&&23-10-2015 00:00
 dfrom2  &&18-10-2015 00:00&&22-10-2015 00:00
 don1  &&20-10-2015 00:00&&30-10-2015 00:00
 don2  &&20-10-2015 00:00&&28-10-2015 00:00
-hello world
+hellow world
 hello
 he-man
 bye world
 learn piano
-go ruunning
+go running
 submit report &&15-10-2015 00:00
 hand in homework &&25-10-2015 00:00
 recess week  &&10-10-2015 00:00&&15-10-2015 00:00
-hell week&&23-11-2015 00:00&&15-10-2015 00:00
-delete test
-holidays  &&06-12-2015 00:00&&10-01-2016 00:00
+hell week  &&23-11-2015 00:00&&04-12-2015 00:00
 abc
+holidays  &&06-12-2015 00:00&&10-01-2016 00:00

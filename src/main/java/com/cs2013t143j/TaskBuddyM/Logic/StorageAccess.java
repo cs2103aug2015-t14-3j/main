@@ -10,6 +10,7 @@ import com.cs2013t143j.TaskBuddyM.Storage.Task;
 public class StorageAccess {
 	
 	private Storage storage;
+	boolean storageCheck = false;
 	
 	public StorageAccess(Storage _storage) {
 		this.storage = _storage;
@@ -30,7 +31,18 @@ public class StorageAccess {
 	
 	
 	public ArrayList<Task> display() {
-		return storage.display();
+		ArrayList<Task> tasks = storage.display();
+		
+		if (storageCheck) {
+			int i = 0;
+			
+			for (i=0;i<tasks.size();++i) {
+				Task task = tasks.get(i);
+				task.print();
+			}
+		}
+		
+		return tasks;
 	}
 	
 	public void updateDescription(int index, String newdescription){

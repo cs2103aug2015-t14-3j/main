@@ -43,8 +43,13 @@ public class Logic {
 	}
 	
 	public String executeCommand(String command) {
-
-		Map<String,String> parsedCommand = parser.getDictionary(command);
+		Map<String,String> parsedCommand;
+		
+		try {
+			parsedCommand = parser.getDictionary(command);
+		} catch (Exception e) {
+			return e.toString();
+		}
 		
 		System.out.println(parsedCommand.toString());
 		Command commandToExecute;
