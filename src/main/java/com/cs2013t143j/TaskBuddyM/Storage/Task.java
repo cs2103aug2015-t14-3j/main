@@ -100,6 +100,10 @@ public String getEndDateTimeInString() {
 	return getDateTimeInString(getEndDateTime());
 }
 
+public void print() {
+	System.out.printf("%s,%s,%s\n",this.getDescription(),this.getStartDateTimeInString(),this.getEndDateTimeInString());
+}
+
 }
 
 

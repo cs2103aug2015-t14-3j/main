@@ -112,8 +112,8 @@ private static Task createDeadLineTask(String[] splitComponents) {
 
 private static Task createEventTask(String[] splitComponents){
  String description = splitComponents[0];
- String startDateString = splitComponents[0];
- String endDateString = splitComponents[1];
+ String startDateString = splitComponents[1];
+ String endDateString = splitComponents[2];
  
  
 LocalDateTime startDate = convertToDate(startDateString);
