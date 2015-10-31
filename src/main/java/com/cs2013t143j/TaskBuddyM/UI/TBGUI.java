@@ -4,8 +4,13 @@ import java.awt.BorderLayout;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -33,6 +38,7 @@ public class TBGUI {
                 WebLookAndFeel.install ();
                 Logic logic = new Logic();
                 JFrame myFrame = new JFrame("TaskBuddy");
+                loadResources();
                 myFrame.setLocationRelativeTo(null);
                 myFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                 myFrame.setSize(800,600);
@@ -45,4 +51,14 @@ public class TBGUI {
             }
         } );
     }
+    
+    private static void loadResources() {
+    	try {
+    	     GraphicsEnvironment ge = 
+    	         GraphicsEnvironment.getLocalGraphicsEnvironment();
+    	     ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("src/main/res/augie.ttf")));
+    	} catch (IOException|FontFormatException e) {
+    	     //Handle exception
+    	}
+	}
 }

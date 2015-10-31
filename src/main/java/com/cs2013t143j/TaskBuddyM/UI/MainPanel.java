@@ -63,7 +63,7 @@ public class MainPanel extends JPanel implements ActionListener {
         textArea.setBorder(new EmptyBorder(10, 20, 20, 20));
         textArea.setEditable(false);
         textArea.setOpaque(false);
-        textArea.setFont(new Font("Crystal",Font.PLAIN, 18));
+        textArea.setFont(new Font("augie",Font.PLAIN, 20));
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
 
@@ -90,30 +90,32 @@ public class MainPanel extends JPanel implements ActionListener {
                     setOpaque(false);
                 }});
             }
-//            @Override
-//            public boolean isCellEditable(int data, int columns)
-//            {
-//                return true;
-//            }
-//            @Override
-//            public Component prepareRenderer(TableCellRenderer r, int data, int columns)
-//            {
-//                Component c = super.prepareRenderer(r, data, columns);
-// 
-//                if (data % 2 == 0)
-//                    c.setBackground(Color.WHITE);
-// 
-//                else
-//                    c.setBackground(Color.LIGHT_GRAY);
-// 
-//                return c;
-//            }
-       };
+//          @Override
+//          public boolean isCellEditable(int data, int columns)
+//          {
+//              return true;
+//          }
+//          @Override
+//          public Component prepareRenderer(TableCellRenderer r, int data, int columns)
+//          {
+//              Component c = super.prepareRenderer(r, data, columns);
+//
+//              if (data % 2 == 0)
+//                  c.setBackground(Color.WHITE);
+//
+//              else
+//                  c.setBackground(Color.LIGHT_GRAY);
+//
+//              return c;
+//          }
+        };
+        table.setFont(new Font("augie", Font.PLAIN, 20));
+        table.setRowHeight(28);
         
 		JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scroll.setOpaque(false);
 		scroll.getViewport().setOpaque(false);
-        textControlsPane.add(scroll, BorderLayout.CENTER);
+		textControlsPane.add(scroll, BorderLayout.CENTER);
 	}
 	
 	private void initCommandLinePanel(JPanel main) {
