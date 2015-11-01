@@ -32,12 +32,9 @@ public class DeleteTest {
 		logic.test2(command);
 		
 		command = new DeleteCommand("2");
-		logic.test2(command);
-		
-		command = new DisplayAll();
 		output = logic.test2(command);
 		
-		assertEquals("Here is your entire schedule:\n1.aaa\t-\t-\tNo\n2.ccc\t-\t-\tNo\n", output);
+		assertEquals("Deleted task(s) 2\n1.aaa\t-\t-\n2.ccc\t-\t-\n", output);
 	}
 	
 	@Test

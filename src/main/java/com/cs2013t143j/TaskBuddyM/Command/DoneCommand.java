@@ -25,11 +25,11 @@ public class DoneCommand implements Command {
 		}
 		
 		Task taskToChange = lastDisplay.get(index-1);
-
-		boolean status = taskToChange.isDone();
+		ArrayList<Task> allTasks = sAccess.display();
 		
-		taskToChange.setIsDone(!status);
-		sAccess.writeToFile();
+		int storageIndex = allTasks.indexOf(taskToChange);
+		
+		sAccess.done(storageIndex);
 		
 		String output = String.format(DONE_OUTPUT, index);
 		return output;

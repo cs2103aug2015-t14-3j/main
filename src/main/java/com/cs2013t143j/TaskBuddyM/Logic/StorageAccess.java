@@ -28,8 +28,6 @@ public class StorageAccess {
 		storage.done(index);
 	}
 	
-	
-	
 	public ArrayList<Task> display() {
 		ArrayList<Task> tasks = storage.display();
 		
@@ -62,7 +60,6 @@ public class StorageAccess {
 	}
 
 	public ArrayList<Task> displayDone() {
-		// TODO Auto-generated method stub
 		return storage.displayDoneTasks();
 	}
 }

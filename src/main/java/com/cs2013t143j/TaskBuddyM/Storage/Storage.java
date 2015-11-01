@@ -64,7 +64,8 @@ public void done(int index){
 		
 		boolean done = true;
 		
-		Task task = tasks.get(index-1);
+		Task task = tasks.get(index);
+		task.print();
 		task.setIsDone(done);
 		doneTasks.add(task);
 		

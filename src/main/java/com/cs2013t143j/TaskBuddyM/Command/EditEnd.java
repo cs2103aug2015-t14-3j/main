@@ -42,6 +42,10 @@ public class EditEnd extends EditCommand {
 		sAccess.updateEndDate(storageIndex, newDate);
 		
 		String output = String.format(EDIT_OUTPUT, editIndex, "end date", newValue);
+
+		Command command = new DisplayLast();
+		output += command.execute(lastDisplay, sAccess);
+		
 		return output;
 	}
 }

@@ -10,6 +10,7 @@ import com.cs2013t143j.TaskBuddyM.Command.CommandAttributeError;
 import com.cs2013t143j.TaskBuddyM.Command.DeleteCommand;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayAfter;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayAll;
+import com.cs2013t143j.TaskBuddyM.Command.DisplayDone;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayDue;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayFloating;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayFrom;
@@ -136,6 +137,8 @@ public class CommandCreate {
 				return new DisplayIncomplete();
 			case "floating":
 				return new DisplayFloating();
+			case "done":
+				return new DisplayDone();
 			}
 		}
 		throw new CommandAttributeError(INVALID_DISPLAY);

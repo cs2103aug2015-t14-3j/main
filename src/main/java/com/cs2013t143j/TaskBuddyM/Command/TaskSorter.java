@@ -11,6 +11,13 @@ public class TaskSorter implements Comparator<Task> {
 		LocalDateTime t1EndDateTime = t1.getEndDateTime();
 		LocalDateTime t2EndDateTime = t2.getEndDateTime();
 		
+		if (t1EndDateTime == null && t2EndDateTime == null) {
+			String description1 = t1.getDescription();
+			String description2 = t2.getDescription();
+			
+			return description1.compareTo(description2);
+		}
+		
 		if (t1EndDateTime == null) {
 			return 1;
 		} else if (t2EndDateTime == null) {

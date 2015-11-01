@@ -45,6 +45,10 @@ public class EditDescription extends EditCommand {
 		sAccess.updateDescription(storageIndex, newValue);
 		
 		String output = String.format(EDIT_OUTPUT, editIndex, "description", newValue);
+
+		Command command = new DisplayLast();
+		output += command.execute(lastDisplay, sAccess);
+		
 		return output;
 	}
 }

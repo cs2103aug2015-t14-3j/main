@@ -42,6 +42,10 @@ public class EditStart extends EditCommand {
 		sAccess.updateStartDate(storageIndex, newDate);
 		
 		String output = String.format(EDIT_OUTPUT, editIndex, "start date", newValue);
+
+		Command command = new DisplayLast();
+		output += command.execute(lastDisplay, sAccess);
+		
 		return output;
 	}
 }
