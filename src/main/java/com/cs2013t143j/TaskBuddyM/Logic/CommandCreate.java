@@ -1,6 +1,7 @@
 package com.cs2013t143j.TaskBuddyM.Logic;
 
 import java.util.Map;
+import java.util.Stack;
 
 import com.cs2013t143j.TaskBuddyM.Command.AddDeadline;
 import com.cs2013t143j.TaskBuddyM.Command.AddEvent;
@@ -22,6 +23,8 @@ import com.cs2013t143j.TaskBuddyM.Command.EditEnd;
 import com.cs2013t143j.TaskBuddyM.Command.EditStart;
 import com.cs2013t143j.TaskBuddyM.Command.HelpCommand;
 import com.cs2013t143j.TaskBuddyM.Command.SearchCommand;
+import com.cs2013t143j.TaskBuddyM.Command.UndoCommand;
+import com.cs2013t143j.TaskBuddyM.Parser.TBParserStub;
 
 public class CommandCreate {
 	
@@ -50,7 +53,26 @@ public class CommandCreate {
 	private final String INVALID_EDIT = "Invalid field to edit";
 	private final String INVALID_COMMAND = "Command not specified";
 	
-	public Command createCommand(Map<String,String> dictionary) throws CommandAttributeError {
+	private TBParserStub parser;
+	
+	private Stack<Command> undoStack;
+	
+	public CommandCreate() {
+		parser = new TBParserStub();
+		undoStack = new Stack<Command>();
+	}
+	
+	public Command createCommand(String _command) throws CommandAttributeError {
+		
+		Map<String,String> dictionary;
+		
+		try {
+			dictionary = parser.getDictionary(_command);
+		} catch (Exception e) {
+			throw new CommandAttributeError(e.toString());
+		}
+		
+		System.out.println(dictionary.toString());
 		
 		Command command;
 		
@@ -59,15 +81,18 @@ public class CommandCreate {
 		switch (commandType) {
 		case "add":
 			command = createAdd(dictionary);
+			undoStack.push(command);
 			break;
 		case "display":
 			command = createDisplay(dictionary);
 			break;
 		case "delete":
 			command = createDelete(dictionary);
+			undoStack.push(command);
 			break;
 		case "edit":
 			command = createEdit(dictionary);
+			undoStack.push(command);
 			break;
 		case "search":
 			command = createSearch(dictionary);
@@ -77,6 +102,9 @@ public class CommandCreate {
 			break;
 		case "done":
 			command = createDone(dictionary);
+			break;
+		case "undo":
+			command = createUndo();
 			break;
 		default:
 			throw new CommandAttributeError(INVALID_COMMAND);
@@ -97,6 +125,16 @@ public class CommandCreate {
 		} else {
 			return new AddFloating(description);
 		}
+	}
+	
+	private Command createUndo() {
+		if (undoStack.isEmpty()) {
+			return new UndoCommand(null);
+		}
+		
+		Command commandToUndo = undoStack.pop();
+		
+		return new UndoCommand(commandToUndo);
 	}
 	
 	private Command createDelete(Map<String,String> dict) {

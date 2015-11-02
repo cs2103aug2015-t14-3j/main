@@ -8,6 +8,7 @@ import com.cs2013t143j.TaskBuddyM.Storage.Task;
 public class DeleteCommand implements Command {
 	
 	private String delIndex;
+	private Task deletedTask;
 	
 	private final String DELETE_OUTPUT = "Deleted task(s) %s\n";
 	
@@ -46,6 +47,7 @@ public class DeleteCommand implements Command {
 			}
 
 			Task taskToDelete = lastDisplay.remove(index-1);
+			deletedTask = taskToDelete;
 			ArrayList<Task> allTasks = sAccess.display();
 
 			int storageIndex = allTasks.indexOf(taskToDelete);
@@ -69,5 +71,9 @@ public class DeleteCommand implements Command {
 		output += command.execute(lastDisplay, sAccess);
 		
 		return output;
+	}
+	
+	public void undo(StorageAccess sAccess) {
+		sAccess.add(deletedTask);
 	}
 }

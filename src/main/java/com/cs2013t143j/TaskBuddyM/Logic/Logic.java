@@ -1,11 +1,9 @@
 package com.cs2013t143j.TaskBuddyM.Logic;
 import java.util.ArrayList;
-import java.util.Map;
 
 import com.cs2013t143j.TaskBuddyM.Command.Command;
 import com.cs2013t143j.TaskBuddyM.Command.CommandAttributeError;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayCommand;
-import com.cs2013t143j.TaskBuddyM.Parser.TBParserStub;
 import com.cs2013t143j.TaskBuddyM.Storage.Storage;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
@@ -14,7 +12,6 @@ public class Logic {
 	private static ArrayList<Task> lastDisplay = new ArrayList<Task>();
 
 	private Storage storage;
-	private TBParserStub parser;
 	private StorageAccess storageAccess;
 
 	private CommandCreate commandCreator;
@@ -25,7 +22,6 @@ public class Logic {
 		lastDisplay = new ArrayList<Task>();
 		
 		storage = new Storage();
-		parser = new TBParserStub();
 		storageAccess = new StorageAccess(storage);
 		
 		commandCreator = new CommandCreate();
@@ -38,24 +34,13 @@ public class Logic {
 		output = new String();
 		
 		lastDisplay = new ArrayList<Task>();
-		
-		parser = new TBParserStub();
 	}
 	
 	public String executeCommand(String command) {
-		Map<String,String> parsedCommand;
-		
-		try {
-			parsedCommand = parser.getDictionary(command);
-		} catch (Exception e) {
-			return e.toString();
-		}
-		
-		System.out.println(parsedCommand.toString());
 		Command commandToExecute;
 		
 		try{
-			commandToExecute = commandCreator.createCommand(parsedCommand);
+			commandToExecute = commandCreator.createCommand(command);
 		} catch (CommandAttributeError e) {
 			return e.toString();
 		}

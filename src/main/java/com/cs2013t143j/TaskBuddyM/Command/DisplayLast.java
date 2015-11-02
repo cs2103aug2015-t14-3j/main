@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
-
-
 public class DisplayLast extends DisplayCommand {
 	
 	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) {

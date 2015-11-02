@@ -7,4 +7,5 @@ import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
 public interface Command {
 	String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) throws CommandAttributeError;
+	void undo(StorageAccess sAccess);
 }

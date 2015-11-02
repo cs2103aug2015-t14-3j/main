@@ -35,6 +35,7 @@ public class AddEvent extends AddCommand {
 		LocalDateTime end = convertDateTime(endDate);
 		
 		Task task = new Task(description, start, end);
+		addedTask = task;
 		
 		sAccess.add(task);
 		

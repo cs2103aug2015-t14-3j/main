@@ -34,4 +34,8 @@ public class DoneCommand implements Command {
 		String output = String.format(DONE_OUTPUT, index);
 		return output;
 	}
+	
+	public void undo(StorageAccess sAccess) {
+		return;
+	}
 }

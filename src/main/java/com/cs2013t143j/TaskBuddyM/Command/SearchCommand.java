@@ -72,4 +72,8 @@ public class SearchCommand implements Command {
 		}
 		return output;
 	}
+	
+	public void undo(StorageAccess sAccess) {
+		return;
+	}
 }

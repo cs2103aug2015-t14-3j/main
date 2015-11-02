@@ -72,5 +72,7 @@ public class HelpCommand implements Command {
 		
 	}
 	
-	
+	public void undo(StorageAccess sAccess) {
+		return;
+	}
 }

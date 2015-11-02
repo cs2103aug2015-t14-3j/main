@@ -73,4 +73,8 @@ public class DisplayCommand implements Command {
 	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) throws CommandAttributeError {
 		return null;
 	}
+	
+	public void undo(StorageAccess sAccess) {
+		return;
+	}
 }

@@ -18,6 +18,7 @@ public class AddFloating extends AddCommand {
 		}
 
 		Task task = new Task(description);
+		addedTask = task;
 		
 		sAccess.add(task);
 		

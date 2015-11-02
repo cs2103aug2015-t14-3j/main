@@ -3,10 +3,15 @@ package com.cs2013t143j.TaskBuddyM.Command;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+
+import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
+import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
 public abstract class AddCommand implements Command {
 	
 	protected String description;
+	protected Task addedTask;
 	
 	protected final String ADD_OUTPUT = "Added new Task to TaskBuddy\n\n";
 	
@@ -46,6 +51,7 @@ public abstract class AddCommand implements Command {
 	}
 	
 	private String createFormatter(String dateTime) throws CommandAttributeError {
+		//Generates a format string for DateTimeFormatter based on the input datetime string
 		
 		String format = "HH ";
 		String date;
@@ -83,5 +89,13 @@ public abstract class AddCommand implements Command {
 		}
 		
 		return format;
+	}
+	
+	public void undo(StorageAccess sAccess) {
+		ArrayList<Task> allTasks = sAccess.display();
+
+		int storageIndex = allTasks.indexOf(addedTask);
+
+		sAccess.delete(storageIndex);
 	}
 }
