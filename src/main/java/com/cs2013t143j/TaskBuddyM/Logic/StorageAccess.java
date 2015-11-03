@@ -6,18 +6,19 @@ import java.util.ArrayList;
 
 import com.cs2013t143j.TaskBuddyM.Storage.Storage;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
+import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
 
 public class StorageAccess {
 	
 	private Storage storage;
-	boolean storageCheck = false;
 	
 	public StorageAccess(Storage _storage) {
 		this.storage = _storage;
 	}
 
-	public void add(Task newTask) {
+	public boolean add(Task newTask) {
 		storage.add(newTask);
+		return true;
 	}
 	
 	public void delete(int index) {
@@ -28,20 +29,16 @@ public class StorageAccess {
 		storage.done(index);
 	}
 	
-	public ArrayList<Task> display() {
-		ArrayList<Task> tasks = storage.display();
-		
-		if (storageCheck) {
-			int i = 0;
-			
-			for (i=0;i<tasks.size();++i) {
-				Task task = tasks.get(i);
-				task.print();
-			}
-		}
-		
-		return tasks;
+	public void clear() {
+		storage.clearAll();
 	}
+	
+	public ArrayList<Task> display() {
+		return storage.display();
+	}
+	
+	
+	
 	
 	public void updateDescription(int index, String newdescription){
 		storage.updateDescription(index, newdescription);
@@ -60,6 +57,7 @@ public class StorageAccess {
 	}
 
 	public ArrayList<Task> displayDone() {
+		// TODO Auto-generated method stub
 		return storage.displayDoneTasks();
 	}
 }
