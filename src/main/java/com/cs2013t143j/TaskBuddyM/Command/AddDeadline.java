@@ -10,6 +10,7 @@ public class AddDeadline extends AddCommand {
 	
 	private String endDate;
 
+	private final String INFO = "Add DeadLine: %s %s";
 	
 	public AddDeadline(String _description, String _endDate) {
 		description = _description;
@@ -39,5 +40,9 @@ public class AddDeadline extends AddCommand {
 		return output;
 	}
 
-
+	public String info() {
+		String output = String.format(INFO, description, endDate);
+		
+		return output;
+	}
 }

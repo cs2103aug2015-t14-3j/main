@@ -9,6 +9,8 @@ public class DisplayFrom extends DisplayCommand {
 	
 	private String output = new String();
 	
+	private final String INFO = "Display From %s";
+	
 	private final String DISPLAY_HEADER_FROM = "Here are your events on %s:\n";
 	
 	public DisplayFrom(String _date) {
@@ -61,5 +63,11 @@ public class DisplayFrom extends DisplayCommand {
 		}
 		
 		return result;
+	}
+	
+	public String info() {
+		String output = String.format(INFO, date);
+		
+		return output;
 	}
 }

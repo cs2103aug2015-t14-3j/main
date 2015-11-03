@@ -12,6 +12,8 @@ public class EditEnd extends EditCommand {
 	private Task editedTask;
 	private LocalDateTime oldDateTime;
 	
+	private final String INFO = "Edit no.%s end date to %s";
+	
 	public EditEnd(String _index, String _newValue) {
 		newValue = _newValue;
 		index = _index;
@@ -59,5 +61,11 @@ public class EditEnd extends EditCommand {
 		int storageIndex = allTasks.indexOf(editedTask);
 		
 		sAccess.updateEndDate(storageIndex, oldDateTime);
+	}
+	
+	public String info() {
+		String output = String.format(INFO, index, newValue);
+		
+		return output;
 	}
 }

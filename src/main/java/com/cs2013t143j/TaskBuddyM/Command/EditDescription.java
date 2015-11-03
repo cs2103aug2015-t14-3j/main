@@ -11,6 +11,8 @@ public class EditDescription extends EditCommand {
 	private String oldValue;
 	private Task editedTask;
 	
+	private final String INFO = "Edit no.%s desctiption to %s";
+	
 	private final String ERROR_DESCRIPTION = "Invalid Description";
 	
 	public EditDescription(String _index, String _newValue) {
@@ -62,5 +64,11 @@ public class EditDescription extends EditCommand {
 		int storageIndex = allTasks.indexOf(editedTask);
 		
 		sAccess.updateDescription(storageIndex, oldValue);
+	}
+	
+	public String info() {
+		String output = String.format(INFO, index, newValue);
+		
+		return output;
 	}
 }

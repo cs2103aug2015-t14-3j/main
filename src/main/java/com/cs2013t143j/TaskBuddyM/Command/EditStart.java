@@ -12,6 +12,8 @@ public class EditStart extends EditCommand {
 	private Task editedTask;
 	private LocalDateTime oldDateTime;
 	
+	private final String INFO = "Edit no.%s start date to %s";
+	
 	public EditStart(String _index, String _newValue) {
 		newValue = _newValue;
 		index = _index;
@@ -59,5 +61,11 @@ public class EditStart extends EditCommand {
 		int storageIndex = allTasks.indexOf(editedTask);
 		
 		sAccess.updateStartDate(storageIndex, oldDateTime);
+	}
+	
+	public String info() {
+		String output = String.format(INFO, index, newValue);
+		
+		return output;
 	}
 }

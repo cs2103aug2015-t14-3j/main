@@ -1,0 +1,12 @@
+Deleting Tasks
+The command to mark a task as done is ‘done’ followed by the index of the task to be marked from the last 'display' command
+
+e.g.
+display
+
+  Description          Start Date         End Date
+1.Submit report                           10/9/2015
+2.Do CE4                                  1/1/2020
+3.Go for a Jog
+
+done 3 would mark the third task(Go for a Jog) as done

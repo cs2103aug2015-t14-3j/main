@@ -9,4 +9,4 @@ display (displays all incomplete tasks)
 2.Do CE4                                  1/1/2020
 3.Go for a Jog
 
-delete 3 would delete the third task from memory 
+delete 3 would delete the third task (Go for a Jog)

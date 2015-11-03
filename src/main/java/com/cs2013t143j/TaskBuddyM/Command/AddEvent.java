@@ -11,6 +11,8 @@ public class AddEvent extends AddCommand {
 	private String endDate;
 	private String startDate;
 	
+	private final String INFO = "Add Event: %s %s %s";
+	
 	public AddEvent(String _description, String _startDate, String _endDate) {
 		description = _description;
 		startDate = _startDate;
@@ -41,6 +43,12 @@ public class AddEvent extends AddCommand {
 		
 		Command command = new DisplayAll();
 		String output = command.execute(lastDisplay, sAccess);
+		
+		return output;
+	}
+	
+	public String info() {
+		String output = String.format(INFO, description, startDate, endDate);
 		
 		return output;
 	}

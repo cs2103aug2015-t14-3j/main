@@ -10,6 +10,8 @@ public class DeleteCommand implements Command {
 	private String delIndex;
 	private Task deletedTask;
 	
+	private final String INFO = "Delete no.%s";
+	
 	private final String DELETE_OUTPUT = "Deleted task(s) %s\n";
 	
 	private final String ERROR_INT = "Index provided is not an Integer";
@@ -75,5 +77,11 @@ public class DeleteCommand implements Command {
 	
 	public void undo(StorageAccess sAccess) {
 		sAccess.add(deletedTask);
+	}
+	
+	public String info() {
+		String output = String.format(INFO, delIndex);
+		
+		return output;
 	}
 }

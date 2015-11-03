@@ -12,6 +12,8 @@ public class UndoCommand implements Command {
 	private final String EMPTY_STACK = "No more commands to undo. ";
 	private final String UNDO = "Undid the last undoable command. ";
 	
+	private final String INFO = "Undo: ";
+	
 	public UndoCommand(Command command) {
 		commandToUndo = command;
 	}
@@ -38,5 +40,11 @@ public class UndoCommand implements Command {
 	public void undo(StorageAccess sAccess) {
 		return;
 	}	
+	
+	public String info() {
+		String output = INFO + commandToUndo.info();
+		
+		return output;
+	}
 	
 }

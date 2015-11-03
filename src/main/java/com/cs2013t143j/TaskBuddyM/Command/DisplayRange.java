@@ -16,6 +16,8 @@ public class DisplayRange extends DisplayCommand {
 	private String endDate;
 	private String output = new String();
 	
+	private final String INFO = "Display Range %s %s";
+	
 	private final String DATE_FORMAT = "HH dd/MM/yyyy";
 	private final String DISPLAY_HEADER_AFTER = "Here are your tasks due after %s:\n";
 	
@@ -111,6 +113,12 @@ public class DisplayRange extends DisplayCommand {
 		}
 		
 		return result;
+	}
+	
+	public String info() {
+		String output = String.format(INFO, startDate, endDate);
+		
+		return output;
 	}
 	
 }

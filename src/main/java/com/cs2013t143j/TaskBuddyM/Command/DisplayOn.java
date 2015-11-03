@@ -9,6 +9,8 @@ public class DisplayOn extends DisplayCommand {
 	
 	private String output = new String();
 	
+	private final String INFO = "Display On %s";
+	
 	private final String DISPLAY_HEADER_DATE = "Here is your schedule for %s:\n";
 	
 	public DisplayOn(String _date) {
@@ -65,6 +67,12 @@ public class DisplayOn extends DisplayCommand {
 		}
 		
 		return result;
+	}
+	
+	public String info() {
+		String output = String.format(INFO, date);
+		
+		return output;
 	}
 
 }

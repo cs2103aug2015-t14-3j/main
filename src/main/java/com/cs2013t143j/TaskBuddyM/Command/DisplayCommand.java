@@ -13,6 +13,8 @@ public class DisplayCommand implements Command {
 	
 	protected static ArrayList<Task> tasks = new ArrayList<Task>();
 	
+	private final String INFO = "Display Command: Should not be instantiated";
+	
 	protected String date;
 	
 	private String dateTimeFormat = "dd MMM yyyy HH:mm";
@@ -76,5 +78,11 @@ public class DisplayCommand implements Command {
 	
 	public void undo(StorageAccess sAccess) {
 		return;
+	}
+	
+	public String info() {
+		String output = INFO;
+		
+		return output;
 	}
 }

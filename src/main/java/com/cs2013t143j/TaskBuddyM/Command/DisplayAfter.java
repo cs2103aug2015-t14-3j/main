@@ -13,6 +13,8 @@ public class DisplayAfter extends DisplayCommand {
 	
 	private String output = new String();
 	
+	private final String INFO = "Display After %s";
+	
 	private final String DATE_FORMAT = "HH dd/MM/yyyy";
 	private final String DISPLAY_HEADER_AFTER = "Here are your tasks due after %s:\n";
 	
@@ -66,5 +68,11 @@ public class DisplayAfter extends DisplayCommand {
 		}
 		
 		return result;
+	}
+	
+	public String info() {
+		String output = String.format(INFO,  date);
+		
+		return output;
 	}
 }

@@ -15,7 +15,6 @@ import com.cs2013t143j.TaskBuddyM.Command.DisplayDone;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayDue;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayFloating;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayFrom;
-import com.cs2013t143j.TaskBuddyM.Command.DisplayIncomplete;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayOn;
 import com.cs2013t143j.TaskBuddyM.Command.DoneCommand;
 import com.cs2013t143j.TaskBuddyM.Command.EditDescription;
@@ -171,8 +170,6 @@ public class CommandCreate {
 				return new DisplayAfter(date);
 			case "due":
 				return new DisplayDue(date);
-			case "incomplete":
-				return new DisplayIncomplete();
 			case "floating":
 				return new DisplayFloating();
 			case "done":
