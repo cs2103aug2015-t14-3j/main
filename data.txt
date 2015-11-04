@@ -21,7 +21,7 @@ he-man
 learn piano
 <<<<<<< HEAD
 go ruunning
-hand in homework &&25-10-2015 00:00
+hand in homework &&04-11-2015 19:00&&12-12-2015 00:00
 delete test
 holidays  &&06-12-2015 00:00&&10-01-2016 00:00
 abc
