@@ -50,7 +50,7 @@ public class CommandCreate {
 	
 	private final String INVALID_DISPLAY = "Invalid display subcommand";
 	private final String INVALID_EDIT = "Invalid field to edit";
-	private final String INVALID_COMMAND = "Command not specified";
+	private final String INVALID_COMMAND = "Invalid Command specified";
 	
 	private TBParserStub parser;
 	
@@ -102,9 +102,9 @@ public class CommandCreate {
 		case "done":
 			command = createDone(dictionary);
 			break;
-		case "undo":
-			command = createUndo();
-			break;
+//		case "undo":
+//			command = createUndo();
+//			break;
 		default:
 			throw new CommandAttributeError(INVALID_COMMAND);
 		}
