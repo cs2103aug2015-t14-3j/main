@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 public abstract class EditCommand implements Command {
 	
 	protected String index;
+	protected String newValue;
 	protected final String EDIT_OUTPUT = "Edited task no.%d %s to %s\n";
 	private final String DATE_FORMAT1 = "HH dd/MM/yyyy";
 	protected final String INVALID_INDEX = "Invalid Index specified\n\n";
