@@ -24,6 +24,7 @@ import com.cs2013t143j.TaskBuddyM.Command.HelpCommand;
 import com.cs2013t143j.TaskBuddyM.Command.SearchCommand;
 import com.cs2013t143j.TaskBuddyM.Command.UndoCommand;
 import com.cs2013t143j.TaskBuddyM.Parser.TBParserStub;
+import com.cs2013t143j.TaskBuddyM.Command.ClearCommand;
 
 public class CommandCreate {
 	
@@ -105,6 +106,9 @@ public class CommandCreate {
 //		case "undo":
 //			command = createUndo();
 //			break;
+		case "clear":
+			command = new ClearCommand();
+			break;
 		default:
 			throw new CommandAttributeError(INVALID_COMMAND);
 		}
