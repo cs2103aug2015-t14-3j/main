@@ -11,7 +11,7 @@ public class TBParserStub {
 	final String DIC_SUBCOMMAND = "subCommand";
 	
 	final String ERROR_NO_COMMAND = "No command entered.";
-	final String ERROR_NO_COMMAND = "No command entered.";
+	//final String ERROR_NO_COMMAND = "No command entered.";
 	
 	CommandParser cmd;
 	DateParser date;
