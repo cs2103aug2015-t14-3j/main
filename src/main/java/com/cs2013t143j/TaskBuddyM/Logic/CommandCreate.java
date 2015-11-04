@@ -24,6 +24,7 @@ import com.cs2013t143j.TaskBuddyM.Command.EditStart;
 import com.cs2013t143j.TaskBuddyM.Command.HelpCommand;
 import com.cs2013t143j.TaskBuddyM.Command.SearchCommand;
 import com.cs2013t143j.TaskBuddyM.Command.UndoCommand;
+import com.cs2013t143j.TaskBuddyM.Command.RedoCommand;
 import com.cs2013t143j.TaskBuddyM.Parser.TBParserStub;
 import com.cs2013t143j.TaskBuddyM.Command.ClearCommand;
 
@@ -59,10 +60,12 @@ public class CommandCreate {
 	private TBParserStub parser;
 	
 	private Stack<Command> undoStack;
+	private Stack<Command> redoStack;
 	
 	public CommandCreate() {
 		parser = new TBParserStub();
 		undoStack = new Stack<Command>();
+		redoStack = new Stack<Command>();
 	}
 	
 	public Command createCommand(String _command) throws CommandAttributeError {
@@ -106,9 +109,12 @@ public class CommandCreate {
 		case "done":
 			command = createDone(dictionary);
 			break;
-//		case "undo":
-//			command = createUndo();
-//			break;
+		case "undo":
+			command = createUndo();
+			break;
+		case "redo":
+			command = createRedo();
+			break;
 		case "clear":
 			command = new ClearCommand();
 			break;
@@ -140,7 +146,21 @@ public class CommandCreate {
 		
 		Command commandToUndo = undoStack.pop();
 		
+		redoStack.push(commandToUndo);
+		
 		return new UndoCommand(commandToUndo);
+	}
+	
+	private Command createRedo() {
+		if (redoStack.isEmpty()) {
+			return new RedoCommand(null);
+		}
+		
+		Command commandToRedo = redoStack.pop();
+		
+		undoStack.push(commandToRedo);
+		
+		return new RedoCommand(commandToRedo);
 	}
 	
 	private Command createDelete(Map<String,String> dict) {

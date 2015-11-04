@@ -10,6 +10,7 @@ public class EditStart extends EditCommand {
 	
 	private Task editedTask;
 	private LocalDateTime oldDateTime;
+	private LocalDateTime newDateTime;
 	
 	private final String INFO = "Edit no.%s start date to %s";
 	
@@ -34,7 +35,7 @@ public class EditStart extends EditCommand {
 			throw new CommandAttributeError(ERROR_NEGATIVE);
 		}
 		
-		LocalDateTime newDate = convertDateTime(newValue);
+		newDateTime = convertDateTime(newValue);
 
 		Task taskToEdit = lastDisplay.get(editIndex - 1);
 		editedTask = taskToEdit;
@@ -44,7 +45,7 @@ public class EditStart extends EditCommand {
 		
 		int storageIndex = allTasks.indexOf(taskToEdit);
 		
-		sAccess.updateStartDate(storageIndex, newDate);
+		sAccess.updateStartDate(storageIndex, newDateTime);
 		
 		String output = String.format(EDIT_OUTPUT, editIndex, "start date", newValue);
 
@@ -60,6 +61,14 @@ public class EditStart extends EditCommand {
 		int storageIndex = allTasks.indexOf(editedTask);
 		
 		sAccess.updateStartDate(storageIndex, oldDateTime);
+	}
+	
+	public void redo(StorageAccess sAccess) {
+		ArrayList<Task> allTasks = sAccess.display();
+	
+		int storageIndex = allTasks.indexOf(editedTask);
+		
+		sAccess.updateStartDate(storageIndex, newDateTime);
 	}
 	
 	public String info() {

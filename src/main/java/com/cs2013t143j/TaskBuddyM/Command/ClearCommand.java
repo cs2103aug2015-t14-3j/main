@@ -20,13 +20,14 @@ public class ClearCommand implements Command {
 		return;
 	}
 
-	@Override
 	public String info() {
 		String output = INFO;
 		
 		return output;
 	}
-	
-	
+
+	public void redo(StorageAccess sAccess) {
+		return;
+	}
 
 }

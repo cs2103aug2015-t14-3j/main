@@ -84,4 +84,8 @@ public class SearchCommand implements Command {
 		
 		return output;
 	}
+	
+	public void redo(StorageAccess sAccess) {
+		return;
+	}
 }

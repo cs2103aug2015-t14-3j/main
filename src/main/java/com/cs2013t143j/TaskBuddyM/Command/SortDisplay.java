@@ -70,4 +70,8 @@ public class SortDisplay implements Command {
 		
 		return output;
 	}
+	
+	public void redo(StorageAccess sAccess) {
+		return;
+	}
 }

@@ -51,4 +51,8 @@ public class DoneCommand implements Command {
 		
 		return output;
 	}
+	
+	public void redo(StorageAccess sAccess) {
+		return;
+	}
 }
