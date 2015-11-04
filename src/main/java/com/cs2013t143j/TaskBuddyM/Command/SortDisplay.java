@@ -12,6 +12,8 @@ public class SortDisplay implements Command {
 	protected final String DISPLAY_FORMAT = "%d.%s\t%s\t%s\t%s\n";
 	private final String SORTED_HEADER = "Here are your tasks sorted by start date\n";
 	protected final String FREE_DAY = "Looks like there is nothing on your schedule. Enjoy your day!!!\n\n";
+	
+	private final String INFO = "Sort Display by start date";
 
 	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) {
 		
@@ -55,6 +57,16 @@ public class SortDisplay implements Command {
 			output += String.format(DISPLAY_FORMAT, index, description, start, end, isDone);			
 			++index;
 		}
+		
+		return output;
+	}
+	
+	public void undo(StorageAccess sAccess) {
+		return;
+	}
+	
+	public String info() {
+		String output = INFO;
 		
 		return output;
 	}

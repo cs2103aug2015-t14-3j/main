@@ -13,6 +13,8 @@ public class SearchCommand implements Command {
 	private final String DISPLAY_FORMAT = "%d.%s\t%s\t%s\t%s\n";
 	private final String NO_RESUTS = "Search returned no results\n\n";
 	
+	private final String INFO = "Search: %s";
+	
 	private ArrayList<Task> result = new ArrayList<Task>();
 	
 	public SearchCommand(String _searchKey) {
@@ -70,6 +72,16 @@ public class SearchCommand implements Command {
 			output += String.format(DISPLAY_FORMAT, index, description, start, end, isDone);			
 			++index;
 		}
+		return output;
+	}
+	
+	public void undo(StorageAccess sAccess) {
+		return;
+	}
+	
+	public String info() {
+		String output = String.format(INFO, searchKey);
+		
 		return output;
 	}
 }

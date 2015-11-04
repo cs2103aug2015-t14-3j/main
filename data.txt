@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 asda
 hello&&27-10-2015 21:00
 lalala&&29-10-2015 21:00
@@ -13,11 +14,13 @@ dfrom1&&18-10-2015 00:00&&23-10-2015 00:00
 dfrom2  &&18-10-2015 00:00&&22-10-2015 00:00
 reading&&20-10-2015 00:00&&30-10-2015 00:00
 don2  &&20-10-2015 00:00&&28-10-2015 00:00
+=======
+>>>>>>> origin/master
 hello world
 hello
 he-man
-bye world
 learn piano
+<<<<<<< HEAD
 go ruunning
 report&&15-10-2015 00:00
 hand in homework &&25-10-2015 00:00
@@ -39,3 +42,10 @@ cs23&&04-11-2015 10:00
 424224&&05-11-2015 17:00
 running start &&05-11-2015 17:00
 cs2103
+=======
+delete test
+edited
+aaa &&03-11-2015 17:00
+aaa
+report &&04-11-2015 17:00
+>>>>>>> origin/master

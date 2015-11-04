@@ -18,6 +18,12 @@ public class DoneCommand {
 	
 public String execute(Map<String,String> parsedCommand){
 	
+	
+	
+	
+	
+	
+	
 	int index = Integer.parseInt(parsedCommand.get(DONE_INDEX));	
 	
 	storage.done(index);

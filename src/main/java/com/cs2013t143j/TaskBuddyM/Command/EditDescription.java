@@ -8,6 +8,10 @@ import com.cs2013t143j.TaskBuddyM.Storage.Task;
 public class EditDescription extends EditCommand {
 	
 	private String newValue;
+	private String oldValue;
+	private Task editedTask;
+	
+	private final String INFO = "Edit no.%s desctiption to %s";
 	
 	private final String ERROR_DESCRIPTION = "Invalid Description";
 	
@@ -37,6 +41,8 @@ public class EditDescription extends EditCommand {
 		}
 		
 		Task taskToEdit = lastDisplay.get(editIndex - 1);
+		editedTask = taskToEdit;
+		oldValue = taskToEdit.getDescription();
 		
 		ArrayList<Task> allTasks = sAccess.display();
 		
@@ -45,6 +51,24 @@ public class EditDescription extends EditCommand {
 		sAccess.updateDescription(storageIndex, newValue);
 		
 		String output = String.format(EDIT_OUTPUT, editIndex, "description", newValue);
+
+		Command command = new DisplayLast();
+		output += command.execute(lastDisplay, sAccess);
+		
+		return output;
+	}
+	
+	public void undo(StorageAccess sAccess) {
+		ArrayList<Task> allTasks = sAccess.display();
+		
+		int storageIndex = allTasks.indexOf(editedTask);
+		
+		sAccess.updateDescription(storageIndex, oldValue);
+	}
+	
+	public String info() {
+		String output = String.format(INFO, index, newValue);
+		
 		return output;
 	}
 }

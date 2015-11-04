@@ -8,8 +8,11 @@ import com.cs2013t143j.TaskBuddyM.Storage.Task;
 public class DeleteCommand implements Command {
 	
 	private String delIndex;
+	private Task deletedTask;
 	
-	private final String DELETE_OUTPUT = "Deleted task no.%d\n\n";
+	private final String INFO = "Delete no.%s";
+	
+	private final String DELETE_OUTPUT = "Deleted task(s) %s\n";
 	
 	private final String ERROR_INT = "Index provided is not an Integer";
 	private final String ERROR_NEGATIVE = "Index provided must be larger than 0";
@@ -21,28 +24,64 @@ public class DeleteCommand implements Command {
 	
 	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) throws CommandAttributeError {
 		
-		int index = 0;
+		ArrayList<Integer> indexes = new ArrayList<Integer>();
 		
-		try{
-			index = Integer.parseInt(delIndex);
-		} catch (NumberFormatException e) {
-			throw new CommandAttributeError(ERROR_INT);
+		String[] indexList = delIndex.split(" ");
+		
+		int i = 0;
+		int converted;
+		
+		for (i=0; i<indexList.length; ++i) {
+			try{
+				converted = Integer.parseInt(indexList[i]);
+				indexes.add(converted);
+			} catch (NumberFormatException e) {
+				throw new CommandAttributeError(ERROR_INT);
+			}
 		}
-				
-		if (index > lastDisplay.size()) {
-			throw new CommandAttributeError(ERROR_RANGE);
-		} else if (index <= 0) {
-			throw new CommandAttributeError(ERROR_NEGATIVE);
+		
+		for (i=0; i<indexes.size(); ++i) {
+			int index = indexes.get(i);
+			if (index > lastDisplay.size()) {
+				throw new CommandAttributeError(ERROR_RANGE);
+			} else if (index <= 0) {
+				throw new CommandAttributeError(ERROR_NEGATIVE);
+			}
+
+			Task taskToDelete = lastDisplay.remove(index-1);
+			deletedTask = taskToDelete;
+			ArrayList<Task> allTasks = sAccess.display();
+
+			int storageIndex = allTasks.indexOf(taskToDelete);
+
+			sAccess.delete(storageIndex);
 		}
 		
-		Task taskToDelete = lastDisplay.get(index-1);
-		ArrayList<Task> allTasks = sAccess.display();
+		String deleted = new String();
 		
-		int storageIndex = allTasks.indexOf(taskToDelete);
+		for (i=0; i<indexes.size(); ++i) {
+			deleted += String.valueOf(indexes.get(i));
+			
+			if (i != indexes.size()-1) {
+				deleted += ",";
+			}
+		}
+
+		String output = String.format(DELETE_OUTPUT, deleted);
 		
-		sAccess.delete(storageIndex);
+		Command command = new DisplayLast();
+		output += command.execute(lastDisplay, sAccess);
 		
-		String output = String.format(DELETE_OUTPUT, index);
+		return output;
+	}
+	
+	public void undo(StorageAccess sAccess) {
+		sAccess.add(deletedTask);
+	}
+	
+	public String info() {
+		String output = String.format(INFO, delIndex);
+		
 		return output;
 	}
 }

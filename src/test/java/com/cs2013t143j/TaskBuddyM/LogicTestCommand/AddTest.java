@@ -23,7 +23,7 @@ public class AddTest {
 		command = new AddFloating("aaa");
 		output = logic.test2(command);
 		
-		assertEquals("Here is your entire schedule:\n1.aaa\t-\t-\tNo\n", output);
+		assertEquals("Here is your entire schedule:\n1.aaa\t-\t-\n", output);
 
 	}
 	
@@ -31,13 +31,13 @@ public class AddTest {
 	public void testAddEvent() {
 		Logic logic = new Logic(false);
 		
-		command = new AddEvent("aaa", "20/10/2015", "21/10/2015");
+		command = new AddEvent("aaa", "20/10/2015", "1/1/2016");
 		logic.test2(command);
 
 		command = new DisplayAll();
 		output = logic.test2(command);
 		
-		assertEquals("Here is your entire schedule:\n1.aaa\t20-10-2015 23:00\t21-10-2015 23:00\tNo\n", output);
+		assertEquals("Here is your entire schedule:\n1.aaa\t20 Oct 2015 23:00\t01 Jan 2016 23:00\n", output);
 
 	}
 	
@@ -45,13 +45,13 @@ public class AddTest {
 	public void testAddDeadline() {
 		Logic logic = new Logic(false);
 		
-		command = new AddDeadline("aaa", "21/10/2015");
+		command = new AddDeadline("aaa", "1/10/2015");
 		logic.test2(command);
 		
 		command = new DisplayAll();
 		output = logic.test2(command);
 		
-		assertEquals("Here is your entire schedule:\n1.aaa\t-\t21-10-2015 23:00\tNo\n", output);
+		assertEquals("Here is your entire schedule:\n1.aaa\t-\t01 Oct 2015 23:00\n", output);
 
 	}
 	
@@ -73,15 +73,5 @@ public class AddTest {
 		output = logic.test2(command);
 		
 		assertEquals("com.cs2013t143j.TaskBuddyM.Command.CommandAttributeError: Invalid Start Date", output);
-	}
-	
-	@Test
-	public void testInvalidDateFormat() {
-		Logic logic = new Logic(false);
-		
-		command = new AddDeadline("aaa", "2/10/2015");
-		output = logic.test2(command);
-		
-		assertEquals("com.cs2013t143j.TaskBuddyM.Command.CommandAttributeError: Invalid date format(Should be dd/mm/yyyy)", output);
 	}
 }

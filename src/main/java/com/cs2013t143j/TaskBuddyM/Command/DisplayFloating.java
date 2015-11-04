@@ -10,6 +10,8 @@ public class DisplayFloating extends DisplayCommand {
 	
 	private String output = new String();
 	
+	private final String INFO = "Display Floating";
+	
 	private final String DISPLAY_HEADER_FLOAT = "Here are all your floating tasks:\n";
 		
 	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) {
@@ -42,5 +44,11 @@ public class DisplayFloating extends DisplayCommand {
 			}
 		}
 		return result;
+	}
+	
+	public String info() {
+		String output = INFO;
+		
+		return output;
 	}
 }

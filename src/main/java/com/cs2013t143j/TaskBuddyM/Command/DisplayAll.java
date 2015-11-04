@@ -11,6 +11,8 @@ public class DisplayAll extends DisplayCommand {
 	
 	private final String DISPLAY_HEADER_ALL = "Here is your entire schedule:\n";
 	
+	private final String INFO = "Display All";
+	
 	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) {
 		
 		ArrayList<Task> allTasks = sAccess.display();
@@ -38,5 +40,11 @@ public class DisplayAll extends DisplayCommand {
 			}
 		}
 		return results;
+	}
+	
+	public String info() {
+		String output = INFO;
+		
+		return output;
 	}
 }

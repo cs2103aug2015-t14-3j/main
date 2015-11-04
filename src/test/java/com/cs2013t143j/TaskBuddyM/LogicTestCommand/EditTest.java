@@ -31,12 +31,9 @@ public class EditTest {
 		logic.test2(command);
 		
 		command = new EditDescription("1", "ccc");
-		logic.test2(command);
-		
-		command = new DisplayAll();
 		output = logic.test2(command);
 		
-		assertEquals("Here is your entire schedule:\n1.ccc\t-\t-\tNo\n2.bbb\t-\t-\tNo\n", output);
+		assertEquals("Edited task no.1 description to ccc\n1.bbb\t-\t-\n2.ccc\t-\t-\n", output);
 	}
 	
 	@Test
@@ -53,12 +50,9 @@ public class EditTest {
 		logic.test2(command);
 		
 		command = new EditStart("1", "20/10/2015");
-		logic.test2(command);
-		
-		command = new DisplayAll();
 		output = logic.test2(command);
 		
-		assertEquals("Here is your entire schedule:\n1.aaa\t20-10-2015 23:59\t-\tNo\n2.bbb\t-\t-\tNo\n", output);
+		assertEquals("Edited task no.1 start date to 20/10/2015\n1.aaa\t20 Oct 2015 00:00\t-\n2.bbb\t-\t-\n", output);
 	}
 	
 	@Test
@@ -75,11 +69,8 @@ public class EditTest {
 		logic.test2(command);
 		
 		command = new EditEnd("1", "21/10/2015");
-		logic.test2(command);
-		
-		command = new DisplayAll();
 		output = logic.test2(command);
 		
-		assertEquals("Here is your entire schedule:\n1.aaa\t-\t21-10-2015 23:59\tNo\n2.bbb\t-\t-\tNo\n", output);
+		assertEquals("Edited task no.1 end date to 21/10/2015\n1.aaa\t-\t21 Oct 2015 00:00\n2.bbb\t-\t-\n", output);
 	}
 }

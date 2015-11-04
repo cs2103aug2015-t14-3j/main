@@ -9,6 +9,8 @@ public class DisplayDue extends DisplayCommand {
 	
 	private String output = new String();
 	
+	private final String INFO = "Display Due %s";
+	
 	private final String DISPLAY_HEADER_DUE = "Here are your tasks due on %s:\n";
 	
 	public DisplayDue(String _date) {
@@ -61,5 +63,11 @@ public class DisplayDue extends DisplayCommand {
 		}
 		
 		return result;
+	}
+	
+	public String info() {
+		String output = String.format(INFO, date);
+		
+		return output;
 	}
 }

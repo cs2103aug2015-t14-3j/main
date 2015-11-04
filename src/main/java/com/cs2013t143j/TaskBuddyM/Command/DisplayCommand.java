@@ -1,5 +1,7 @@
 package com.cs2013t143j.TaskBuddyM.Command;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -11,9 +13,14 @@ public class DisplayCommand implements Command {
 	
 	protected static ArrayList<Task> tasks = new ArrayList<Task>();
 	
+	private final String INFO = "Display Command: Should not be instantiated";
+	
 	protected String date;
 	
-	protected final String DISPLAY_FORMAT = "%d.%s\t%s\t%s\t%s\n";
+	private String dateTimeFormat = "dd MMM yyyy HH:mm";
+	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateTimeFormat);
+	
+	protected final String DISPLAY_FORMAT = "%d.%s\t%s\t%s\n";
 	protected final String FREE_DAY = "Looks like there is nothing on your schedule. Enjoy your day!!!";
 	
 	protected final String ERROR_DATE = "Invalid or no date specified";
@@ -38,28 +45,26 @@ public class DisplayCommand implements Command {
 		for (i = 0; i < tasks.size(); ++i) {
 			Task task = tasks.get(i);
 			
+			String start;
+			String end;
+			
 			String description = task.getDescription();
-			String start = task.getStartDateTimeInString();
-			String end = task.getEndDateTimeInString();
+			LocalDateTime _start = task.getStartDateTime();
+			LocalDateTime _end = task.getEndDateTime();
 			
-			if (start == "") {
+			if (_start == null) {
 				start = "-";
+			} else {
+				start = _start.format(formatter);
 			}
 			
-			if (end == "") {
+			if (_end == null) {
 				end = "-";
+			} else {
+				end = _end.format(formatter);
 			}
 			
-			boolean done = task.isDone();
-			String isDone = "No";
-			
-			if (done == true) {
-				isDone = "Yes";
-			}else {
-				isDone = "No";
-			}
-			
-			output += String.format(DISPLAY_FORMAT, index, description, start, end, isDone);			
+			output += String.format(DISPLAY_FORMAT, index, description, start, end);			
 			++index;
 		}
 		
@@ -69,5 +74,15 @@ public class DisplayCommand implements Command {
 
 	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) throws CommandAttributeError {
 		return null;
+	}
+	
+	public void undo(StorageAccess sAccess) {
+		return;
+	}
+	
+	public String info() {
+		String output = INFO;
+		
+		return output;
 	}
 }

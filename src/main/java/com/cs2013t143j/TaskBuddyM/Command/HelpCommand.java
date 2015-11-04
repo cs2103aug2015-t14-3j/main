@@ -1,9 +1,7 @@
 package com.cs2013t143j.TaskBuddyM.Command;
 
-import java.io.BufferedReader;
+import java.awt.Desktop;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -19,58 +17,76 @@ public class HelpCommand implements Command {
 	private String delHelp = "delHelper.txt";
 	private String searchHelp = "searchHelper.txt";
 	private String editHelp = "editHelper.txt";
+	private String doneHelp = "doneHelper.txt";
+	private String undoHelp = "undoHelper.txt";
+	
+	private final String INFO = "Help";
 	
 	private File fileToRead;
 	
-	private final String ERROR_COMMAND = "Invalid Help Command Specified";
+	private final String HELP_DEFAULT = "You can get help for the following commands: add, display, delete, search, undo, done, edit";
+	private final String ERROR_OPEN = "Cannot open help file";
+	private final String HELP_OUT = "Here's the help file for Command: %s\n";
 	
 	public HelpCommand(String _command) {
 		command = _command;
 	}
 
 	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) throws CommandAttributeError {
-		String output = "\n";
+		String output = new String();
 		
 		switch(command) {
 		case "add":
+			output = String.format(HELP_OUT, "ADD");
 			fileToRead = new File(addHelp);
 			break;
 		case "display":
+			output = String.format(HELP_OUT, "DISPLAY");
 			fileToRead = new File(dispHelp);
 			break;
 		case "delete":
+			output = String.format(HELP_OUT, "DELETE");
 			fileToRead = new File(delHelp);
 			break;
 		case "search":
+			output = String.format(HELP_OUT, "SEARCH");
 			fileToRead = new File(searchHelp);
 			break;
+		case "undo":
+			output = String.format(HELP_OUT, "UNDO");
+			fileToRead = new File(undoHelp);
+			break;
+		case "done":
+			output = String.format(HELP_OUT, "DONE");
+			fileToRead = new File(doneHelp);
+			break;
 		case "edit":
+			output = String.format(HELP_OUT, "EDIT");
 			fileToRead = new File(editHelp);
 			break;
 		default:
-			throw new CommandAttributeError(ERROR_COMMAND);
+			return HELP_DEFAULT;
 		}
 		
-		try{
-		BufferedReader reader = new BufferedReader(new FileReader(fileToRead));
-		String line = reader.readLine();
-		while (line != null) {
-		output += line;
-		output += "\n";
-		line = reader.readLine();
-		}
-		reader.close();
-		} catch (FileNotFoundException ex) {
-			//Should not happen unless user deletes all the text files
-		} catch (IOException ex) {
-
+		try {
+			Desktop.getDesktop().open(fileToRead);
+		} catch (IOException e) {
+			throw new CommandAttributeError(ERROR_OPEN);
 		}
 		
-		output += "\n";
+		Command command = new DisplayLast();
+		output += command.execute(lastDisplay, sAccess);
 		
-		return output;
-		
+		return output;		
 	}
 	
-	
+	public void undo(StorageAccess sAccess) {
+		return;
+	}
+
+	public String info() {
+		String output = INFO;
+		
+		return output;
+	}
 }

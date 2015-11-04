@@ -7,6 +7,8 @@ import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
 public class AddFloating extends AddCommand {
 	
+	private final String INFO = "Add Floating: %s";
+	
 	public AddFloating(String _description) {
 		description = _description;
 	}
@@ -18,6 +20,7 @@ public class AddFloating extends AddCommand {
 		}
 
 		Task task = new Task(description);
+		addedTask = task;
 		
 		sAccess.add(task);
 		
@@ -25,5 +28,11 @@ public class AddFloating extends AddCommand {
 		String output = command.execute(lastDisplay, sAccess);
 		
 		return output;
+	}
+	
+	public String info() {
+		String output = String.format(INFO, description);
+		
+		return output;	
 	}
 }

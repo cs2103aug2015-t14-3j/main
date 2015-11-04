@@ -9,6 +9,8 @@ import com.cs2013t143j.TaskBuddyM.Storage.Task;
 public class AddDeadline extends AddCommand {
 	
 	private String endDate;
+
+	private final String INFO = "Add DeadLine: %s %s";
 	
 	public AddDeadline(String _description, String _endDate) {
 		description = _description;
@@ -28,11 +30,18 @@ public class AddDeadline extends AddCommand {
 		LocalDateTime end = convertDateTime(endDate);
 		
 		Task task = new Task(description, end);
+		addedTask = task;
 		
 		sAccess.add(task);
 		
 		Command command = new DisplayAll();
 		String output = command.execute(lastDisplay, sAccess);
+		
+		return output;
+	}
+
+	public String info() {
+		String output = String.format(INFO, description, endDate);
 		
 		return output;
 	}

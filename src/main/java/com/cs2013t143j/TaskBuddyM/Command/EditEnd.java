@@ -9,6 +9,10 @@ import com.cs2013t143j.TaskBuddyM.Storage.Task;
 public class EditEnd extends EditCommand {
 	
 	private String newValue;
+	private Task editedTask;
+	private LocalDateTime oldDateTime;
+	
+	private final String INFO = "Edit no.%s end date to %s";
 	
 	public EditEnd(String _index, String _newValue) {
 		newValue = _newValue;
@@ -34,6 +38,8 @@ public class EditEnd extends EditCommand {
 		LocalDateTime newDate = convertDateTime(newValue);
 
 		Task taskToEdit = lastDisplay.get(editIndex - 1);
+		editedTask = taskToEdit;
+		oldDateTime = taskToEdit.getEndDateTime();
 		
 		ArrayList<Task> allTasks = sAccess.display();
 		
@@ -42,6 +48,24 @@ public class EditEnd extends EditCommand {
 		sAccess.updateEndDate(storageIndex, newDate);
 		
 		String output = String.format(EDIT_OUTPUT, editIndex, "end date", newValue);
+
+		Command command = new DisplayLast();
+		output += command.execute(lastDisplay, sAccess);
+		
+		return output;
+	}
+	
+	public void undo(StorageAccess sAccess) {
+		ArrayList<Task> allTasks = sAccess.display();
+		
+		int storageIndex = allTasks.indexOf(editedTask);
+		
+		sAccess.updateEndDate(storageIndex, oldDateTime);
+	}
+	
+	public String info() {
+		String output = String.format(INFO, index, newValue);
+		
 		return output;
 	}
 }

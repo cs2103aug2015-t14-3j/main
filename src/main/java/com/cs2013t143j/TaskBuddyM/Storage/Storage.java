@@ -2,13 +2,11 @@ package com.cs2013t143j.TaskBuddyM.Storage;
 import java.util.ArrayList;
 
 
+
 import java.time.LocalDateTime;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 import com.cs2013t143j.TaskBuddyM.Storage.StorageIO;
 import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
-
-
-
 
 public class Storage {
 
@@ -17,13 +15,13 @@ public class Storage {
 	
 	
 	
-	public Storage() {
+public Storage() {
 		tasks = StorageIO.readFile();
 	}
 		
-	public void add(Task newTask) {
+public void add(Task newTask) {
 		tasks.add(newTask);
-		writeToFile(); 
+		writeToFile();
 	}
 	
 	public void delete(int index) {
@@ -32,7 +30,6 @@ public class Storage {
 	}
 	
 	public Task getTask(int index) {
-		
 		Task task = tasks.get(index);
 			return task;
 	}
@@ -59,7 +56,26 @@ public class Storage {
 		writeToFile();
 	}
 	
-public void done(int index){
+	public ArrayList<Task> searchTaskWithinPeriod(LocalDateTime startDateTime,LocalDateTime endDateTime)
+	{
+		ArrayList<Task>newTaskList = new ArrayList<Task>();
+		int length = tasks.size()-1;
+		
+		for(int i=0;i<length;i++){
+		
+			if( ((tasks.get(i).getStartDateTime().compareTo(startDateTime))>= 0) & ((tasks.get(i).getEndDateTime().compareTo(endDateTime)) <= 0) )   {
+				newTaskList.add(tasks.get(i));
+			}
+		}
+			return newTaskList;	
+	}
+	
+	public void clearAll() {
+	tasks = new ArrayList<Task>();
+	writeToFile();
+	}
+	
+	public void done(int index){
 		
 		
 		boolean done = true;
@@ -73,11 +89,9 @@ public void done(int index){
 		writeToFile();
 	}
 	
-public ArrayList<Task> displayDoneTasks() {
+	public ArrayList<Task> displayDoneTasks() {
 		return doneTasks;
-}
-	
-	
+	}
 	
 	public ArrayList<Task> display() {
 		return tasks;

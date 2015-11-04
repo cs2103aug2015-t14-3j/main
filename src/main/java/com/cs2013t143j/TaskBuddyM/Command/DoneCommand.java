@@ -9,6 +9,8 @@ public class DoneCommand implements Command {
 
 	private String doneIndex;
 	
+	private final String INFO = "Done no.%s";
+	
 	private final String DONE_OUTPUT = "Changed the done status of task %d\n\n";
 	private final String INVALID_INDEX = "Invalid Index specified\n\n";
 
@@ -16,7 +18,7 @@ public class DoneCommand implements Command {
 		doneIndex = _index;
 	}
 	
-	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) {
+	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) throws CommandAttributeError {
 		
 		int index = Integer.parseInt(doneIndex);
 				
@@ -25,13 +27,28 @@ public class DoneCommand implements Command {
 		}
 		
 		Task taskToChange = lastDisplay.get(index-1);
-
-		boolean status = taskToChange.isDone();
+		ArrayList<Task> allTasks = sAccess.display();
 		
-		taskToChange.setIsDone(!status);
-		sAccess.writeToFile();
+		int storageIndex = allTasks.indexOf(taskToChange);
+		
+		sAccess.done(storageIndex);
 		
 		String output = String.format(DONE_OUTPUT, index);
+		
+		Command command = new DisplayLast();
+		
+		output += command.execute(lastDisplay, sAccess);
+		
+		return output;
+	}
+	
+	public void undo(StorageAccess sAccess) {
+		return;
+	}
+	
+	public String info() {
+		String output = String.format(INFO, doneIndex);
+		
 		return output;
 	}
 }

@@ -1,18 +1,35 @@
 Editing Tasks
-The command to edit a task is ‘edit’ followed by the id number of the task to be removed.
-edit <task number> 
+The command to edit a task is ‘edit’ followed by the id number of the task to be changed, followed by the field to be changed and the new value.
+edit <task number> <field> <newValue>
 
-e.g. ‘edit 10’ will specify the task with id number 10 for editing.
+Valid Fields are description, start date and end date
 
-After specifying the command, the application will show the event and all the related information in the following format: 
-Description		Start Date			End Date 
-report			10 Sept 2015, 0900h		10 Sept 2015, 2359h		
+e.g.
+display (displays all incomplete tasks)
 
-The command to edit any of the field is: <field to change> <new value>
-e.g. description submit report. Repeat the command as needed.
+  Description          Start Date         End Date
+1.Submit report                           10/9/2015
+2.Do CE4                                  1/1/2020
+3.Go for a Jog
 
-The command to cancel editing a task is: edit cancel
-After cancelling, all changes made to the task will not be saved. 
+edit 1 desctiption do homework
 
-The command to end editing a task is: edit end
-After ending, all changes made to the task will be saved. 
+  Description          Start Date         End Date
+1.do homework                             10/9/2015
+2.Do CE4                                  1/1/2020
+3.Go for a Jog
+
+edit 2 start date 15/10/2009
+
+  Description          Start Date         End Date
+1.do homework                             10/9/2015
+2.Do CE4               15/10/2009         1/1/2020
+3.Go for a Jog
+
+edit 3 end date 10/10/2020
+
+
+  Description          Start Date         End Date
+1.do homework                             10/9/2015
+2.Do CE4               15/10/2009         1/1/2020
+3.Go for a Jog				  10/10/2020
