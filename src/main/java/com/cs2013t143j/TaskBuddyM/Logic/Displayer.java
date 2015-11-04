@@ -20,6 +20,13 @@ public class Displayer {
 	
 	private final String DISPLAY_SUB = "subCommand";
 	private final String DISPLAY_DATE = "date";
+	private final String DISPLAY_START_DATE = "startDate";
+	private final String DISPLAY_END_DATE = "endDate";
+			
+	
+	private final String DATE_FORMAT1 = "HHmm dd/MM/yyyy";
+	private final String DATE_FORMAT2 = "HH dd/M/yyyy";
+	
 	
 	private final String DISPLAY_HEADER_DATE = "Here is your schedule for %s:\n";
 	private final String DISPLAY_HEADER_ALL = "Here is your entire schedule:\n";
@@ -41,6 +48,8 @@ public class Displayer {
 		output = new String();
 		String subCommand = parsedCommand.get(DISPLAY_SUB);
 		String date = parsedCommand.get(DISPLAY_DATE);
+		String startDate = parsedCommand.get(DISPLAY_START_DATE);
+		String endDate = parsedCommand.get(DISPLAY_END_DATE);
 		
 		String[] splitDate = new String[10];
 		
@@ -54,17 +63,18 @@ public class Displayer {
 		}
 
 		ArrayList<Task> allTasks = storage.display();
+		//ArrayList<Task> TaskList = storage.SearchPeriod(startDate, endDate);
 		ArrayList<Task> doneTasks = storage.displayDone();
 		
 		
 		
-		if (subCommand == null) {
-			//Display All
+		
+		if(subCommand == null){
+			
 			tasks = extractAll(allTasks);
-			
-			
-			
-		} else {
+		}
+		
+		else {
 			switch (subCommand) {
 			case "on":
 				tasks = extractOn(allTasks, date);
@@ -81,6 +91,8 @@ public class Displayer {
 			case "incomplete":
 				tasks = extractIncomplete(allTasks);
 				break;
+			case "within":
+				tasks= extractWithin(startDate,endDate);
 			case "floating":
 				tasks = extractFloating(allTasks);
 			case "done":
@@ -258,6 +270,71 @@ public class Displayer {
 		
 		return result;
 	}
+	
+private ArrayList<Task> extractWithin(String startDate,String endDate){
+			ArrayList<Task> TaskList = new ArrayList<Task>();
+			
+			LocalDateTime startDateTime = convertDateTime(startDate);
+			LocalDateTime endDateTime = convertDateTime(endDate);
+			
+			TaskList = storage.searchPeriod(startDateTime, endDateTime);
+			
+			return TaskList;
+}
+	
+private LocalDateTime convertDateTime(String dateTime) {
+		
+		if (dateTime == null) {
+			return null;
+		}
+		String[] splitDateTime = dateTime.split(" ");
+		DateTimeFormatter formatter;
+		LocalDateTime dt;
+		
+		if (splitDateTime.length == 1) {
+			//No time specified
+			try {
+				formatter = DateTimeFormatter.ofPattern(DATE_FORMAT1);
+				dt = LocalDateTime.parse("2359 " + dateTime, formatter);
+			} catch (Exception e) {
+				formatter = DateTimeFormatter.ofPattern(DATE_FORMAT2);
+				dt = LocalDateTime.parse("2359 " + dateTime, formatter);
+			}
+			
+			
+			return dt;
+		} else {
+			//Time specified
+			try {
+				formatter = DateTimeFormatter.ofPattern(DATE_FORMAT1);
+				dt = LocalDateTime.parse(dateTime, formatter);
+			} catch (Exception e) {
+				formatter = DateTimeFormatter.ofPattern(DATE_FORMAT2);
+				dt = LocalDateTime.parse(dateTime, formatter);
+			}
+			
+			
+			return dt;
+		}
+	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	private ArrayList<Task> extractFloating(ArrayList<Task> allTasks) {
 		ArrayList<Task> result = new ArrayList<Task>();

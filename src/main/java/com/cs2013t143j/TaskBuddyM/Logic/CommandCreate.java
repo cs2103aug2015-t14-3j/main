@@ -16,6 +16,7 @@ import com.cs2013t143j.TaskBuddyM.Command.DisplayDue;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayFloating;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayFrom;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayOn;
+import com.cs2013t143j.TaskBuddyM.Command.DisplayRange;
 import com.cs2013t143j.TaskBuddyM.Command.DoneCommand;
 import com.cs2013t143j.TaskBuddyM.Command.EditDescription;
 import com.cs2013t143j.TaskBuddyM.Command.EditEnd;
@@ -24,6 +25,7 @@ import com.cs2013t143j.TaskBuddyM.Command.HelpCommand;
 import com.cs2013t143j.TaskBuddyM.Command.SearchCommand;
 import com.cs2013t143j.TaskBuddyM.Command.UndoCommand;
 import com.cs2013t143j.TaskBuddyM.Parser.TBParserStub;
+import com.cs2013t143j.TaskBuddyM.Command.ClearCommand;
 
 public class CommandCreate {
 	
@@ -37,6 +39,8 @@ public class CommandCreate {
 	
 	private final String DISPLAY_SUB = "subCommand";
 	private final String DISPLAY_DATE = "date";
+	private final String DISPLAY_START = "startDate";
+	private final String DISPLAY_END = "endDate";
 	
 	private final String EDIT_INDEX = "index";
 	private final String EDIT_FIELD = "field";
@@ -105,6 +109,9 @@ public class CommandCreate {
 //		case "undo":
 //			command = createUndo();
 //			break;
+		case "clear":
+			command = new ClearCommand();
+			break;
 		default:
 			throw new CommandAttributeError(INVALID_COMMAND);
 		}
@@ -172,6 +179,10 @@ public class CommandCreate {
 				return new DisplayDue(date);
 			case "floating":
 				return new DisplayFloating();
+			case "range":
+				String start = dict.get(DISPLAY_START);
+				String end = dict.get(DISPLAY_END);
+				return new DisplayRange(start, end);
 			case "done":
 				return new DisplayDone();
 			}

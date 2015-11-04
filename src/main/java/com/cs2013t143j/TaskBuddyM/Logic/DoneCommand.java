@@ -24,10 +24,8 @@ public String execute(Map<String,String> parsedCommand){
 	
 	
 	
-	int index = Integer.parseInt(parsedCommand.get(DONE_INDEX));	
-	
+	int index = Integer.parseInt(parsedCommand.get(DONE_INDEX));
 	storage.done(index);
-	
 	String output = String.format(DONE_OUTPUT, index);
 	return output;
     }

@@ -1,6 +1,7 @@
 package com.cs2013t143j.TaskBuddyM.Command;
 
 import java.time.LocalDateTime;
+
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,6 +17,8 @@ public class DisplayCommand implements Command {
 	private final String INFO = "Display Command: Should not be instantiated";
 	
 	protected String date;
+	protected String startDate;
+	protected String endDate;
 	
 	private String dateTimeFormat = "dd MMM yyyy HH:mm";
 	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateTimeFormat);
