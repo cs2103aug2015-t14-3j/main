@@ -1,6 +1,10 @@
 package com.cs2013t143j.TaskBuddyM.Parser;
 
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import com.cs2013t143j.TaskBuddyM.Logic.Logic;
 
 public class ContentParser {
 	
@@ -23,19 +27,27 @@ public class ContentParser {
 	
 	DateParser date;
 	
+	Logger logger = Logger.getLogger(Logic.class.getName());
+	
 	public ContentParser(String userInput, Map<String,String> dictionary) {
 		this.userInput = userInput;
 		this.dictionary = dictionary;
 		date = new DateParser(dictionary);
 	}
 
-	public Map<String,String> extractAddContent() throws TooManyDateFoundException {
+	public Map<String,String> extractAddContent() throws TooManyDateFoundException, InvalidInputException {
 		String[] temp = userInput.split(" ");
 		dictionary.put(DIC_DESCRIPTION, userInput);
 		if(temp.length>1) {
 			replaceWhiteSpace(temp);
 			dictionary = date.parse(dictionary);
 		} 
+		
+		if (dictionary.get(DIC_DESCRIPTION).equals("")) {
+			InvalidInputException e = new InvalidInputException("No descripton entered for new task");
+			logger.log(Level.SEVERE, "Exception(extractAddContent)");
+			throw e;
+		}
 		return dictionary;
 	}
 
