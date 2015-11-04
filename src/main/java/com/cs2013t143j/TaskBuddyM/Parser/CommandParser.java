@@ -42,8 +42,6 @@ public class CommandParser {
 	private static final String DISPLAY_SUBCOMMAND_DONE = "done";
 	private static final String DISPLAY_SUBCOMMAND_FLOATING = "floating";
 	
-	private static final String DISPLAY_COLOR = "color";
-	
 	private static final String ERROR_COMMAND = "Invalid command";
 	
 	private String userInput=null;

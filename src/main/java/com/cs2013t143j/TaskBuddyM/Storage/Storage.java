@@ -80,7 +80,7 @@ public void add(Task newTask) {
 		
 		boolean done = true;
 		
-		Task task = tasks.get(index-1);
+		Task task = tasks.get(index);
 		task.setIsDone(done);
 		doneTasks.add(task);
 		
