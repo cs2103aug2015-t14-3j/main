@@ -31,7 +31,7 @@ public class MainPanel extends JPanel implements ActionListener {
     private JTable table;
     private JPanel main_1;
     
-    private String[] columns = {"Description", "Start Date", "End Date", "Done"};
+    private String[] columns = {"Description", "Start Date", "End Date"};
 
     MainPanel(Logic l){
         setLayout(new BorderLayout());
