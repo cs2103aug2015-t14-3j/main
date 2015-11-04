@@ -47,7 +47,7 @@ public class DisplayRange extends DisplayCommand {
 		endDate = splitEnd[splitEnd.length - 1];
 		
 		output = String.format(DISPLAY_RANGE, startDate, endDate);
-		output += parseTasks(output);
+		output = parseTasks(output);
 
 		return output;
 	}

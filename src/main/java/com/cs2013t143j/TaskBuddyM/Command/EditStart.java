@@ -39,7 +39,7 @@ public class EditStart extends EditCommand {
 
 		Task taskToEdit = lastDisplay.get(editIndex - 1);
 		editedTask = taskToEdit;
-		oldDateTime = taskToEdit.getEndDateTime();
+		oldDateTime = taskToEdit.getStartDateTime();
 		
 		ArrayList<Task> allTasks = sAccess.display();
 		
