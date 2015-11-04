@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -13,6 +15,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.lang.ArrayUtils;
 
 import com.joestelmach.natty.DateGroup;
 import com.joestelmach.natty.Parser;
@@ -25,7 +29,7 @@ public class DateParser {
 	private String format;
 	private int nattyAbsPosition;
 	private int localAbsPostion;
-	private String nattyParsedDateMatch;
+	private List<String> nattyParsedDateMatch;
 	private String localParsedDateResult;
 	private String localParsedDateMatch;
 	private String localParsedDateRegexp;
@@ -37,6 +41,7 @@ public class DateParser {
 	
 	public DateParser(Map dict){
 		wordsContainBothNumberAndAlphabet = new ArrayList<>();
+		nattyParsedDateMatch = new ArrayList<>();
 		resDict = dict;
 	}
 	
@@ -70,11 +75,20 @@ public class DateParser {
 				logger.log(Level.INFO, "parse case 0");
 				parseDateByNatty(0);
 				
-				if(nattyParsedDateMatch != null){
-					System.out.println("Natty trim is " + nattyParsedDateMatch);
-					newDes = description.replace(nattyParsedDateMatch, "");
+				if(nattyParsedDateMatch.size() > 0){
+					
+					for(String r : nattyParsedDateMatch){
+						System.out.println("Natty trim is " + r);
+						newDes = (String)resDict.get("description").replace(r, "");
+						System.out.println("Natty trim res is " + newDes);
+						resDict.put("description",newDes);
+					}		
+					// temp quick fix
+					newDes = (String)resDict.get("description").replace("before", "");
+					newDes = (String)resDict.get("description").replace("after", "");
 					resDict.put("description",newDes);
 					setid = 1;
+					nattyParsedDateMatch = new ArrayList<>();
 				}				
 				trimResDescription(setid);
 				break;
@@ -86,11 +100,20 @@ public class DateParser {
 				determineStartOrEndDate(description, localParsedDateResult);
 				replaceLocalSingleMatchWithStub();
 				parseDateByNatty(1);
-				if(nattyParsedDateMatch != null){
-					System.out.println("Natty trim is " + nattyParsedDateMatch);
-					newDes = description.replace(nattyParsedDateMatch, "");
+				if(nattyParsedDateMatch.size() > 0){
+					
+					for(String r : nattyParsedDateMatch){
+						System.out.println("Natty trim is " + r);
+						newDes = (String)resDict.get("description").replace(r, "");
+						System.out.println("Natty trim res is " + newDes);
+						resDict.put("description",newDes);
+					}		
+					// temp quick fix
+					newDes = (String)resDict.get("description").replace("before", "");
+					newDes = (String)resDict.get("description").replace("after", "");
 					resDict.put("description",newDes);
 					setid = 1;
+					nattyParsedDateMatch = new ArrayList<>();
 				}else{
 					resDict.put("description",description);
 				}
@@ -213,20 +236,44 @@ public class DateParser {
 	    return res; 
 	}
 	
-	private List<String> matchDateByNatty(String userInput){
+	private List<String> matchDateByNatty(String userInput) throws TooManyDateFoundException{
 		Parser p = new Parser();
-    	List<DateGroup> groups = p.parse(userInput);
-    	List<String> returnList = new ArrayList<>();
-    	nattyParsedDateMatch = null;
-    	for(DateGroup group:groups) {
-    	  List<Date> dates = group.getDates();
-    	  for(Date d : dates){
-    		  String timeString = convertDateToString(d);
-    		  returnList.add(timeString);
-    	  }
-    	  nattyParsedDateMatch = group.getText();
-    	  nattyAbsPosition = group.getAbsolutePosition();
-    	}
+		String[] parsePhases = userInput.split(" to ",2);
+		List<String> returnList = new ArrayList<>();
+		if(parsePhases.length==1){
+			List<DateGroup> groups = p.parse(userInput);
+	    	nattyParsedDateMatch = null;
+	    	for(DateGroup group:groups) {
+	    	  List<Date> dates = group.getDates();
+	    	  for(Date d : dates){
+	    		  String timeString = convertDateToString(d);
+	    		  returnList.add(timeString);
+	    	  }
+	    	  nattyParsedDateMatch.add(group.getText());
+	    	  nattyAbsPosition = group.getAbsolutePosition();
+	    	}
+		}else if(parsePhases.length == 2){
+			//ArrayUtils.reverse(parsePhases);
+			for(String phase : parsePhases){
+				System.out.println("Natty MultiMatch is "+phase);
+				List<DateGroup> groups = p.parse(phase.replaceFirst("from ", ""));
+		    	for(DateGroup group:groups) {
+		    	  List<Date> dates = group.getDates();
+		    	  for(Date d : dates){
+		    		  String timeString = convertDateToString(d);
+		    		  returnList.add(timeString);
+		    	  }
+		    	  String matchText = group.getText();
+		    	  nattyParsedDateMatch.add(matchText);
+		    	  System.out.println("Natty MultiMatched is "+matchText);
+		    	  nattyAbsPosition = group.getAbsolutePosition();
+		    	}
+			}
+			//Collections.reverse(returnList);
+		}else{
+			throw new TooManyDateFoundException("More Than 2 date has been found in NattyParser match");
+		}
+    	
     	return returnList;
 	}	
 	
@@ -267,7 +314,7 @@ public class DateParser {
 	private void replaceWordContainBothNumberAndAlphabetWithStub() {
 		String description = (String)resDict.get("description");
 		System.out.println("old des2 is " + description);
-		Pattern p = Pattern.compile("(([a-zA-Z].*[0-9])|([0-9].*[a-zA-Z]))");
+		Pattern p = Pattern.compile("(([a-zA-Z]\\w*[0-9])|([0-9]\\w*[a-zA-Z]))");
         Matcher m = p.matcher(description);
         String newDescription = description;
         while(m.find()) {
@@ -332,6 +379,7 @@ public class DateParser {
 	private static final Map<String, Boolean> TIME_KEY_REGEXPS;
 	private static final List<String> TRIM_KEY_REGEXPS1;
 	private static final List<String> TRIM_KEY_REGEXPS2;
+//	private static final List<String> NATTY_SEPARATOR_REGEXPS;
 	static{
 		DATE_FORMAT_REGEXPS = new LinkedHashMap<>();
 		DATE_FORMAT_REGEXPS.put("\\d{1,2}-\\d{1,2}-\\d{4}\\s\\d{1,2}:\\d{2}", "dd-MM-yyyy HH:mm");
@@ -425,6 +473,7 @@ public class DateParser {
 			TRIM_KEY_REGEXPS2.add("due\\s+("+i+"){1}");
 			TRIM_KEY_REGEXPS2.add(i);
 		}
+		
 		
 	}
 }
