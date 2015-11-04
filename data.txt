@@ -1,5 +1,15 @@
+<<<<<<< Updated upstream
 report
 exams form &&09-11-2015 00:00&&20-11-2015 00:00
 grocery &&05-11-2015 21:00
 dada &&11-11-2015 22:00
 swimming &&08-11-2015 00:00&&22-11-2015 00:00
+=======
+report
+exams form &&09-11-2015 00:00&&20-11-2015 00:00
+grocery &&05-11-2015 21:00
+dada &&11-11-2015 22:00
+ggghj
+dfsdfa
+gkhjh
+>>>>>>> Stashed changes

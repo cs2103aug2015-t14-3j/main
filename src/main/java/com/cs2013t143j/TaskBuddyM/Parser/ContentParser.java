@@ -41,13 +41,14 @@ public class ContentParser {
 		if(temp.length>1) {
 			replaceWhiteSpace(temp);
 			dictionary = date.parse(dictionary);
+			System.out.println("command="+dictionary.get("command"));
 		} 
 		
-		if (dictionary.get(DIC_DESCRIPTION).equals("")) {
-			InvalidInputException e = new InvalidInputException("No descripton entered for new task");
+		/*if (dictionary.get(DIC_DESCRIPTION).equals("")) {
+			InvalidInputException e = new InvalidInputException("No description entered for new task");
 			logger.log(Level.SEVERE, "Exception(extractAddContent)");
 			throw e;
-		}
+		}*/
 		return dictionary;
 	}
 
