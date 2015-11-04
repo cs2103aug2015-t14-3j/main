@@ -16,16 +16,20 @@ public class TBParserStub {
 	// parse input to a dict
 	public Map<String, String> getDictionary (String input) throws InvalidInputException, TooManyDateFoundException  {
 		Map<String, String> dictionary = new HashMap<String,String>();
-		userInput = input;
+		userInput = input.trim();
 		
-		if (userInput.trim().equals("")) {
+		if (userInput.equals("")) {
 			throw new InvalidInputException(ERROR_NO_COMMAND);
 		}
 
 		retrieveCommand(dictionary);
 		
-		if(dictionary.get("command") != "redo" && dictionary.get("command") != "undo" &&
-				dictionary.get("command") != "clear") {
+		if (dictionary.get("command").equals("add") && userInput.equals("")) {
+			throw new InvalidInputException("No input entered");
+		}
+
+		if(!dictionary.get("command").equals("redo") && !dictionary.get("command").equals("undo") &&
+				!dictionary.get("command").equals("clear")) {
 			retrieveContent(dictionary);
 		}
 		return dictionary;
