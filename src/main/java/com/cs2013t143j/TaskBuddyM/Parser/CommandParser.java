@@ -34,6 +34,13 @@ public class CommandParser {
 
 	private static final String DIC_COMMAND = "command";
 	private static final String DIC_SUBCOMMAND = "subCommand";
+	private static final String DISPLAY_SUBCOMMAND_ON = "on";
+	private static final String DISPLAY_SUBCOMMAND_FROM = "from";
+	private static final String DISPLAY_SUBCOMMAND_AFTER = "after";
+	private static final String DISPLAY_SUBCOMMAND_DUE = "due";
+	private static final String DISPLAY_SUBCOMMAND_INCOMPLETE = "incomplete";
+	private static final String DISPLAY_SUBCOMMAND_DONE = "done";
+	private static final String DISPLAY_SUBCOMMAND_FLOATING = "floating";
 	
 	private static final String DISPLAY_COLOR = "color";
 	
@@ -48,7 +55,7 @@ public class CommandParser {
 		arr = userInput.split(" ");
 	}
 	
-	public void extractShortcutCommand(Map<String,String> dictionary) {	
+	public void extractShortcutCommand(Map<String,String> dictionary) throws InvalidInputException {	
 		if (arr[0].equalsIgnoreCase("a") || arr[0].equalsIgnoreCase("c") || arr[0].equalsIgnoreCase("i")) {
 			dictionary.put(DIC_COMMAND, COMMAND_ADD);
 		} else if (arr[0].equalsIgnoreCase("del") || arr[0].equalsIgnoreCase("r")) {
@@ -75,7 +82,7 @@ public class CommandParser {
 		}
 	}
 	
-	public void extractCommand(Map<String,String> dictionary) {
+	public void extractCommand(Map<String,String> dictionary) throws InvalidInputException {
 		for (int i = 0; i < arr.length; i++) {
 			if (arr[i].equalsIgnoreCase(COMMAND_ADD) || arr[i].equalsIgnoreCase(COMMAND_CREATE) || arr[i].equalsIgnoreCase(COMMAND_INSERT)) {
 				dictionary.put(DIC_COMMAND, COMMAND_ADD);
@@ -110,7 +117,7 @@ public class CommandParser {
 				break;
 			}else if (i == arr.length - 1) {
 				dictionary.put(DIC_COMMAND,null);
-				//throw new InvalidInputException(ERROR_COMMAND);
+				throw new InvalidInputException(ERROR_COMMAND);
 			}
 		}
 	}
@@ -121,20 +128,18 @@ public class CommandParser {
 		if (index < arr.length) {
 			if (command.equals(COMMAND_DISPLAY)) {
 				switch (arr[index].toLowerCase()) {
-				case "on":
-				case "from":
-				case "after":
-				case "due":
-				case "done":
-				case "incomplete":
-				case "floating":
+				case DISPLAY_SUBCOMMAND_ON:
+				case DISPLAY_SUBCOMMAND_FROM:
+				case DISPLAY_SUBCOMMAND_AFTER:
+				case DISPLAY_SUBCOMMAND_DUE:
+				case DISPLAY_SUBCOMMAND_DONE:
+				case DISPLAY_SUBCOMMAND_INCOMPLETE:
+				case DISPLAY_SUBCOMMAND_FLOATING:
 					dictionary.put(DIC_SUBCOMMAND, arr[index]);
 					userInput = removeWord(arr[index]);
 					break;
 				default:
-					dictionary.put(DIC_SUBCOMMAND, DISPLAY_COLOR);
-					userInput = removeWord(arr[index]);
-					break;
+					dictionary.put(DIC_SUBCOMMAND, null);
 				}
 			}
 		}

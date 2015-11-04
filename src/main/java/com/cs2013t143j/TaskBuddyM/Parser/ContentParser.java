@@ -15,22 +15,17 @@ public class ContentParser {
 		date = new DateParser(dictionary);
 	}
 
-	public Map<String,String> extractAddContent() {
-		replaceWhiteSpace();
-		dictionary.put("description",userInput);
-		try {
+	public Map<String,String> extractAddContent() throws TooManyDateFoundException {
+		String[] temp = userInput.split(" ");
+		dictionary.put("description", userInput);
+		if(temp.length>1) {
+			replaceWhiteSpace(temp);
 			dictionary = date.parse(dictionary);
-		} catch (TooManyDateFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		} 
 		return dictionary;
 	}
 
-	private void replaceWhiteSpace() {
-		String[] temp = userInput.split(" ");
-		
+	private void replaceWhiteSpace(String[] temp) {
 		for(int i=0; i < temp.length-1; i++) {
 			if(temp[i].equalsIgnoreCase("start") || temp[i].equalsIgnoreCase("end")) {
 				if(temp[i+1].equalsIgnoreCase("date")) {
@@ -41,16 +36,15 @@ public class ContentParser {
 		}
 	}
 	
-	public Map<String,String> extractDeleteContent() {
-		/*if (userInput.equals("")) {
-			throw InvalidInputException("Invalid index entered");
-		}*/
+	public Map<String,String> extractDeleteContent() throws InvalidInputException {
+		if (userInput.equals("")) {
+			throw new InvalidInputException("Invalid index entered");
+		}
 		dictionary.put("index", userInput);
 		return dictionary;
 	}
 	
-	public Map<String,String> extractDisplayContent()  {
-		// need to pass to date parser
+	public Map<String,String> extractDisplayContent() throws TooManyDateFoundException  {
 		if (userInput.length() != 0) {
 			dictionary.put("description", userInput);
 			retrieveDisplayDate();
@@ -59,35 +53,21 @@ public class ContentParser {
 		return dictionary;
 	}
 
-	private void retrieveDisplayDate() {
-		try {
-			dictionary = date.parse(dictionary);
-		} catch (TooManyDateFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		/*String temp = dictionary.remove("startDate");
-		if(temp != null) {
-			temp = temp.substring(temp.indexOf(" ")+1, temp.length());
-		}
-		dictionary.put("start date",temp);
+	private void retrieveDisplayDate() throws TooManyDateFoundException {
+		dictionary = date.parse(dictionary);
 		
-		temp = dictionary.remove("endDate");
-		if(temp != null) {
-			temp = temp.substring(temp.indexOf(" ")+1, temp.length());
+		if (dictionary.get("startDate") == null || dictionary.get("startDate") == ""
+				|| dictionary.get("endDate") == null || dictionary.get("endDate") == "") {
+			String temp = dictionary.remove("startDate");
+
+			if (temp == null) {
+				temp = dictionary.remove("endDate");
+			}
+			dictionary.put("date", temp);
 		}
-		dictionary.put("end date", temp);*/
-		
-		String temp = dictionary.remove("startDate");
-		
-		if(temp == null) {
-			temp = dictionary.remove("endDate");
-		}
-		dictionary.put("date",temp);
-		
 	}
 	
-	public Map<String, String> extractEditContent()  {
+	public Map<String, String> extractEditContent() throws InvalidInputException  {
 		//assert userInput != null;
 		retrieveEditIndex();
 		
@@ -98,7 +78,7 @@ public class ContentParser {
 		} else if (userInput.contains("description")){
 			retrieveEditDescription();
 		} else {
-			//throw new InvalidInputException("Invalid field");
+			throw new InvalidInputException("Invalid field");
 		}
 		
 		return dictionary;
