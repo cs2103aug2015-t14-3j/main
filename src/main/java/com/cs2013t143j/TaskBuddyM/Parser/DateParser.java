@@ -30,10 +30,13 @@ public class DateParser {
 	private String localParsedDateMatch;
 	private String localParsedDateRegexp;
 	
+	private List<String> wordsContainBothNumberAndAlphabet;
+	
 	private static final Logger logger =
 	        Logger.getLogger(DateParser.class.getName());
 	
 	public DateParser(Map dict){
+		wordsContainBothNumberAndAlphabet = new ArrayList<>();
 		resDict = dict;
 	}
 	
@@ -114,12 +117,14 @@ public class DateParser {
 	}
 	
 	private void parseDateByNatty(int lastMatch) throws TooManyDateFoundException {
+		String originalDescription = (String)resDict.get("description");
+		System.out.println(originalDescription);
+		replaceWordContainBothNumberAndAlphabetWithStub();
 		String description = (String)resDict.get("description");
 		List<String> NattyParseResult = matchDateByNatty(description);
 		int resultSize = NattyParseResult.size();
 		if(resultSize == 0){
 			logger.log(Level.INFO, "parse Natty case result size is 0");
-			return;
 		}else if (resultSize > 2) {
 			logger.log(Level.WARNING, "parse Natty case result size greater than 2");
 			throw new TooManyDateFoundException("More Than 2 date has been found in NattyParser");
@@ -145,28 +150,7 @@ public class DateParser {
 				System.out.println("checkpoint2");
 				resDict.put(STARTDATE, localParsedDateResult);
 				resDict.put(ENDDATE, NattyParseResult.get(0));
-			}
-//			int pivat = description.indexOf(" to ");		
-//			if(pivat<0){
-////				Map<String, String> localizedParseResult = matchDateByLocalFormat(description);
-////				for (String date : localizedParseResult.keySet()) {
-////					determineStartOrEndDate(description, date);
-////				}
-//				
-//			}else{
-//				Map<String, String> localizedParseResult = matchDateByLocalFormat(description);
-//				for (String date : localizedParseResult.keySet()) {
-//					int numStringIndex = description.indexOf(date);
-//					if(pivat-numStringIndex>0){
-//						resDict.put(STARTDATE, date);
-//						resDict.put(ENDDATE, NattyParseResult.get(1));
-//					}else{
-//						resDict.put(STARTDATE, NattyParseResult.get(0));
-//						resDict.put(ENDDATE, date);
-//					}
-//				}
-//				
-//			}			
+			}		
 		}else{
 			logger.log(Level.INFO, "parse Natty case 12");
 			assert lastMatch == 1 : "LastMatch is "+lastMatch;
@@ -188,7 +172,13 @@ public class DateParser {
 			}
 		}
 		
-		//resDict.put("description",description);
+//		if(wordsContainBothNumberAndAlphabet.size()>0){
+//			for(String word : wordsContainBothNumberAndAlphabet){
+//				
+//			}
+//		}
+		System.out.println(originalDescription);
+		resDict.put("description",originalDescription);
 	}
 	
 	private Map<String, String> matchDateByLocalFormat(String userInput) {
@@ -266,15 +256,36 @@ public class DateParser {
         Matcher m = p.matcher(description);
         while(m.find()) {
         	localParsedDateMatch = m.group();
-        	String replacement = "";
-        	for(int i = 0; i < localParsedDateMatch.length(); i++){
-        		replacement += "x";
-        	}
+        	String replacement = generateStubString("x", localParsedDateMatch.length());
         	String newDescription = description.replace(localParsedDateMatch, replacement);
         	localAbsPostion = newDescription.indexOf(replacement);
         	System.out.println("newDes is " + newDescription);
         	resDict.put("description", newDescription);
         }
+	}
+	
+	private void replaceWordContainBothNumberAndAlphabetWithStub() {
+		String description = (String)resDict.get("description");
+		System.out.println("old des2 is " + description);
+		Pattern p = Pattern.compile("(([a-zA-Z].*[0-9])|([0-9].*[a-zA-Z]))");
+        Matcher m = p.matcher(description);
+        String newDescription = description;
+        while(m.find()) {
+        	String word = m.group();
+        	wordsContainBothNumberAndAlphabet.add(word);
+        	String replacement = generateStubString("y", word.length());
+        	newDescription = newDescription.replaceFirst(word, replacement);
+        	System.out.println("newDes2 is " + newDescription);
+        }
+        resDict.put("description", newDescription);
+	}
+	
+	private String generateStubString(String repeater, int repeatTime){
+		String replacement = "";
+		for(int i = 0; i < repeatTime; i++){
+    		replacement += repeater;
+    	}
+		return replacement;
 	}
 	
 	private void trimResDescription(int setid) {
