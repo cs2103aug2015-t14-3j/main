@@ -61,6 +61,7 @@ public class Logic {
 			
 		try {
 			logger.info("Command: " + commandToExecute.info());
+			//System.out.print(commandToExecute.info());
 			output = commandToExecute.execute(lastDisplay, storageAccess);
 		} catch (CommandAttributeError e) {
 			logger.severe("Exception(execute): " + e.toString());

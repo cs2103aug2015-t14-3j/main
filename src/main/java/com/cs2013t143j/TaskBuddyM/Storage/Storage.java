@@ -7,12 +7,14 @@ import java.time.LocalDateTime;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 import com.cs2013t143j.TaskBuddyM.Storage.StorageIO;
 import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
+import java.lang.NullPointerException;
+
 
 public class Storage {
 
 	private ArrayList<Task> tasks = new ArrayList<Task>();
 	private ArrayList<Task>doneTasks = new ArrayList<Task>();
-	
+	private ArrayList<Task>newTaskList = new ArrayList<Task>();
 	
 	
 public Storage() {
@@ -56,21 +58,29 @@ public void add(Task newTask) {
 		writeToFile();
 	}
 	
-	public ArrayList<Task> searchTaskWithinPeriod(LocalDateTime startDateTime,LocalDateTime endDateTime)
-	{
-		ArrayList<Task>newTaskList = new ArrayList<Task>();
-		int length = tasks.size()-1;
+public ArrayList<Task> searchTaskWithinPeriod(LocalDateTime startDateTime,LocalDateTime endDateTime)
+{
+		try{
+			//ArrayList<Task>newTaskList = new ArrayList<Task>();
 		
-		for(int i=0;i<length;i++){
-		
-			if( ((tasks.get(i).getStartDateTime().compareTo(startDateTime))>= 0) & ((tasks.get(i).getEndDateTime().compareTo(endDateTime)) <= 0) )   {
-				newTaskList.add(tasks.get(i));
+		for(int i=0;i< tasks.size();i++){
+			Task task = tasks.get(i);
+			LocalDateTime startDate= task.getStartDateTime();
+			LocalDateTime endDate = task.getEndDateTime();
+			
+			if((startDate!= null) && (endDate != null) && (startDate.compareTo(startDateTime) >= 0) && (endDate.compareTo(endDateTime) <= 0) )   {
+				newTaskList.add(task);
 			}
+		
 		}
-			return newTaskList;	
-	}
-	
-	public void clearAll() {
+		} catch(NullPointerException e){
+			System.out.println("Wrong format");
+		}
+				
+		return newTaskList;	
+}
+
+public void clearAll() {
 	tasks = new ArrayList<Task>();
 	writeToFile();
 	}

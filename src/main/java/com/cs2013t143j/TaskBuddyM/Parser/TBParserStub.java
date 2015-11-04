@@ -16,11 +16,10 @@ public class TBParserStub {
 	CommandParser cmd;
 	DateParser date;
 	ContentParser content;
-	Logger logger;
+	Logger logger = Logger.getLogger(Logic.class.getName());;
 	String userInput;
 
 	public TBParserStub() {	
-		logger = Logger.getLogger(Logic.class.getName());
 	}
 	
 	// parse input to a dict
