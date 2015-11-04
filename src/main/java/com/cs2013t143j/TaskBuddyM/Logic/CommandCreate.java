@@ -16,6 +16,7 @@ import com.cs2013t143j.TaskBuddyM.Command.DisplayDue;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayFloating;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayFrom;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayOn;
+import com.cs2013t143j.TaskBuddyM.Command.DisplayRange;
 import com.cs2013t143j.TaskBuddyM.Command.DoneCommand;
 import com.cs2013t143j.TaskBuddyM.Command.EditDescription;
 import com.cs2013t143j.TaskBuddyM.Command.EditEnd;
@@ -38,6 +39,8 @@ public class CommandCreate {
 	
 	private final String DISPLAY_SUB = "subCommand";
 	private final String DISPLAY_DATE = "date";
+	private final String DISPLAY_START = "startDate";
+	private final String DISPLAY_END = "endDate";
 	
 	private final String EDIT_INDEX = "index";
 	private final String EDIT_FIELD = "field";
@@ -176,6 +179,10 @@ public class CommandCreate {
 				return new DisplayDue(date);
 			case "floating":
 				return new DisplayFloating();
+			case "range":
+				String start = dict.get(DISPLAY_START);
+				String end = dict.get(DISPLAY_END);
+				return new DisplayRange(start, end);
 			case "done":
 				return new DisplayDone();
 			}

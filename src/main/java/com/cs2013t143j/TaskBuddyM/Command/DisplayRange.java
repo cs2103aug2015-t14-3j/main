@@ -2,9 +2,7 @@ package com.cs2013t143j.TaskBuddyM.Command;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
@@ -18,10 +16,7 @@ public class DisplayRange extends DisplayCommand {
 	
 	private final String INFO = "Display Range %s %s";
 	
-	private final String DATE_FORMAT = "HH dd/MM/yyyy";
-	private final String DISPLAY_HEADER_AFTER = "Here are your tasks due after %s:\n";
-	
-	private final String ERROR_FORMAT = "Invalid date format(Should be dd/mm/yyyy)";
+	private final String DATE_FORMAT = "HH dd/MM/yyyy";	
 	
 	public DisplayRange(String _startDate, String _endDate) {
 		startDate = _startDate;
@@ -36,7 +31,7 @@ public class DisplayRange extends DisplayCommand {
 			throw new CommandAttributeError(ERROR_DATE);
 		}
 		
-		lastDisplay = extractWithin(startDate,endDate,sAccess);
+		tasks = extractWithin(startDate, endDate, sAccess);
 		
 		output = parseTasks(output);
 
