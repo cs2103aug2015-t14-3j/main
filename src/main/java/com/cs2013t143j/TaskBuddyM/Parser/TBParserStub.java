@@ -1,5 +1,9 @@
 package com.cs2013t143j.TaskBuddyM.Parser;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import com.cs2013t143j.TaskBuddyM.Logic.Logic;
 
 public class TBParserStub {
 	
@@ -8,21 +12,24 @@ public class TBParserStub {
 	CommandParser cmd;
 	DateParser date;
 	ContentParser content;
+	Logger logger;
 	String userInput;
 
 	public TBParserStub() {	
+		logger = Logger.getLogger(Logic.class.getName());
 	}
 	
 	// parse input to a dict
 	public Map<String, String> getDictionary (String input) throws InvalidInputException, TooManyDateFoundException  {
 		Map<String, String> dictionary = new HashMap<String,String>();
-		userInput = input.trim();
 		
 		if (userInput.equals("")) {
 			throw new InvalidInputException(ERROR_NO_COMMAND);
 		}
 
 		retrieveCommand(dictionary);
+		logger.log(Level.INFO, "Parsed Command: " + dictionary.get("command"));
+		logger.log(Level.INFO, "Parsed Sub Command: " + dictionary.get("subCommand"));
 		
 		if (dictionary.get("command").equals("add") && userInput.equals("")) {
 			throw new InvalidInputException("No input entered");

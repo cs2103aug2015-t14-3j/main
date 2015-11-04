@@ -4,7 +4,21 @@ import java.util.Map;
 
 public class ContentParser {
 	
+	private static final String DIC_DESCRIPTION = "description";
+	private static final String DIC_START_DATE = "startDate";
+	private static final String DIC_END_DATE = "endDate";
+	private static final String DIC_INDEX = "index";
+	private static final String DIC_FIELD = "field";
+	private static final String DIC_NEW_VALUE = "newValue";
+	private static final String DIC_SEARCH_KEY = "searchKey";
+	private static final String DIC_SUBCOMMAND = "subCommand";
+	private static final String DIC_SUBCOMMAND_RANGE = "range";
+	
+	private static final String ERROR_INDEX = "Invalid index entered";
+	private static final String ERROR_FIELD = "Invalid field entered";
+	
 	String userInput;
+	
 	Map<String,String> dictionary;
 	
 	DateParser date;
@@ -17,7 +31,7 @@ public class ContentParser {
 
 	public Map<String,String> extractAddContent() throws TooManyDateFoundException {
 		String[] temp = userInput.split(" ");
-		dictionary.put("description", userInput);
+		dictionary.put(DIC_DESCRIPTION, userInput);
 		if(temp.length>1) {
 			replaceWhiteSpace(temp);
 			dictionary = date.parse(dictionary);
@@ -38,7 +52,7 @@ public class ContentParser {
 	
 	public Map<String,String> extractDeleteContent() throws InvalidInputException {
 		if (userInput.equals("")) {
-			throw new InvalidInputException("Invalid index entered");
+			throw new InvalidInputException(ERROR_INDEX);
 		}
 		dictionary.put("index", userInput);
 		return dictionary;
@@ -46,7 +60,7 @@ public class ContentParser {
 	
 	public Map<String,String> extractDisplayContent() throws TooManyDateFoundException  {
 		if (userInput.length() != 0) {
-			dictionary.put("description", userInput);
+			dictionary.put(DIC_DESCRIPTION, userInput);
 			retrieveDisplayDate();
 		}
 		
@@ -56,12 +70,21 @@ public class ContentParser {
 	private void retrieveDisplayDate() throws TooManyDateFoundException {
 		dictionary = date.parse(dictionary);
 		
-		if (dictionary.get("startDate") == null || dictionary.get("startDate") == ""
-				|| dictionary.get("endDate") == null || dictionary.get("endDate") == "") {
-			String temp = dictionary.remove("startDate");
+		/*if (dictionary.get(DIC_START_DATE) == null || dictionary.get(DIC_START_DATE) == ""
+				|| dictionary.get(DIC_END_DATE) == null || dictionary.get(DIC_END_DATE) == "") {
+			String temp = dictionary.remove(DIC_START_DATE);
 
 			if (temp == null) {
-				temp = dictionary.remove("endDate");
+				temp = dictionary.remove(DIC_END_DATE);
+			}
+			dictionary.put("date", temp);
+		}*/
+		
+		if (!dictionary.get(DIC_SUBCOMMAND).equalsIgnoreCase(DIC_SUBCOMMAND_RANGE)) {
+			String temp = dictionary.remove(DIC_START_DATE);
+
+			if (temp == null) {
+				temp = dictionary.remove(DIC_END_DATE);
 			}
 			dictionary.put("date", temp);
 		}
@@ -71,14 +94,14 @@ public class ContentParser {
 		//assert userInput != null;
 		retrieveEditIndex();
 		
-		if(userInput.contains("end date")) {
+		if(userInput.toLowerCase().contains("end date") || userInput.toLowerCase().contains("enddate")) {
 			retrieveEditEndDate();
-		} else if (userInput.contains("start date")) {
+		} else if (userInput.toLowerCase().contains("start date") || userInput.toLowerCase().contains("startdate")) {
 			retrieveEditStartDate();
-		} else if (userInput.contains("description")){
+		} else if (userInput.toLowerCase().contains(DIC_DESCRIPTION)){
 			retrieveEditDescription();
 		} else {
-			throw new InvalidInputException("Invalid field");
+			throw new InvalidInputException(ERROR_FIELD);
 		}
 		
 		return dictionary;
@@ -88,49 +111,49 @@ public class ContentParser {
 		int whiteSpaceIndex = userInput.indexOf(" ");
 		String index = userInput.substring(0, whiteSpaceIndex);
 		userInput = removeWord(index);
-		dictionary.put("index",index);
+		dictionary.put(DIC_INDEX,index);
 	}
 
 	private void retrieveEditDescription() {
-		dictionary.put("field","description");
-		userInput = removeWord("description");
-		dictionary.put("newValue",userInput);
+		dictionary.put(DIC_FIELD,DIC_DESCRIPTION);
+		userInput = removeWord(DIC_DESCRIPTION);
+		dictionary.put(DIC_NEW_VALUE,userInput);
 	}
 
 	private void retrieveEditStartDate() {
-		dictionary.put("field","start date");
+		dictionary.put(DIC_FIELD,"start date");
 		userInput = userInput.replace("start date", "startdate");
-		dictionary.put("description",userInput);
+		dictionary.put(DIC_DESCRIPTION,userInput);
 		try {
 			dictionary = date.parse(dictionary);
 		} catch (TooManyDateFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		dictionary.put("newValue",dictionary.remove("startDate"));
+		dictionary.put(DIC_NEW_VALUE,dictionary.remove(DIC_START_DATE));
 	}
 
 	private void retrieveEditEndDate() {
-		dictionary.put("field","end date");
+		dictionary.put(DIC_FIELD,"end date");
 		userInput = userInput.replace("end date", "enddate");
-		dictionary.put("description",userInput);
+		dictionary.put(DIC_DESCRIPTION,userInput);
 		try {
 			dictionary = date.parse(dictionary);
 		} catch (TooManyDateFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		dictionary.put("newValue",dictionary.remove("endDate"));
+		dictionary.put(DIC_NEW_VALUE,dictionary.remove(DIC_END_DATE));
 	}
 
 	public Map<String,String> extractSearchContent() {
 		//assert userInput != null;
-		dictionary.put("searchKey", userInput);
+		dictionary.put(DIC_SEARCH_KEY, userInput);
 		return dictionary;
 	}
 	
 	public Map<String,String> extractDoneContent() {
-		dictionary.put("index", userInput);
+		dictionary.put(DIC_INDEX, userInput);
 		
 		return dictionary;
 	}
