@@ -41,6 +41,7 @@ public class CommandParser {
 	private static final String DISPLAY_SUBCOMMAND_INCOMPLETE = "incomplete";
 	private static final String DISPLAY_SUBCOMMAND_DONE = "done";
 	private static final String DISPLAY_SUBCOMMAND_FLOATING = "floating";
+	private static final String DISPLAY_SUBCOMMAND_RANGE = "range";
 	
 	private static final String ERROR_COMMAND = "Invalid command";
 	
@@ -133,6 +134,7 @@ public class CommandParser {
 				case DISPLAY_SUBCOMMAND_DONE:
 				case DISPLAY_SUBCOMMAND_INCOMPLETE:
 				case DISPLAY_SUBCOMMAND_FLOATING:
+				case DISPLAY_SUBCOMMAND_RANGE:
 					dictionary.put(DIC_SUBCOMMAND, arr[index]);
 					userInput = removeWord(arr[index]);
 					break;

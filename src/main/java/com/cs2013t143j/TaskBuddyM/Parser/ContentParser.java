@@ -11,6 +11,8 @@ public class ContentParser {
 	private static final String DIC_FIELD = "field";
 	private static final String DIC_NEW_VALUE = "newValue";
 	private static final String DIC_SEARCH_KEY = "searchKey";
+	private static final String DIC_SUBCOMMAND = "subCommand";
+	private static final String DIC_SUBCOMMAND_RANGE = "range";
 	
 	private static final String ERROR_INDEX = "Invalid index entered";
 	private static final String ERROR_FIELD = "Invalid field entered";
@@ -68,8 +70,17 @@ public class ContentParser {
 	private void retrieveDisplayDate() throws TooManyDateFoundException {
 		dictionary = date.parse(dictionary);
 		
-		if (dictionary.get(DIC_START_DATE) == null || dictionary.get(DIC_START_DATE) == ""
+		/*if (dictionary.get(DIC_START_DATE) == null || dictionary.get(DIC_START_DATE) == ""
 				|| dictionary.get(DIC_END_DATE) == null || dictionary.get(DIC_END_DATE) == "") {
+			String temp = dictionary.remove(DIC_START_DATE);
+
+			if (temp == null) {
+				temp = dictionary.remove(DIC_END_DATE);
+			}
+			dictionary.put("date", temp);
+		}*/
+		
+		if (!dictionary.get(DIC_SUBCOMMAND).equalsIgnoreCase(DIC_SUBCOMMAND_RANGE)) {
 			String temp = dictionary.remove(DIC_START_DATE);
 
 			if (temp == null) {
