@@ -17,6 +17,8 @@ public class DisplayRange extends DisplayCommand {
 	
 	private final String INFO = "Display Range %s %s";
 	
+	private final String DISPLAY_RANGE = "Here are your tasks from %s to %s\n";
+	
 	private final String ERROR_FORMAT = "Invalid date format(Should be dd/mm/yyyy)";
 
 	private final int DAY_POS = 0;
@@ -37,8 +39,15 @@ public class DisplayRange extends DisplayCommand {
 		}
 
 		tasks = extractWithin(startDate, endDate, sAccess);
-
-		output = parseTasks(output);
+		
+		String[] splitStart = startDate.split(" ");
+		String[] splitEnd = endDate.split(" ");
+		
+		startDate = splitStart[splitStart.length - 1];
+		endDate = splitEnd[splitEnd.length - 1];
+		
+		output = String.format(DISPLAY_RANGE, startDate, endDate);
+		output += parseTasks(output);
 
 		return output;
 	}
