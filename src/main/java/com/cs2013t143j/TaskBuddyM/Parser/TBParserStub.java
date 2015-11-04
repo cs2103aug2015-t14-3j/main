@@ -7,8 +7,12 @@ import com.cs2013t143j.TaskBuddyM.Logic.Logic;
 
 public class TBParserStub {
 	
+	final String DIC_COMMAND = "command";
+	final String DIC_SUBCOMMAND = "subCommand";
 	
 	final String ERROR_NO_COMMAND = "No command entered.";
+	//final String ERROR_NO_COMMAND = "No command entered.";
+	
 	CommandParser cmd;
 	DateParser date;
 	ContentParser content;
@@ -22,17 +26,16 @@ public class TBParserStub {
 	// parse input to a dict
 	public Map<String, String> getDictionary (String input) throws InvalidInputException, TooManyDateFoundException  {
 		Map<String, String> dictionary = new HashMap<String,String>();
+		userInput = input;
 		
-		if (userInput.equals("")) {
-			throw new InvalidInputException(ERROR_NO_COMMAND);
-		}
+		checkCommandExists();
 
 		retrieveCommand(dictionary);
-		logger.log(Level.INFO, "Parsed Command: " + dictionary.get("command"));
-		logger.log(Level.INFO, "Parsed Sub Command: " + dictionary.get("subCommand"));
+		logger.log(Level.INFO, "Parsed Command: " + dictionary.get(DIC_COMMAND));
+		logger.log(Level.INFO, "Parsed Sub Command: " + dictionary.get(DIC_SUBCOMMAND));
 		
-		if (dictionary.get("command").equals("add") && userInput.equals("")) {
-			throw new InvalidInputException("No input entered");
+		if (dictionary.get(DIC_COMMAND).equals("add") && userInput.equals("")) {
+			throw new InvalidInputException("No tasks entered");
 		}
 
 		if(!dictionary.get("command").equals("redo") && !dictionary.get("command").equals("undo") &&
@@ -40,6 +43,12 @@ public class TBParserStub {
 			retrieveContent(dictionary);
 		}
 		return dictionary;
+	}
+
+	private void checkCommandExists() throws InvalidInputException {
+		if (userInput.equals("")) {
+			throw new InvalidInputException(ERROR_NO_COMMAND);
+		}
 	}
 	
 	private void retrieveCommand(Map<String, String> dictionary) throws InvalidInputException {
