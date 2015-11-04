@@ -8,7 +8,6 @@ import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
 public class EditEnd extends EditCommand {
 	
-	private String newValue;
 	private Task editedTask;
 	private LocalDateTime oldDateTime;
 	

@@ -7,7 +7,6 @@ import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
 public class EditDescription extends EditCommand {
 	
-	private String newValue;
 	private String oldValue;
 	private Task editedTask;
 	
