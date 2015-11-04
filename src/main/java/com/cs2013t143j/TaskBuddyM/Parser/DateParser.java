@@ -242,7 +242,6 @@ public class DateParser {
 		List<String> returnList = new ArrayList<>();
 		if(parsePhases.length==1){
 			List<DateGroup> groups = p.parse(userInput);
-	    	nattyParsedDateMatch = null;
 	    	for(DateGroup group:groups) {
 	    	  List<Date> dates = group.getDates();
 	    	  for(Date d : dates){
