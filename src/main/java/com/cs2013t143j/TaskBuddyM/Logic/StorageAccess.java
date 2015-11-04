@@ -37,7 +37,14 @@ public class StorageAccess {
 		return storage.display();
 	}
 	
-	
+	public ArrayList<Task> searchPeriod(LocalDateTime startDate,LocalDateTime endDate){
+		ArrayList<Task> TaskList = new ArrayList<Task>();
+		
+		TaskList = storage.searchTaskWithinPeriod(startDate, endDate);
+		
+		return TaskList;
+		
+	}
 	
 	
 	public void updateDescription(int index, String newdescription){
