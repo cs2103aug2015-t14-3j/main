@@ -36,89 +36,62 @@ public class DisplayRange extends DisplayCommand {
 			throw new CommandAttributeError(ERROR_DATE);
 		}
 		
-		ArrayList<Task> allTasks = sAccess.display();
-		
-		tasks = extractAfter(allTasks, startDate);
-		
-		Collections.sort(tasks, new TaskSorter());
-		tasks = removeAfter(tasks, endDate);
+		lastDisplay = extractWithin(startDate,endDate,sAccess);
 		
 		output = parseTasks(output);
 
 		return output;
 	}
+private ArrayList<Task> extractWithin(String startDate,String endDate,StorageAccess sAccess){
+		ArrayList<Task> TaskList = new ArrayList<Task>();
+		
+		LocalDateTime startDateTime = convertDateTime(startDate);
+		LocalDateTime endDateTime = convertDateTime(endDate);
+		
+		TaskList = sAccess.searchPeriod(startDateTime, endDateTime);
+		
+		return TaskList;
+}
+
+private LocalDateTime convertDateTime(String dateTime) {
 	
-	private ArrayList<Task> extractAfter(ArrayList<Task> allTasks, String _date) throws CommandAttributeError {
-		ArrayList<Task> result = new ArrayList<Task>();
-		
-		LocalDateTime date;
-		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
-		
-		try {
-		date = LocalDateTime.parse("00 " + _date, formatter);
-		} catch (DateTimeParseException e) {
-			throw new CommandAttributeError(ERROR_FORMAT);
-		}
-		
-		output = String.format(DISPLAY_HEADER_AFTER, _date);
-		
-		int i;
-		LocalDateTime endDate;
-		
-		for (i=0; i<allTasks.size(); ++i) {
-			
-			Task task = allTasks.get(i);
-			
-			endDate = task.getEndDateTime();
-			
-			if (endDate != null && endDate.isAfter(date) && task.isDone() == false) {
-				result.add(task);
-			}
-		}
-		
-		return result;
+	if (dateTime == null) {
+		return null;
 	}
+	String[] splitDateTime = dateTime.split(" ");
+	DateTimeFormatter formatter;
+	LocalDateTime dt;
 	
-	private ArrayList<Task> removeAfter(ArrayList<Task> allTasks, String _date) throws CommandAttributeError {
-		
-		LocalDateTime date;
-		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
-		
-		ArrayList<Task> result = new ArrayList<Task>();
-		
+	if (splitDateTime.length == 1) {
+		//No time specified
 		try {
-		date = LocalDateTime.parse("00 " + _date, formatter);
-		} catch (DateTimeParseException e) {
-			throw new CommandAttributeError(ERROR_FORMAT);
+			formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
+			dt = LocalDateTime.parse("2359 " + dateTime, formatter);
+		} catch (Exception e) {
+			formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
+			dt = LocalDateTime.parse("2359 " + dateTime, formatter);
 		}
 		
-		output = String.format(DISPLAY_HEADER_AFTER, _date);
 		
-		int i;
-		LocalDateTime endDate;
-		
-		for (i=0; i<allTasks.size(); ++i) {
-			
-			Task task = allTasks.get(i);
-			
-			endDate = task.getEndDateTime();
-			
-			if (endDate == null || endDate.isAfter(date)) {
-				break;
-			} else {
-				result.add(task);
-			}
+		return dt;
+	} else {
+		//Time specified
+		try {
+			formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
+			dt = LocalDateTime.parse(dateTime, formatter);
+		} catch (Exception e) {
+			formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
+			dt = LocalDateTime.parse(dateTime, formatter);
 		}
 		
-		return result;
+		
+		return dt;
 	}
+}
 	
-	public String info() {
+public String info() {
 		String output = String.format(INFO, startDate, endDate);
 		
 		return output;
 	}
-	
 }
