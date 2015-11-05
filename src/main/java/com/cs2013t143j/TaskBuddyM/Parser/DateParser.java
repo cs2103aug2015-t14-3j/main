@@ -424,6 +424,7 @@ public class DateParser {
 		TIME_KEY_REGEXPS.put("by", false);
 		TIME_KEY_REGEXPS.put("at", true);
 		TIME_KEY_REGEXPS.put("due", false);
+		TIME_KEY_REGEXPS.put("on", true);
 		
 		TRIM_KEY_REGEXPS1 = new ArrayList<>();
 		for(String i : DATE_FORMAT_REGEXPS.keySet()){
@@ -450,6 +451,7 @@ public class DateParser {
 			TRIM_KEY_REGEXPS1.add("by\\s+("+i+")?");
 			TRIM_KEY_REGEXPS1.add("at\\s+("+i+")?");
 			TRIM_KEY_REGEXPS1.add("due\\s+("+i+")?");
+			TRIM_KEY_REGEXPS1.add("on\\s+("+i+")?");
 			TRIM_KEY_REGEXPS1.add(i);
 		}
 		
@@ -478,6 +480,7 @@ public class DateParser {
 			TRIM_KEY_REGEXPS2.add("by\\s+("+i+"){1}");
 			TRIM_KEY_REGEXPS2.add("at\\s+("+i+"){1}");
 			TRIM_KEY_REGEXPS2.add("due\\s+("+i+"){1}");
+			TRIM_KEY_REGEXPS2.add("on\\s+("+i+"){1}");
 			TRIM_KEY_REGEXPS2.add(i);
 		}
 		
