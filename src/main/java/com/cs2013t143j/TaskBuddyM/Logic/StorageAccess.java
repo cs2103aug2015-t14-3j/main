@@ -8,6 +8,7 @@ import com.cs2013t143j.TaskBuddyM.Storage.Storage;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
 
+//@@Chow Hong Ern Daniel A0121327U
 public class StorageAccess {
 	
 	private Storage storage;
@@ -64,7 +65,6 @@ public class StorageAccess {
 	}
 
 	public ArrayList<Task> displayDone() {
-		// TODO Auto-generated method stub
 		return storage.displayDoneTasks();
 	}
 }
