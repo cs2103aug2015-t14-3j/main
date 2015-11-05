@@ -98,4 +98,8 @@ public abstract class AddCommand implements Command {
 
 		sAccess.delete(storageIndex);
 	}
+	
+	public void redo(StorageAccess sAccess) {
+		sAccess.add(addedTask);
+	}
 }

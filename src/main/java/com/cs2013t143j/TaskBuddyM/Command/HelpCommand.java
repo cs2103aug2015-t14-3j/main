@@ -89,4 +89,8 @@ public class HelpCommand implements Command {
 		
 		return output;
 	}
+	
+	public void redo(StorageAccess sAccess) {
+		return;
+	}
 }

@@ -87,6 +87,21 @@ public class DeleteCommand implements Command {
 		}
 	}
 	
+	public void redo(StorageAccess sAccess) {
+		
+		int i = 0;
+		
+		for (i=0; i<deletedTasks.size(); ++i) {
+			Task taskToDelete = deletedTasks.get(i);
+			
+			ArrayList<Task> allTasks = sAccess.display();
+
+			int storageIndex = allTasks.indexOf(taskToDelete);
+
+			sAccess.delete(storageIndex);
+		}		
+	}
+	
 	public String info() {
 		String output = String.format(INFO, delIndex);
 		

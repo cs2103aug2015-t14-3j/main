@@ -9,4 +9,5 @@ public interface Command {
 	String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) throws CommandAttributeError;
 	void undo(StorageAccess sAccess);
 	String info();
+	void redo(StorageAccess sAccess);
 }

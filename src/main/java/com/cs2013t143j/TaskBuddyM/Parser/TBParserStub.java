@@ -38,7 +38,8 @@ public class TBParserStub {
 		checkTaskExists(dictionary);
 		
 		retrieveContent(dictionary);
-
+		
+		//System.out.println("command="+dictionary.get("command"));
 		return dictionary;
 	}
 

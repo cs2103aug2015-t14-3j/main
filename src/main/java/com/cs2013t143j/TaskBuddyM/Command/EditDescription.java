@@ -59,10 +59,18 @@ public class EditDescription extends EditCommand {
 	
 	public void undo(StorageAccess sAccess) {
 		ArrayList<Task> allTasks = sAccess.display();
-		
+			
 		int storageIndex = allTasks.indexOf(editedTask);
 		
 		sAccess.updateDescription(storageIndex, oldValue);
+	}
+	
+	public void redo(StorageAccess sAccess) {
+		ArrayList<Task> allTasks = sAccess.display();
+		
+		int storageIndex = allTasks.indexOf(editedTask);
+		
+		sAccess.updateDescription(storageIndex, newValue);
 	}
 	
 	public String info() {
