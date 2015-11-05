@@ -29,9 +29,9 @@ public class AddEvent extends AddCommand {
 			throw new CommandAttributeError(ERROR_START);
 		}
 		
-		if (endDate == null || endDate == "" || endDate == " ") {
-			throw new CommandAttributeError(ERROR_END);
-		}
+//		if (endDate == null || endDate == "" || endDate == " ") {
+//			throw new CommandAttributeError(ERROR_END);
+//		}
 		
 		LocalDateTime start = convertDateTime(startDate);
 		LocalDateTime end = convertDateTime(endDate);

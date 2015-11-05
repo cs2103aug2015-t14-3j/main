@@ -436,7 +436,11 @@ public class DateParser {
 		}
 		for(String i : DATE_FORMAT_REGEXPS.keySet()){
 			TRIM_KEY_REGEXPS1.add("start\\w{0,3}\\s+by\\s+("+i+")?");
+			TRIM_KEY_REGEXPS1.add("start\\w{0,3}\\s+on\\s+("+i+")?");
+			TRIM_KEY_REGEXPS1.add("start\\w{0,3}\\s+at\\s+("+i+")?");
 			TRIM_KEY_REGEXPS1.add("beg[iau]n\\w{0,4}\\s+by\\s+("+i+")?");
+			TRIM_KEY_REGEXPS1.add("beg[iau]n\\w{0,4}\\s+on\\s+("+i+")?");
+			TRIM_KEY_REGEXPS1.add("beg[iau]n\\w{0,4}\\s+at\\s+("+i+")?");
 			TRIM_KEY_REGEXPS1.add("end\\w{0,3}\\s+at\\s+("+i+")?");
 			TRIM_KEY_REGEXPS1.add("finish\\w{0,3}\\s+at\\s+("+i+")?");
 			TRIM_KEY_REGEXPS1.add("from\\s+("+i+")?");
@@ -460,7 +464,11 @@ public class DateParser {
 		}
 		for(String i : DATE_FORMAT_REGEXPS.keySet()){
 			TRIM_KEY_REGEXPS2.add("start\\w{0,3}\\s+by\\s+("+i+"){1}");
+			TRIM_KEY_REGEXPS2.add("start\\w{0,3}\\s+on\\s+("+i+"){1}");
+			TRIM_KEY_REGEXPS2.add("start\\w{0,3}\\s+at\\s+("+i+"){1}");
 			TRIM_KEY_REGEXPS2.add("beg[iau]n\\w{0,4}\\s+by\\s+("+i+"){1}");
+			TRIM_KEY_REGEXPS2.add("beg[iau]n\\w{0,4}\\s+on\\s+("+i+"){1}");
+			TRIM_KEY_REGEXPS2.add("beg[iau]n\\w{0,4}\\s+at\\s+("+i+"){1}");
 			TRIM_KEY_REGEXPS2.add("end\\w{0,3}\\s+at\\s+("+i+"){1}");
 			TRIM_KEY_REGEXPS2.add("finish\\w{0,3}\\s+at\\s+("+i+"){1}");
 			TRIM_KEY_REGEXPS2.add("from\\s+("+i+"){1}");
