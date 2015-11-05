@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
+//@@Chow Hong Ern Daniel A0121327U
 public class AddEvent extends AddCommand {
 	
 	private String endDate;
@@ -27,10 +28,6 @@ public class AddEvent extends AddCommand {
 		
 		if (startDate == null || startDate == "" || startDate == " ") {
 			throw new CommandAttributeError(ERROR_START);
-		}
-		
-		if (endDate == null || endDate == "" || endDate == " ") {
-			throw new CommandAttributeError(ERROR_END);
 		}
 		
 		LocalDateTime start = convertDateTime(startDate);

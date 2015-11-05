@@ -2,12 +2,15 @@ package com.cs2013t143j.TaskBuddyM.Command;
 
 import java.awt.Desktop;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
+//@@Chow Hong Ern Daniel A0121327U
 public class HelpCommand implements Command {
 	
 	private String command;
@@ -28,6 +31,10 @@ public class HelpCommand implements Command {
 	private final String ERROR_OPEN = "Cannot open help file";
 	private final String HELP_OUT = "Here's the help file for Command: %s\n";
 	
+	
+	public static final String PREFIX = "stream2file";
+    public static final String SUFFIX = ".tmp";
+	
 	public HelpCommand(String _command) {
 		command = _command;
 	}
@@ -35,41 +42,50 @@ public class HelpCommand implements Command {
 	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) throws CommandAttributeError {
 		String output = new String();
 		
+		String file;
+		
+		try {
+			fileToRead = File.createTempFile(PREFIX, SUFFIX);
+		} catch (IOException e1) {
+			throw new CommandAttributeError(e1.toString());
+		}
+        fileToRead.deleteOnExit();
+		
 		switch(command) {
 		case "add":
 			output = String.format(HELP_OUT, "ADD");
-			fileToRead = new File(addHelp);
+			file = addHelp;
 			break;
 		case "display":
 			output = String.format(HELP_OUT, "DISPLAY");
-			fileToRead = new File(dispHelp);
+			file = dispHelp;
 			break;
 		case "delete":
 			output = String.format(HELP_OUT, "DELETE");
-			fileToRead = new File(delHelp);
+			file = delHelp;
 			break;
 		case "search":
 			output = String.format(HELP_OUT, "SEARCH");
-			fileToRead = new File(searchHelp);
+			file = searchHelp;
 			break;
 		case "undo":
 			output = String.format(HELP_OUT, "UNDO");
-			fileToRead = new File(undoHelp);
+			file = undoHelp;
 			break;
 		case "done":
 			output = String.format(HELP_OUT, "DONE");
-			fileToRead = new File(doneHelp);
+			file = doneHelp;
 			break;
 		case "edit":
 			output = String.format(HELP_OUT, "EDIT");
-			fileToRead = new File(editHelp);
+			file = editHelp;
 			break;
 		default:
 			return HELP_DEFAULT;
 		}
-		
-		try {
-			Desktop.getDesktop().open(fileToRead);
+			
+		try{
+			openFile(file);
 		} catch (IOException e) {
 			throw new CommandAttributeError(ERROR_OPEN);
 		}
@@ -78,6 +94,24 @@ public class HelpCommand implements Command {
 		output += command.execute(lastDisplay, sAccess);
 		
 		return output;		
+	}
+
+	private void openFile(String fileName) throws IOException {
+		InputStream is = getClass().getResourceAsStream(fileName);
+		
+		byte[] data = new byte[is.available()];
+		is.read(data);
+		is.close();
+		
+		String tempFile = "HELP";
+		File temp = File.createTempFile(tempFile, ".txt");
+		FileOutputStream fos = new FileOutputStream(temp);
+		
+		fos.write(data);
+		fos.flush();
+		fos.close();
+		
+		Desktop.getDesktop().open(temp);
 	}
 	
 	public void undo(StorageAccess sAccess) {
@@ -88,5 +122,9 @@ public class HelpCommand implements Command {
 		String output = INFO;
 		
 		return output;
+	}
+	
+	public void redo(StorageAccess sAccess) {
+		return;
 	}
 }

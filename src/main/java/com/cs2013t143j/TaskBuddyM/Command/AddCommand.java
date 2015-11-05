@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
+//@@Chow Hong Ern Daniel A0121327U
 public abstract class AddCommand implements Command {
 	
 	protected String description;
@@ -54,17 +55,7 @@ public abstract class AddCommand implements Command {
 		//Generates a format string for DateTimeFormatter based on the input datetime string
 		
 		String format = "HH ";
-		String date;
-		
-		String[] splitDT = dateTime.split(" ");
-		
-		if (splitDT.length == 1) {
-			//No Time specified
-			date = splitDT[0];
-		} else {
-			// Time specified
-			date = splitDT[1];
-		}
+		String date = getDateComponent(dateTime);
 		
 		String[] splitDate = date.split("/");
 		
@@ -91,11 +82,30 @@ public abstract class AddCommand implements Command {
 		return format;
 	}
 	
+	private String getDateComponent(String dateTime) {
+		String[] splitDT = dateTime.split(" ");
+		String date;
+		
+		if (splitDT.length == 1) {
+			//No Time specified
+			date = splitDT[0];
+		} else {
+			// Time specified
+			date = splitDT[1];
+		}
+		
+		return date;
+	}
+	
 	public void undo(StorageAccess sAccess) {
 		ArrayList<Task> allTasks = sAccess.display();
 
 		int storageIndex = allTasks.indexOf(addedTask);
 
 		sAccess.delete(storageIndex);
+	}
+	
+	public void redo(StorageAccess sAccess) {
+		sAccess.add(addedTask);
 	}
 }

@@ -5,17 +5,17 @@ import java.util.ArrayList;
 import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
-public class UndoCommand implements Command {
+public class RedoCommand implements Command {
 	
-	private Command commandToUndo;
+	private Command commandToRedo;
 	
-	private final String EMPTY_STACK = "No more commands to undo. ";
-	private final String UNDO = "Undid the last undoable command. ";
+	private final String EMPTY_STACK = "No more commands to redo. ";
+	private final String REDO = "Redid the last redoable command. ";
 	
-	private final String INFO = "Undo: ";
+	private final String INFO = "Redo: ";
 	
-	public UndoCommand(Command command) {
-		commandToUndo = command;
+	public RedoCommand(Command command) {
+		commandToRedo = command;
 	}
 
 	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) throws CommandAttributeError {
@@ -23,15 +23,15 @@ public class UndoCommand implements Command {
 		String output;
 		Command command = new DisplayAll();
 		
-		if (commandToUndo == null) {
+		if (commandToRedo == null) {
 			output = EMPTY_STACK;
 			output += command.execute(lastDisplay, sAccess);
 			
 			return output;
 		}
 		
-		commandToUndo.undo(sAccess);
-		output = UNDO;
+		commandToRedo.redo(sAccess);
+		output = REDO;
 		output += command.execute(lastDisplay, sAccess);
 		
 		return output;
@@ -42,10 +42,10 @@ public class UndoCommand implements Command {
 	}	
 	
 	public String info() {
-		if (commandToUndo == null) {
+		if (commandToRedo == null) {
 			return INFO + "NULL";
 		}
-		String output = INFO + commandToUndo.info();
+		String output = INFO + commandToRedo.info();
 		
 		return output;
 	}
@@ -53,4 +53,5 @@ public class UndoCommand implements Command {
 	public void redo(StorageAccess sAccess) {
 		return;
 	}
+	
 }

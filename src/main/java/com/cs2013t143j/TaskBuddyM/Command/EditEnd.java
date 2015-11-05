@@ -6,11 +6,13 @@ import java.util.ArrayList;
 import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
+//@@Chow Hong Ern Daniel A0121327U
 public class EditEnd extends EditCommand {
 	
 	private Task editedTask;
 	private LocalDateTime oldDateTime;
-	
+	private LocalDateTime newDateTime;
+
 	private final String INFO = "Edit no.%s end date to %s";
 	
 	public EditEnd(String _index, String _newValue) {
@@ -34,8 +36,8 @@ public class EditEnd extends EditCommand {
 			throw new CommandAttributeError(ERROR_NEGATIVE);
 		}	
 		
-		LocalDateTime newDate = convertDateTime(newValue);
-
+		newDateTime = convertDateTime(newValue);
+		
 		Task taskToEdit = lastDisplay.get(editIndex - 1);
 		editedTask = taskToEdit;
 		oldDateTime = taskToEdit.getEndDateTime();
@@ -44,7 +46,7 @@ public class EditEnd extends EditCommand {
 		
 		int storageIndex = allTasks.indexOf(taskToEdit);
 		
-		sAccess.updateEndDate(storageIndex, newDate);
+		sAccess.updateEndDate(storageIndex, newDateTime);
 		
 		String output = String.format(EDIT_OUTPUT, editIndex, "end date", newValue);
 
@@ -59,7 +61,15 @@ public class EditEnd extends EditCommand {
 		
 		int storageIndex = allTasks.indexOf(editedTask);
 		
-		sAccess.updateEndDate(storageIndex, oldDateTime);
+		sAccess.updateEndDate(storageIndex, oldDateTime);	
+	}
+	
+	public void redo(StorageAccess sAccess) {
+		ArrayList<Task> allTasks = sAccess.display();
+	
+		int storageIndex = allTasks.indexOf(editedTask);
+		
+		sAccess.updateEndDate(storageIndex, newDateTime);
 	}
 	
 	public String info() {
