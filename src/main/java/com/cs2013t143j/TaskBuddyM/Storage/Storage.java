@@ -61,8 +61,8 @@ public void add(Task newTask) {
 public ArrayList<Task> searchTaskWithinPeriod(LocalDateTime startDateTime,LocalDateTime endDateTime)
 {
 		try{
-			//ArrayList<Task>newTaskList = new ArrayList<Task>();
 		
+			
 		for(int i=0;i< tasks.size();i++){
 			Task task = tasks.get(i);
 			LocalDateTime startDate= task.getStartDateTime();
@@ -77,7 +77,7 @@ public ArrayList<Task> searchTaskWithinPeriod(LocalDateTime startDateTime,LocalD
 			System.out.println("Wrong format");
 		}
 				
-		return newTaskList;	
+		return newTaskList;
 }
 
 public void clearAll() {
@@ -110,4 +110,30 @@ public void clearAll() {
 	public void writeToFile() {
 		StorageIO.writeToFile(tasks);
 	}
+	
+	public boolean EqualsTo(Task task){
+		boolean str = false;
+		
+		String description = task.getDescription();
+		LocalDateTime startTime = task.getStartDateTime();
+		LocalDateTime endTime = task.getEndDateTime();
+		
+		for(int i=0; i< tasks.size();i++){
+			Task oldTask = tasks.get(i);
+			if((oldTask.getDescription() == description)  && (oldTask.getStartDateTime() == startTime) &&
+					(oldTask.getEndDateTime() == endTime)){
+					 str = true;
+			}
+		}
+			
+		return str;
+	
+	}
+
+
+
+
+
 }
+
+
