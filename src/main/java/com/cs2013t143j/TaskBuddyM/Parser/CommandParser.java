@@ -37,11 +37,11 @@ public class CommandParser {
 
 	private static final String DIC_COMMAND = "command";
 	private static final String DIC_SUBCOMMAND = "subCommand";
+	
 	private static final String DISPLAY_SUBCOMMAND_ON = "on";
 	private static final String DISPLAY_SUBCOMMAND_FROM = "from";
 	private static final String DISPLAY_SUBCOMMAND_AFTER = "after";
 	private static final String DISPLAY_SUBCOMMAND_DUE = "due";
-	private static final String DISPLAY_SUBCOMMAND_INCOMPLETE = "incomplete";
 	private static final String DISPLAY_SUBCOMMAND_DONE = "done";
 	private static final String DISPLAY_SUBCOMMAND_OVERDUE = "overdue";
 	private static final String DISPLAY_SUBCOMMAND_MONTH = "month";
@@ -147,7 +147,6 @@ public class CommandParser {
 				case DISPLAY_SUBCOMMAND_OVERDUE:
 				case DISPLAY_SUBCOMMAND_MONTH:
 				case DISPLAY_SUBCOMMAND_WEEK:
-				case DISPLAY_SUBCOMMAND_INCOMPLETE:
 				case DISPLAY_SUBCOMMAND_FLOATING:
 				case DISPLAY_SUBCOMMAND_RANGE:
 					dictionary.put(DIC_SUBCOMMAND, arr[index]);

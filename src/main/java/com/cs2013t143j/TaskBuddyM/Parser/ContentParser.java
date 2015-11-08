@@ -22,7 +22,6 @@ public class ContentParser {
 	private static final String ERROR_INDEX = "No index entered";
 	private static final String ERROR_FIELD = "Invalid field entered";
 	private static final String ERROR_EDIT_CONTENT = "Invalid content for 'edit' entered";
-	private static final String ERROR_DISPLAY_CONTENT = "Invalid content for 'display' entered";
 	
 	String userInput;
 	
