@@ -10,6 +10,7 @@ import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
 //@@Chow Hong Ern Daniel A0121327U
 public class AddEvent extends AddCommand {
+	
 	private static final Logger logger = Logger.getLogger(AddDeadline.class.getName());
 
 	private String endDate;
@@ -23,7 +24,7 @@ public class AddEvent extends AddCommand {
 		endDate = _endDate;
 	}
 	
-public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) throws CommandAttributeError {
+	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) throws CommandAttributeError {
 		
 		isValid();
 		

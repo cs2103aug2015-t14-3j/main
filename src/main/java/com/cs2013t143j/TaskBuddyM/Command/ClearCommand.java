@@ -9,10 +9,14 @@ public class ClearCommand implements Command {
 	
 	private final String INFO = "Clear";
 	private final String CLEAR_OUT = "Cleared all tasks from memory";
+	
+	private ArrayList<Task> allTasks = new ArrayList<Task>();
 
 	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) throws CommandAttributeError {
 		
 		isValid();
+		
+		allTasks = sAccess.display();
 		
 		sAccess.clear();
 		
@@ -24,7 +28,13 @@ public class ClearCommand implements Command {
 	}
 
 	public void undo(StorageAccess sAccess) {
-		return;
+		int i = 0;
+		
+		for (i=0; i<allTasks.size(); ++i) {
+			Task task = allTasks.get(i);
+			
+			sAccess.add(task);
+		}
 	}
 
 	public String info() {
@@ -34,7 +44,6 @@ public class ClearCommand implements Command {
 	}
 
 	public void redo(StorageAccess sAccess) {
-		return;
+		sAccess.clear();
 	}
-
 }

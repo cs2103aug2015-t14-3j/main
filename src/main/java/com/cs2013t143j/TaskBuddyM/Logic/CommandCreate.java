@@ -139,6 +139,7 @@ public class CommandCreate {
 			break;
 		case "clear":
 			command = new ClearCommand();
+			undoStack.push(command);
 			break;
 		default:
 			throw new CommandAttributeError(INVALID_COMMAND);
