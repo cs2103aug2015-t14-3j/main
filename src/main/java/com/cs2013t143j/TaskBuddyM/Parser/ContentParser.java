@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 
 import com.cs2013t143j.TaskBuddyM.Logic.Logic;
 
-//@@Lek Jia Ying A0126303W-reused
+//@@author A0126303W-reused
 
 public class ContentParser {
 	

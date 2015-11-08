@@ -1,6 +1,6 @@
 package com.cs2013t143j.TaskBuddyM.Parser;
 
-//@@Lek Jia Ying A0126303W generated
+//@@author A0126303W generated
 
 public class InvalidInputException extends Exception {
 	public InvalidInputException() { super(); }

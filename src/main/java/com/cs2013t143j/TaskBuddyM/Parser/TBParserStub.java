@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 
 import com.cs2013t143j.TaskBuddyM.Logic.Logic;
 
-//@@Lek Jia Ying A0126303W
+//@@author A0126303W
 
 public class TBParserStub {
 	
