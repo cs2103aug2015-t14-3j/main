@@ -1,7 +1,7 @@
 Display
 The display command is used to have a view of all the uncompleted tasks.
 
-Display
+Display All
 Display all the tasks that are not completed
 Command: display
 
@@ -26,5 +26,22 @@ Display all tasks with no end date and start date
 Command: display floating
 
 Display Done
-Dusplay all tasks marked as done
+Display all tasks marked as done
 Command: display done
+
+Display Range
+Display all tasks fall between a range of dates
+Command: display range 20/10/2015 to 30/10/2015
+
+Display Overdue
+Display all tasks that are overdue(End date is before today's date)
+Command: display overdue
+
+Display Week
+Display all tasks end between now and 1 week later
+Command: display week
+
+
+Display Month
+Display all tasks end between now and 1 month later
+Command: display month
