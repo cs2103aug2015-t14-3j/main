@@ -22,7 +22,7 @@ public class TBParserStub {
 	private static final String COMMAND_SEARCH = "search";
 	
 	private static final String ERROR_NO_COMMAND = "No command entered.";
-	private static final String ERROR_NO_CONTENT = "No task entered.";
+	private static final String ERROR_NO_CONTENT = "No content entered.";
 	
 	CommandParser cmd;
 	DateParser date;
