@@ -76,7 +76,7 @@ public class StorageTest extends Storage {
 		
 		assertEquals(olddescription,description);
 		
-		//fail("Not yet implemented");
+
 	}
 
 	@Test
