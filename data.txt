@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 swimming &&15-12-2015 00:00&&19-12-2015 00:00
 fighting &&11-12-2015 00:00&&12-12-2015 00:00
@@ -12,9 +13,14 @@ fighting &&11-12-2015 00:00&&12-12-2015 00:00
 2
 4
 5 &&08-11-2015 15:00
+=======
+>>>>>>> Stashed changes
 hello &&08-11-2015 16:00&&09-11-2015 16:00
 afds&&08-11-2015 16:00&&08-12-2015 16:00
 ewe &&15-11-2015 16:00
 project &&07-11-2015 17:00
+<<<<<<< Updated upstream
 >>>>>>> Stashed changes
 >>>>>>> branch 'master' of https://github.com/cs2103aug2015-t14-3j/main.git
+=======
+>>>>>>> Stashed changes
