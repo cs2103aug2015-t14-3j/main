@@ -26,7 +26,7 @@ public class DoneCommand implements Command {
 			return INVALID_INDEX;
 		}
 		
-		Task taskToChange = lastDisplay.get(index-1);
+		Task taskToChange = lastDisplay.remove(index-1);
 		ArrayList<Task> allTasks = sAccess.display();
 		
 		int storageIndex = allTasks.indexOf(taskToChange);
