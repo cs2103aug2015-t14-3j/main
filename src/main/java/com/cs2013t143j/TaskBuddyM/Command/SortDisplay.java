@@ -6,7 +6,7 @@ import java.util.Collections;
 import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
-//@@Chow Hong Ern Daniel A0121327U
+//@@author A0121327U-unused
 public class SortDisplay implements Command {
 	
 	protected final String DISPLAY_FORMAT = "%d.%s\t%s\t%s\t%s\n";

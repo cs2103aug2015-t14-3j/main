@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-//@@Chow Hong Ern Daniel A0121327U
+//@@author A0121327U
 public abstract class EditCommand implements Command {
 	
 	protected String index;

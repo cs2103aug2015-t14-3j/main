@@ -8,7 +8,7 @@ import com.cs2013t143j.TaskBuddyM.Storage.Storage;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 import java.util.logging.*;
 
-//@@Chow Hong Ern Daniel A0121327U
+//@@author A0121327U
 public class Logic {
 	private String output;
 	private static ArrayList<Task> lastDisplay = new ArrayList<Task>();

@@ -32,7 +32,7 @@ import com.cs2013t143j.TaskBuddyM.Command.RedoCommand;
 import com.cs2013t143j.TaskBuddyM.Parser.TBParserStub;
 import com.cs2013t143j.TaskBuddyM.Command.ClearCommand;
 
-//@@Chow Hong Ern Daniel A0121327U
+//@@author A0121327U
 public class CommandCreate {
 	
 	private final String COMMAND_TYPE = "command";

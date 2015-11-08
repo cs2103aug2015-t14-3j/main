@@ -5,7 +5,7 @@ import java.util.Comparator;
 
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
-//@@Chow Hong Ern Daniel A0121327U
+//@@author A0121327U-unused
 class StartSorter implements Comparator<Task> {
 	
 	public int compare(Task t1, Task t2) {

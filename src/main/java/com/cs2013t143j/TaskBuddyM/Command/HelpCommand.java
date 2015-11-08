@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
-//@@Chow Hong Ern Daniel A0121327U
+//@@author A0121327U
 public class HelpCommand implements Command {
 	
 	private String command;
