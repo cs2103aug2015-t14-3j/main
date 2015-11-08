@@ -47,7 +47,7 @@ public class DeleteCommand implements Command {
 				deleted += String.valueOf(converted);
 				
 				if (i != indexList.length-1) {
-					deleted += ",";
+					deleted += ", ";
 				}
 				
 				tasks.add(lastDisplay.get(converted-1));

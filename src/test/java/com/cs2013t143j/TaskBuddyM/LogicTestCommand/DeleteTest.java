@@ -16,7 +16,7 @@ public class DeleteTest {
 	private String output;
 
 	@Test
-	public void testDeleteInRange() {
+	public void DeleteOne() {
 		Logic logic = new Logic(false);
 		
 		command = new AddFloating("aaa");
@@ -35,6 +35,24 @@ public class DeleteTest {
 		output = logic.test2(command);
 		
 		assertEquals("Deleted task(s) 2\n1.aaa\t-\t-\n2.ccc\t-\t-\n", output);
+	}
+	
+	@Test
+	public void DeleteMultiple() {
+		Logic logic = new Logic(false);
+		
+		command = new AddFloating("aaa");
+		logic.test2(command);
+		
+		command = new AddFloating("bbb");
+		logic.test2(command);
+		
+		command = new AddFloating("ccc");
+		logic.test2(command);
+
+		command = new DeleteCommand("1 2");
+		output = logic.test2(command);
+		assertEquals("Deleted task(s) 1, 2\n1.ccc	-	-\n", output);
 	}
 	
 	@Test

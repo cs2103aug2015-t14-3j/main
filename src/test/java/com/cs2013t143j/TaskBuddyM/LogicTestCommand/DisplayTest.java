@@ -14,7 +14,6 @@ import com.cs2013t143j.TaskBuddyM.Command.DisplayDue;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayFloating;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayFrom;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayOn;
-import com.cs2013t143j.TaskBuddyM.Command.DisplayRange;
 import com.cs2013t143j.TaskBuddyM.Logic.Logic;
 
 public class DisplayTest {
