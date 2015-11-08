@@ -170,7 +170,8 @@ public void done(int index){
 	}
 	
 	public boolean EqualsTo(Task task){
-		boolean str = false;
+		boolean str = true;
+		
 		
 		String description = task.getDescription();
 		LocalDateTime startTime = task.getStartDateTime();
@@ -178,21 +179,17 @@ public void done(int index){
 		
 		for(int i=0; i< tasks.size();i++){
 			Task oldTask = tasks.get(i);
-			if((oldTask.getDescription() == description)  && (oldTask.getStartDateTime() == startTime) &&
-					(oldTask.getEndDateTime() == endTime)){
-					 str = true;
+		
+			if((oldTask.getEndDateTime() == endTime) && (oldTask.getStartDateTime() == startTime) 
+					&& (oldTask.getDescription() == description)) {
+				str = true;
 			}
 		}
-			
 		return str;
-	
 	}
-
-
-
-
-
 }
+
+
 
 
 

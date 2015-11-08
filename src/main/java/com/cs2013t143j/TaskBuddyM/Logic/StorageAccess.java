@@ -53,22 +53,6 @@ public class StorageAccess {
 		return str;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public void delete(int index) {
 		storage.delete(index);
 	}
@@ -93,7 +77,6 @@ public class StorageAccess {
 		return TaskList;
 		
 	}
-	
 	
 	public void updateDescription(int index, String newdescription){
 		storage.updateDescription(index, newdescription);
