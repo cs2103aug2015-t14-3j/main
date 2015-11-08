@@ -22,6 +22,53 @@ public class StorageAccess {
 		return true;
 	}
 	
+	public ArrayList<Task> showOverDue(){
+		ArrayList<Task> OverDueTasks = new ArrayList<Task>();
+		
+		OverDueTasks = storage.ShowOverDue();
+		
+		return OverDueTasks;
+	}
+	
+	public ArrayList<Task> showWeek() {
+		ArrayList<Task> WeekTaskList = new ArrayList<Task>();
+		
+		WeekTaskList = storage.showWeek();
+		
+		return WeekTaskList;
+	}
+	
+	public ArrayList<Task> showMonth() {
+		ArrayList<Task> MonthTaskList = new ArrayList<Task>();
+		
+		MonthTaskList = storage.showMonth();
+		
+		return MonthTaskList;
+		
+	}
+	
+	public boolean showWarning(Task task){
+		 boolean str = storage.EqualsTo(task);
+		
+		return str;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public void delete(int index) {
 		storage.delete(index);
 	}
