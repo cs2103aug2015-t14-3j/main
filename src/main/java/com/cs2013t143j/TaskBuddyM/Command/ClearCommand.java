@@ -11,9 +11,16 @@ public class ClearCommand implements Command {
 	private final String CLEAR_OUT = "Cleared all tasks from memory";
 
 	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) throws CommandAttributeError {
+		
+		isValid();
+		
 		sAccess.clear();
 		
 		return CLEAR_OUT;
+	}
+	
+	public boolean isValid() {
+		return true;
 	}
 
 	public void undo(StorageAccess sAccess) {

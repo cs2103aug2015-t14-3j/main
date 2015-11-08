@@ -10,5 +10,6 @@ public interface Command {
 	String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) throws CommandAttributeError;
 	void undo(StorageAccess sAccess);
 	String info();
+	boolean isValid() throws CommandAttributeError;
 	void redo(StorageAccess sAccess);
 }

@@ -14,7 +14,7 @@ public abstract class EditCommand implements Command {
 	
 	protected final String ERROR_INT = "Index provided is not an Integer";
 	protected final String ERROR_NEGATIVE = "Index provided must be larger than 0";
-	protected final String ERROR_RANGE = "Index providded is larger than last display";
+	protected final String ERROR_RANGE = "Index provided is larger than last display";
 	
 	private final int DAY_POS = 0;
 	private final int MONTH_POS = 1;

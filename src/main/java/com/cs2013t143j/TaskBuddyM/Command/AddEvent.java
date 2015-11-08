@@ -22,13 +22,7 @@ public class AddEvent extends AddCommand {
 	
 	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) throws CommandAttributeError {
 		
-		if (description == null || description == "" || description == " ") {
-			throw new CommandAttributeError(ERROR_DESCRIPTION);
-		}
-		
-		if (startDate == null || startDate == "" || startDate == " ") {
-			throw new CommandAttributeError(ERROR_START);
-		}
+		isValid();
 		
 		LocalDateTime start = convertDateTime(startDate);
 		LocalDateTime end = convertDateTime(endDate);
@@ -42,6 +36,18 @@ public class AddEvent extends AddCommand {
 		String output = command.execute(lastDisplay, sAccess);
 		
 		return output;
+	}
+	
+	public boolean isValid() throws CommandAttributeError {
+		if (description == null || description == "" || description == " ") {
+			throw new CommandAttributeError(ERROR_DESCRIPTION);
+		}
+		
+		if (startDate == null || startDate == "" || startDate == " ") {
+			throw new CommandAttributeError(ERROR_START);
+		}
+		
+		return true;
 	}
 	
 	public String info() {

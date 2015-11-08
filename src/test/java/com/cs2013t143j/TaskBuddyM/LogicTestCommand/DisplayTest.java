@@ -91,7 +91,7 @@ public class DisplayTest {
 		command = new DisplayOn(" ");
 		output = logic.test2(command);
 		
-		assertEquals("com.cs2013t143j.TaskBuddyM.Command.CommandAttributeError: Invalid or no date specified", output);
+		assertEquals("Invalid or no date specified", output);
 	}
 	
 	@Test
@@ -169,7 +169,7 @@ public class DisplayTest {
 		command = new DisplayFrom(" ");
 		output = logic.test2(command);
 		
-		assertEquals("com.cs2013t143j.TaskBuddyM.Command.CommandAttributeError: Invalid or no date specified", output);
+		assertEquals("Invalid or no date specified", output);
 	}
 	
 	@Test
@@ -204,12 +204,12 @@ public class DisplayTest {
 		command = new DisplayAfter("20/09/2015");
 		output = logic.test2(command);
 		
-		assertEquals("Here are your tasks due after 20/09/2015:\n1.submit report\t-\t20 Sep 2015 23:00\n2.ddd\t10 Sep 2015 23:00\t20 Sep 2015 23:00\n3.recess week\t20 Sep 2015 23:00\t22 Sep 2015 23:00\n4.finals\t20 Sep 2015 23:00\t25 Sep 2015 23:00\n", output);
+		assertEquals("Here are your tasks due after 20/09/2015:\n1.recess week\t20 Sep 2015 23:00\t22 Sep 2015 23:00\n2.finals\t20 Sep 2015 23:00\t25 Sep 2015 23:00\n", output);
 
 		command = new DisplayAfter("22/09/2015");
 		output = logic.test2(command);
 		
-		assertEquals("Here are your tasks due after 22/09/2015:\n1.recess week\t20 Sep 2015 23:00\t22 Sep 2015 23:00\n2.finals\t20 Sep 2015 23:00\t25 Sep 2015 23:00\n", output);
+		assertEquals("Here are your tasks due after 22/09/2015:\n1.finals\t20 Sep 2015 23:00\t25 Sep 2015 23:00\n", output);
 
 		command = new DisplayAfter("23/09/2015");
 		output = logic.test2(command);
@@ -230,7 +230,7 @@ public class DisplayTest {
 		command = new DisplayAfter(" ");
 		output = logic.test2(command);
 		
-		assertEquals("com.cs2013t143j.TaskBuddyM.Command.CommandAttributeError: Invalid or no date specified", output);
+		assertEquals("Invalid or no date specified", output);
 	}
 	
 	@Test
@@ -280,7 +280,7 @@ public class DisplayTest {
 		command = new DisplayDue(" ");
 		output = logic.test2(command);
 		
-		assertEquals("com.cs2013t143j.TaskBuddyM.Command.CommandAttributeError: Invalid or no date specified", output);
+		assertEquals("Invalid or no date specified", output);
 	}
 	
 	@Test
@@ -349,29 +349,5 @@ public class DisplayTest {
 		assertEquals("Here is your entire schedule:\n\nDescription                 Start Date             End Date            Done\n1.aaa                 18-10-2015 14:00                                  No\n\n", output);
 
 	}
-	
-	@Test
-	public void testDisplayRange() {
-		Logic logic = new Logic(false);
-		
-		command = new AddFloating("aaa");
-		logic.test2(command);
-		
-		command = new AddDeadline("submit report", "20/09/2015");
-		logic.test2(command);
-		
-		command = new AddEvent("recess week", "20/09/2015", "22/09/2015");
-		logic.test2(command);
-		
-		command = new AddEvent("finals", "20/09/2015", "25/09/2015");
-		logic.test2(command);
-		
-		command = new AddEvent("ddd", "10/09/2015", "20/09/2015");
-		logic.test2(command);
-		
-		command = new DisplayRange("20/09/2015", "23/09/2015");
-		output = logic.test2(command);
-		
-		assertEquals("Here are your tasks due after 23/09/2015:\n1.submit report\t-\t20 Sep 2015 23:00\n2.ddd\t10 Sep 2015 23:00\t20 Sep 2015 23:00\n3.recess week\t20 Sep 2015 23:00\t22 Sep 2015 23:00\n", output);
-	}
+
 }

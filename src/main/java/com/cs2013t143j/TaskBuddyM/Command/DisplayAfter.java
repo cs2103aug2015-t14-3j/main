@@ -29,9 +29,7 @@ public class DisplayAfter extends DisplayCommand {
 	
 	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) throws CommandAttributeError {
 		
-		if (date == null || date == "" || date == " ") {
-			throw new CommandAttributeError(ERROR_DATE);
-		}
+		isValid();
 		
 		ArrayList<Task> allTasks = sAccess.display();
 		
@@ -40,6 +38,14 @@ public class DisplayAfter extends DisplayCommand {
 		output = parseTasks(output);
 
 		return output;
+	}
+	
+	public boolean isValid() throws CommandAttributeError {
+		if (date == null || date == "" || date == " ") {
+			throw new CommandAttributeError(ERROR_DATE);
+		}
+		
+		return true;
 	}
 	
 	private ArrayList<Task> extractAfter(ArrayList<Task> allTasks, String _date) throws CommandAttributeError {

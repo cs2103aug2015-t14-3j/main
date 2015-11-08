@@ -19,9 +19,10 @@ public class TBParserStub {
 	private static final String COMMAND_UNDO = "undo";
 	private static final String COMMAND_CLEAR = "clear";
 	private static final String COMMAND_HELP = "help";
+	private static final String COMMAND_SEARCH = "search";
 	
 	private static final String ERROR_NO_COMMAND = "No command entered.";
-	private static final String ERROR_NO_CONTENT = "No task entered.";
+	private static final String ERROR_NO_CONTENT = "No content entered.";
 	
 	CommandParser cmd;
 	DateParser date;
@@ -50,13 +51,21 @@ public class TBParserStub {
 	}
 
 	private void checkContentExists(Map<String, String> dictionary) throws InvalidInputException {
-		if ((!dictionary.get(DIC_COMMAND).equals(COMMAND_CLEAR) || 
-				!dictionary.get(DIC_COMMAND).equals(COMMAND_REDO) ||
-				!dictionary.get(DIC_COMMAND).equals(COMMAND_UNDO))
-				&& (userInput.equals("") || userInput.equals(" ") || userInput.equals(null))) {
-			InvalidInputException e = new InvalidInputException(ERROR_NO_CONTENT);
-			logger.log(Level.SEVERE, "Exception in TBParser (checkContentExists)"); 
-			throw e;
+		switch (dictionary.get(DIC_COMMAND)) {
+		case COMMAND_ADD:
+		case COMMAND_DELETE:
+		case COMMAND_DONE:
+		case COMMAND_EDIT:
+		case COMMAND_SEARCH:
+		case COMMAND_HELP:
+			if (userInput.equals("") || userInput.equals(" ") || userInput.equals(null)) {
+				InvalidInputException e = new InvalidInputException(ERROR_NO_CONTENT);
+				logger.log(Level.SEVERE, "Exception in TBParser (checkContentExists)");
+				throw e;
+			}
+			break;
+		default:
+			break;
 		}
 	}
 

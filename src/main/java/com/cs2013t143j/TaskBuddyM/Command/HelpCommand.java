@@ -24,16 +24,11 @@ public class HelpCommand implements Command {
 	private String undoHelp = "undoHelper.txt";
 	
 	private final String INFO = "Help";
-	
-	private File fileToRead;
-	
+		
 	private final String HELP_DEFAULT = "You can get help for the following commands: add, display, delete, search, undo, done, edit";
 	private final String ERROR_OPEN = "Cannot open help file";
 	private final String HELP_OUT = "Here's the help file for Command: %s\n";
-	
-	
-	public static final String PREFIX = "stream2file";
-    public static final String SUFFIX = ".tmp";
+	private final String tempFile = "HELP";
 	
 	public HelpCommand(String _command) {
 		command = _command;
@@ -43,13 +38,6 @@ public class HelpCommand implements Command {
 		String output = new String();
 		
 		String file;
-		
-		try {
-			fileToRead = File.createTempFile(PREFIX, SUFFIX);
-		} catch (IOException e1) {
-			throw new CommandAttributeError(e1.toString());
-		}
-        fileToRead.deleteOnExit();
 		
 		switch(command) {
 		case "add":
@@ -95,6 +83,10 @@ public class HelpCommand implements Command {
 		
 		return output;		
 	}
+	
+	public boolean isValid() {
+		return true;
+	}
 
 	private void openFile(String fileName) throws IOException {
 		InputStream is = getClass().getResourceAsStream(fileName);
@@ -103,7 +95,6 @@ public class HelpCommand implements Command {
 		is.read(data);
 		is.close();
 		
-		String tempFile = "HELP";
 		File temp = File.createTempFile(tempFile, ".txt");
 		FileOutputStream fos = new FileOutputStream(temp);
 		
