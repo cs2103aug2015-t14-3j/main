@@ -1,5 +1,5 @@
 Deleting Tasks
-The command to delete a task is ‘delete’ followed by the index of the task to be removed from the last 'display' command
+The command to delete a task is ‘delete’ followed by the indexes of the task to be removed from the last 'display' command
 
 e.g.
 display (displays all incomplete tasks)
@@ -10,3 +10,7 @@ display (displays all incomplete tasks)
 3.Go for a Jog
 
 delete 3 would delete the third task (Go for a Jog)
+
+Specifying multiple numbers will delete multiple tasks
+
+i.e. delete 1 2 will delete the first and second task

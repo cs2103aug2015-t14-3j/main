@@ -21,11 +21,10 @@ public class HelpCommand implements Command {
 	private String searchHelp = "searchHelper.txt";
 	private String editHelp = "editHelper.txt";
 	private String doneHelp = "doneHelper.txt";
-	private String undoHelp = "undoHelper.txt";
 	
 	private final String INFO = "Help";
 		
-	private final String HELP_DEFAULT = "You can get help for the following commands: add, display, delete, search, undo, done, edit";
+	private final String HELP_DEFAULT = "You can get help for the following commands: add, display, delete, search, done, edit";
 	private final String ERROR_OPEN = "Cannot open help file";
 	private final String HELP_OUT = "Here's the help file for Command: %s\n";
 	private final String tempFile = "HELP";
@@ -55,10 +54,6 @@ public class HelpCommand implements Command {
 		case "search":
 			output = String.format(HELP_OUT, "SEARCH");
 			file = searchHelp;
-			break;
-		case "undo":
-			output = String.format(HELP_OUT, "UNDO");
-			file = undoHelp;
 			break;
 		case "done":
 			output = String.format(HELP_OUT, "DONE");
