@@ -1,4 +1,4 @@
-/* Types of command (shortcut): 
+/* Types of command 		(shortcut): 
  * 1. add/create/insert		(a/c/i)
  * 2. delete/remove			(del/r)
  * 3. display/show			(d)
