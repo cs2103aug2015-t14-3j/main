@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
-
 public class DisplayRange extends DisplayCommand {
 	
 	private String startDate;
@@ -20,7 +19,9 @@ public class DisplayRange extends DisplayCommand {
 	private final String DISPLAY_RANGE = "Here are your tasks from %s to %s\n";
 	
 	private final String ERROR_FORMAT = "Invalid date format(Should be dd/mm/yyyy)";
-
+	private final String ERROR_START = "Invalid or no start date specified";
+	private final String ERROR_END = "Invalid or no end date specified";
+	
 	private final int DAY_POS = 0;
 	private final int MONTH_POS = 1;
 	private final int YEAR_POS = 2;
@@ -32,11 +33,7 @@ public class DisplayRange extends DisplayCommand {
 
 	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) throws CommandAttributeError {
 
-		if (startDate == null || startDate == "" || startDate == " ") {
-			throw new CommandAttributeError(ERROR_DATE);
-		} else if (endDate == null || endDate == "" || endDate == " ") {
-			throw new CommandAttributeError(ERROR_DATE);
-		}
+		isValid();
 
 		tasks = extractWithin(startDate, endDate, sAccess);
 		
@@ -50,6 +47,16 @@ public class DisplayRange extends DisplayCommand {
 		output = parseTasks(output);
 
 		return output;
+	}
+	
+	public boolean isValid() throws CommandAttributeError {
+		if (startDate == null || startDate == "" || startDate == " ") {
+			throw new CommandAttributeError(ERROR_START);
+		} else if (endDate == null || endDate == "" || endDate == " ") {
+			throw new CommandAttributeError(ERROR_END);
+		}
+		
+		return true;
 	}
 	
 	private ArrayList<Task> extractWithin(String startDate,String endDate,StorageAccess sAccess) throws CommandAttributeError {

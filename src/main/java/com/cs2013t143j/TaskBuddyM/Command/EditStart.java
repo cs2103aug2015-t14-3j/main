@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
+//@@Chow Hong Ern Daniel A0121327U
 public class EditStart extends EditCommand {
 	
 	private Task editedTask;
@@ -23,11 +24,9 @@ public class EditStart extends EditCommand {
 		
 		int editIndex = 0;
 		
-		try {
-			editIndex = Integer.parseInt(index);
-		} catch (NumberFormatException e) {
-			throw new CommandAttributeError(ERROR_INT);
-		}
+		isValid();
+		
+		editIndex = Integer.parseInt(index);
 		
 		if (editIndex > lastDisplay.size()){
 			throw new CommandAttributeError(ERROR_RANGE);
@@ -53,6 +52,16 @@ public class EditStart extends EditCommand {
 		output += command.execute(lastDisplay, sAccess);
 		
 		return output;
+	}
+	
+	public boolean isValid() throws CommandAttributeError {
+		try {
+			Integer.parseInt(index);
+		} catch (NumberFormatException e) {
+			throw new CommandAttributeError(ERROR_INT);
+		}
+		
+		return true;
 	}
 	
 	public void undo(StorageAccess sAccess) {

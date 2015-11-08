@@ -52,7 +52,7 @@ public class EditTest {
 		command = new EditStart("1", "20/10/2015");
 		output = logic.test2(command);
 		
-		assertEquals("Edited task no.1 start date to 20/10/2015\n1.aaa\t20 Oct 2015 00:00\t-\n2.bbb\t-\t-\n", output);
+		assertEquals("Edited task no.1 start date to 20/10/2015\n1.aaa\t20 Oct 2015 23:00\t-\n2.bbb\t-\t-\n", output);
 	}
 	
 	@Test
@@ -71,6 +71,6 @@ public class EditTest {
 		command = new EditEnd("1", "21/10/2015");
 		output = logic.test2(command);
 		
-		assertEquals("Edited task no.1 end date to 21/10/2015\n1.aaa\t-\t21 Oct 2015 00:00\n2.bbb\t-\t-\n", output);
+		assertEquals("Edited task no.1 end date to 21/10/2015\n1.aaa\t-\t21 Oct 2015 23:00\n2.bbb\t-\t-\n", output);
 	}
 }

@@ -8,6 +8,7 @@ import com.cs2013t143j.TaskBuddyM.Storage.Storage;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
 
+//@@Chow Hong Ern Daniel A0121327U
 public class StorageAccess {
 	
 	private Storage storage;
@@ -19,6 +20,37 @@ public class StorageAccess {
 	public boolean add(Task newTask) {
 		storage.add(newTask);
 		return true;
+	}
+	
+	public ArrayList<Task> showOverDue(){
+		ArrayList<Task> OverDueTasks = new ArrayList<Task>();
+		
+		OverDueTasks = storage.ShowOverDue();
+		
+		return OverDueTasks;
+	}
+	
+	public ArrayList<Task> showWeek() {
+		ArrayList<Task> WeekTaskList = new ArrayList<Task>();
+		
+		WeekTaskList = storage.showWeek();
+		
+		return WeekTaskList;
+	}
+	
+	public ArrayList<Task> showMonth() {
+		ArrayList<Task> MonthTaskList = new ArrayList<Task>();
+		
+		MonthTaskList = storage.showMonth();
+		
+		return MonthTaskList;
+		
+	}
+	
+	public boolean showWarning(Task task){
+		 boolean str = storage.EqualsTo(task);
+		
+		return str;
 	}
 	
 	public void delete(int index) {
@@ -46,7 +78,6 @@ public class StorageAccess {
 		
 	}
 	
-	
 	public void updateDescription(int index, String newdescription){
 		storage.updateDescription(index, newdescription);
 	}
@@ -64,7 +95,6 @@ public class StorageAccess {
 	}
 
 	public ArrayList<Task> displayDone() {
-		// TODO Auto-generated method stub
 		return storage.displayDoneTasks();
 	}
 }

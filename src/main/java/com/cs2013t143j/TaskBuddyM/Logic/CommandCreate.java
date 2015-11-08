@@ -1,6 +1,7 @@
 package com.cs2013t143j.TaskBuddyM.Logic;
 
 import java.util.Map;
+
 import java.util.Stack;
 
 import com.cs2013t143j.TaskBuddyM.Command.AddDeadline;
@@ -12,6 +13,9 @@ import com.cs2013t143j.TaskBuddyM.Command.DeleteCommand;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayAfter;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayAll;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayDone;
+import com.cs2013t143j.TaskBuddyM.Command.DisplayWeek;
+import com.cs2013t143j.TaskBuddyM.Command.DisplayMonth;
+import com.cs2013t143j.TaskBuddyM.Command.DisplayOverDue;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayDue;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayFloating;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayFrom;
@@ -28,6 +32,7 @@ import com.cs2013t143j.TaskBuddyM.Command.RedoCommand;
 import com.cs2013t143j.TaskBuddyM.Parser.TBParserStub;
 import com.cs2013t143j.TaskBuddyM.Command.ClearCommand;
 
+//@@Chow Hong Ern Daniel A0121327U
 public class CommandCreate {
 	
 	private final String COMMAND_TYPE = "command";
@@ -47,7 +52,7 @@ public class CommandCreate {
 	private final String EDIT_FIELD = "field";
 	private final String EDIT_VALUE = "newValue";
 	
-	private final String HELP_COMMAND = "searchKey";
+	private final String HELP_COMMAND = "helpKey";
 	
 	private final String SEARCH_KEY = "searchKey";
 	
@@ -56,6 +61,8 @@ public class CommandCreate {
 	private final String INVALID_DISPLAY = "Invalid display subcommand";
 	private final String INVALID_EDIT = "Invalid field to edit";
 	private final String INVALID_COMMAND = "Invalid Command specified";
+	
+	private final String ERROR_PARSER = "Parser Error: ";
 	
 	private TBParserStub parser;
 	
@@ -75,7 +82,7 @@ public class CommandCreate {
 		try {
 			dictionary = parser.getDictionary(_command);
 		} catch (Exception e) {
-			throw new CommandAttributeError(e.toString());
+			throw new CommandAttributeError(ERROR_PARSER + e.toString());
 		}
 		
 		System.out.println(dictionary.toString());
@@ -87,6 +94,11 @@ public class CommandCreate {
 		switch (commandType) {
 		case "add":
 			command = createAdd(dictionary);
+			try {
+				command.isValid();
+			} catch (CommandAttributeError e) {
+				break;
+			}
 			undoStack.push(command);
 			break;
 		case "display":
@@ -94,10 +106,20 @@ public class CommandCreate {
 			break;
 		case "delete":
 			command = createDelete(dictionary);
+			try {
+				command.isValid();
+			} catch (CommandAttributeError e) {
+				break;
+			}
 			undoStack.push(command);
 			break;
 		case "edit":
 			command = createEdit(dictionary);
+			try {
+				command.isValid();
+			} catch (CommandAttributeError e) {
+				break;
+			}
 			undoStack.push(command);
 			break;
 		case "search":
@@ -117,6 +139,7 @@ public class CommandCreate {
 			break;
 		case "clear":
 			command = new ClearCommand();
+			undoStack.push(command);
 			break;
 		default:
 			throw new CommandAttributeError(INVALID_COMMAND);
@@ -197,6 +220,12 @@ public class CommandCreate {
 				return new DisplayAfter(date);
 			case "due":
 				return new DisplayDue(date);
+			case "overdue":
+				return new DisplayOverDue();
+			case "month":
+				return new DisplayMonth();
+			case "week":
+				return new DisplayWeek();
 			case "floating":
 				return new DisplayFloating();
 			case "range":

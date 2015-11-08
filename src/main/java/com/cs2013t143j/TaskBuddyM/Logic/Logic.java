@@ -8,6 +8,7 @@ import com.cs2013t143j.TaskBuddyM.Storage.Storage;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 import java.util.logging.*;
 
+//@@Chow Hong Ern Daniel A0121327U
 public class Logic {
 	private String output;
 	private static ArrayList<Task> lastDisplay = new ArrayList<Task>();
@@ -56,7 +57,7 @@ public class Logic {
 			commandToExecute = commandCreator.createCommand(command);
 		} catch (CommandAttributeError e) {
 			logger.severe("Exception(createCommand): " + e.toString());
-			return e.toString();
+			return e.getMessage();
 		}
 			
 		try {
@@ -65,7 +66,7 @@ public class Logic {
 			output = commandToExecute.execute(lastDisplay, storageAccess);
 		} catch (CommandAttributeError e) {
 			logger.severe("Exception(execute): " + e.toString());
-			return e.toString();
+			return e.getMessage();
 		}
 		
 		lastDisplay = DisplayCommand.getLastDisplay();
@@ -79,7 +80,7 @@ public class Logic {
 		output = command.execute(lastDisplay, storageAccess);
 		} catch (CommandAttributeError e) {
 			logger.log(Level.SEVERE, "Exception Encountered in execute", e);
-			return e.toString();
+			return e.getMessage();
 		}
 		lastDisplay = DisplayCommand.getLastDisplay();
 		

@@ -6,7 +6,7 @@ import java.util.Collections;
 import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
-
+//@@Chow Hong Ern Daniel A0121327U
 public class SortDisplay implements Command {
 	
 	protected final String DISPLAY_FORMAT = "%d.%s\t%s\t%s\t%s\n";
@@ -59,6 +59,10 @@ public class SortDisplay implements Command {
 		}
 		
 		return output;
+	}
+	
+	public boolean isValid() {
+		return true;
 	}
 	
 	public void undo(StorageAccess sAccess) {

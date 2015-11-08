@@ -9,7 +9,7 @@ import java.util.Collections;
 import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
-
+//@@Chow Hong Ern Daniel A0121327U
 public class DisplayCommand implements Command {
 	
 	protected static ArrayList<Task> tasks = new ArrayList<Task>();
@@ -77,6 +77,10 @@ public class DisplayCommand implements Command {
 
 	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) throws CommandAttributeError {
 		return null;
+	}
+	
+	public boolean isValid() throws CommandAttributeError {
+		return true;
 	}
 	
 	public void undo(StorageAccess sAccess) {

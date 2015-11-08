@@ -11,7 +11,7 @@ public class DoneCommand implements Command {
 	
 	private final String INFO = "Done no.%s";
 	
-	private final String DONE_OUTPUT = "Changed the done status of task %d\n\n";
+	private final String DONE_OUTPUT = "Changed the done status of task %d\n";
 	private final String INVALID_INDEX = "Invalid Index specified\n\n";
 
 	public DoneCommand(String _index) {
@@ -26,7 +26,7 @@ public class DoneCommand implements Command {
 			return INVALID_INDEX;
 		}
 		
-		Task taskToChange = lastDisplay.get(index-1);
+		Task taskToChange = lastDisplay.remove(index-1);
 		ArrayList<Task> allTasks = sAccess.display();
 		
 		int storageIndex = allTasks.indexOf(taskToChange);
@@ -40,6 +40,10 @@ public class DoneCommand implements Command {
 		output += command.execute(lastDisplay, sAccess);
 		
 		return output;
+	}
+	
+	public boolean isValid() {
+		return true;
 	}
 	
 	public void undo(StorageAccess sAccess) {

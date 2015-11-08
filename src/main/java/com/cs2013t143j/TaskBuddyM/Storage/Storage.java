@@ -1,12 +1,8 @@
 package com.cs2013t143j.TaskBuddyM.Storage;
 import java.util.ArrayList;
-
-
-
 import java.time.LocalDateTime;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 import com.cs2013t143j.TaskBuddyM.Storage.StorageIO;
-import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
 import java.lang.NullPointerException;
 
 
@@ -27,11 +23,15 @@ public void add(Task newTask) {
 	}
 	
 	public void delete(int index) {
+		assert index != 0;
+		
 		tasks.remove(index);
 		writeToFile();
 	}
 	
 	public Task getTask(int index) {
+		assert index != 0;
+		
 		Task task = tasks.get(index);
 			return task;
 	}
@@ -51,6 +51,9 @@ public void add(Task newTask) {
 	}
 	
 	public void updateEndDate(int index,LocalDateTime newEndDate) {
+		assert index != 0;
+		
+		
 		Task task = tasks.get(index);
 		task.setEndDateTime(newEndDate);
 		//tasks.add(index,task);
@@ -60,8 +63,7 @@ public void add(Task newTask) {
 	
 public ArrayList<Task> searchTaskWithinPeriod(LocalDateTime startDateTime,LocalDateTime endDateTime)
 {
-		try{
-			//ArrayList<Task>newTaskList = new ArrayList<Task>();
+	try{
 		
 		for(int i=0;i< tasks.size();i++){
 			Task task = tasks.get(i);
@@ -77,16 +79,72 @@ public ArrayList<Task> searchTaskWithinPeriod(LocalDateTime startDateTime,LocalD
 			System.out.println("Wrong format");
 		}
 				
-		return newTaskList;	
+		return newTaskList;
 }
 
 public void clearAll() {
 	tasks = new ArrayList<Task>();
 	writeToFile();
 	}
+
+public ArrayList<Task> ShowOverDue(){
 	
-	public void done(int index){
+	ArrayList<Task> OverDueTaskList = new ArrayList<Task>();
+	
+	for(int i=0; i< tasks.size();i++){
+		 Task task = tasks.get(i);
+		 if((task.getStartDateTime()== null) &&(task.getEndDateTime() != null) &&(LocalDateTime.now().isAfter(task.getEndDateTime()))) {
+			 OverDueTaskList.add(task);
+		}
+		 if((task.getStartDateTime()!=null)&&(task.getEndDateTime()!= null)&&(LocalDateTime.now().isAfter(task.getEndDateTime()))) {
+			 OverDueTaskList.add(task);
+		 }
 		
+	}
+	return OverDueTaskList;
+}
+
+public ArrayList<Task> showWeek(){
+ArrayList<Task> WeekList = new ArrayList<Task>();
+
+for(int i=0;i< tasks.size();i++){
+ Task task = tasks.get(i);
+ LocalDateTime endTime = task.getEndDateTime();
+ LocalDateTime OneWeekLater = (LocalDateTime.now()).plusWeeks(1);
+ 
+ if( (task.getStartDateTime() == null)&&  (endTime != null) &&(endTime.isAfter(LocalDateTime.now()))  && (endTime.isBefore(OneWeekLater))  ){ 
+	 WeekList.add(task);
+}
+ 
+ if( (task.getStartDateTime() != null)&&  (endTime != null) &&(endTime.isAfter(LocalDateTime.now()))  && (endTime.isBefore(OneWeekLater))  ){ 
+	 WeekList.add(task);
+}
+}
+	return WeekList;
+}
+
+
+public ArrayList<Task> showMonth(){
+ArrayList<Task> MonthList = new ArrayList<Task>();
+
+for(int i=0;i< tasks.size();i++){
+ Task task = tasks.get(i);
+ LocalDateTime endTime = task.getEndDateTime();
+ LocalDateTime OneMonthLater = (LocalDateTime.now()).plusMonths(1);
+ 
+ if( (task.getStartDateTime() == null)&&  (endTime != null) &&(endTime.isAfter(LocalDateTime.now()))  && (endTime.isBefore(OneMonthLater))  ){ 
+	 MonthList.add(task);
+}
+ 
+ if( (task.getStartDateTime() != null)&&  (endTime != null) &&(endTime.isAfter(LocalDateTime.now()))  && (endTime.isBefore(OneMonthLater))  ){ 
+	 MonthList.add(task);
+}
+}
+	return MonthList;
+}
+
+public void done(int index){
+		assert index != 0;
 		
 		boolean done = true;
 		
@@ -110,4 +168,28 @@ public void clearAll() {
 	public void writeToFile() {
 		StorageIO.writeToFile(tasks);
 	}
+	
+	public boolean EqualsTo(Task task){
+		boolean str = true;
+		
+		
+		String description = task.getDescription();
+		LocalDateTime startTime = task.getStartDateTime();
+		LocalDateTime endTime = task.getEndDateTime();
+		
+		for(int i=0; i< tasks.size();i++){
+			Task oldTask = tasks.get(i);
+		
+			if((oldTask.getEndDateTime() == endTime) && (oldTask.getStartDateTime() == startTime) 
+					&& (oldTask.getDescription() == description)) {
+				str = true;
+			}
+		}
+		return str;
+	}
 }
+
+
+
+
+

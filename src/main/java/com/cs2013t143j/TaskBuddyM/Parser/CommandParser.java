@@ -1,4 +1,4 @@
-/* Types of command (shortcut): 
+/* Types of command 		(shortcut): 
  * 1. add/create/insert		(a/c/i)
  * 2. delete/remove			(del/r)
  * 3. display/show			(d)
@@ -22,6 +22,9 @@ public class CommandParser {
 	private static final String COMMAND_DELETE = "delete";
 	private static final String COMMAND_DISPLAY = "display";
 	private static final String COMMAND_DONE = "done";
+	private static final String COMMAND_OVERDUE = "overdue";
+	private static final String COMMAND_MONTH = "month";
+	private static final String COMMAND_WEEK = "week";
 	private static final String COMMAND_EDIT = "edit";
 	private static final String COMMAND_HELP = "help";
 	private static final String COMMAND_INSERT = "insert";
@@ -34,13 +37,15 @@ public class CommandParser {
 
 	private static final String DIC_COMMAND = "command";
 	private static final String DIC_SUBCOMMAND = "subCommand";
+	
 	private static final String DISPLAY_SUBCOMMAND_ON = "on";
 	private static final String DISPLAY_SUBCOMMAND_FROM = "from";
 	private static final String DISPLAY_SUBCOMMAND_AFTER = "after";
 	private static final String DISPLAY_SUBCOMMAND_DUE = "due";
-	private static final String DISPLAY_SUBCOMMAND_WITHIN = "within";
-	private static final String DISPLAY_SUBCOMMAND_INCOMPLETE = "incomplete";
 	private static final String DISPLAY_SUBCOMMAND_DONE = "done";
+	private static final String DISPLAY_SUBCOMMAND_OVERDUE = "overdue";
+	private static final String DISPLAY_SUBCOMMAND_MONTH = "month";
+	private static final String DISPLAY_SUBCOMMAND_WEEK = "week";
 	private static final String DISPLAY_SUBCOMMAND_FLOATING = "floating";
 	private static final String DISPLAY_SUBCOMMAND_RANGE = "range";
 	
@@ -109,6 +114,12 @@ public class CommandParser {
 			} else if (arr[i].equalsIgnoreCase(COMMAND_DONE)) {
 				dictionary.put(DIC_COMMAND,COMMAND_DONE);
 				break;
+			}else if (arr[i].equalsIgnoreCase(COMMAND_OVERDUE)){
+				dictionary.put(DIC_COMMAND,COMMAND_OVERDUE);
+			} else if (arr[i].equalsIgnoreCase(COMMAND_WEEK)){
+				dictionary.put(DIC_COMMAND,COMMAND_WEEK);
+			} else if (arr[i].equalsIgnoreCase(COMMAND_MONTH)){
+				dictionary.put(DIC_COMMAND,COMMAND_MONTH);
 			} else if (arr[i].equalsIgnoreCase(COMMAND_REDO)) {
 				dictionary.put(DIC_COMMAND,COMMAND_REDO);
 				break;
@@ -133,8 +144,9 @@ public class CommandParser {
 				case DISPLAY_SUBCOMMAND_AFTER:
 				case DISPLAY_SUBCOMMAND_DUE:
 				case DISPLAY_SUBCOMMAND_DONE:
-				case DISPLAY_SUBCOMMAND_INCOMPLETE:
-				case DISPLAY_SUBCOMMAND_WITHIN:
+				case DISPLAY_SUBCOMMAND_OVERDUE:
+				case DISPLAY_SUBCOMMAND_MONTH:
+				case DISPLAY_SUBCOMMAND_WEEK:
 				case DISPLAY_SUBCOMMAND_FLOATING:
 				case DISPLAY_SUBCOMMAND_RANGE:
 					dictionary.put(DIC_SUBCOMMAND, arr[index]);
@@ -142,12 +154,14 @@ public class CommandParser {
 					break;
 				default:
 					dictionary.put(DIC_SUBCOMMAND, null);
+					break;
 				}
 			}
 		}
 	}
 	
 	public String removeWord(String word) {
+		assert word != "";
 		String regex = "\\s*\\b" + word + "\\b";
 		String temp = userInput.replaceAll(regex,"").trim();
 		if(temp.equals(userInput)) {

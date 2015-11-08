@@ -5,13 +5,14 @@ import java.util.ArrayList;
 import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
+//@@Chow Hong Ern Daniel A0121327U
 public class SearchCommand implements Command {
 	
 	private String searchKey;
 	
 	private final String SEARCH_HEADER = "Search returned %d result(s):\n";
-	private final String DISPLAY_FORMAT = "%d.%s\t%s\t%s\t%s\n";
-	private final String NO_RESUTS = "Search returned no results\n\n";
+	private final String DISPLAY_FORMAT = "%d.%s\t%s\t%s\n";
+	private final String NO_RESUTS = "Search returned no results";
 	
 	private final String INFO = "Search: %s";
 	
@@ -60,19 +61,14 @@ public class SearchCommand implements Command {
 				end = "-";
 			}
 			
-			boolean done = task.isDone();
-			String isDone = "No";
-			
-			if (done == true) {
-				isDone = "Yes";
-			}else {
-				isDone = "No";
-			}
-			
-			output += String.format(DISPLAY_FORMAT, index, description, start, end, isDone);			
+			output += String.format(DISPLAY_FORMAT, index, description, start, end);			
 			++index;
 		}
 		return output;
+	}
+	
+	public boolean isValid() {
+		return true;
 	}
 	
 	public void undo(StorageAccess sAccess) {

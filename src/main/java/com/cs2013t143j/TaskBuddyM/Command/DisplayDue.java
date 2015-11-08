@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
+//@@Chow Hong Ern Daniel A0121327U
 public class DisplayDue extends DisplayCommand {
 	
 	private String output = new String();
@@ -20,9 +21,7 @@ public class DisplayDue extends DisplayCommand {
 	
 	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) throws CommandAttributeError {
 		
-		if (date == null || date == "" || date == " ") {
-			throw new CommandAttributeError(ERROR_DATE);
-		}
+		isValid();
 		
 		ArrayList<Task> allTasks = sAccess.display();
 		
@@ -31,6 +30,14 @@ public class DisplayDue extends DisplayCommand {
 		output = parseTasks(output);
 
 		return output;
+	}
+	
+	public boolean isValid() throws CommandAttributeError {
+		if (date == null || date == "" || date == " ") {
+			throw new CommandAttributeError(ERROR_DATE);
+		}
+		
+		return true;
 	}
 	
 	private String convertDate(String _date) {

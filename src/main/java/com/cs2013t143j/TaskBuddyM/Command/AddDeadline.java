@@ -2,11 +2,17 @@ package com.cs2013t143j.TaskBuddyM.Command;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
+//@@Chow Hong Ern Daniel A0121327U
 public class AddDeadline extends AddCommand {
+	
+	private static final Logger logger = Logger.getLogger(AddDeadline.class.getName());
 	
 	private String endDate;
 
@@ -19,18 +25,17 @@ public class AddDeadline extends AddCommand {
 	
 	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) throws CommandAttributeError {
 		
-		if (description == null || description == "" || description == " ") {
-			throw new CommandAttributeError(ERROR_DESCRIPTION);
-		}
-		
-		if (endDate == null || endDate == "" || endDate == " ") {
-			throw new CommandAttributeError(ERROR_END);
-		}
+		isValid();
 		
 		LocalDateTime end = convertDateTime(endDate);
 		
 		Task task = new Task(description, end);
 		addedTask = task;
+		
+		if(sAccess.showWarning(task) == true){
+			logger.setLevel(Level.WARNING);
+			logger.log(Level.WARNING,"You already have a simliar task!");
+		}
 		
 		sAccess.add(task);
 		
@@ -40,6 +45,18 @@ public class AddDeadline extends AddCommand {
 		return output;
 	}
 
+	public boolean isValid() throws CommandAttributeError {
+		if (description == null || description == "" || description == " ") {
+			throw new CommandAttributeError(ERROR_DESCRIPTION);
+		}
+		
+		if (endDate == null || endDate == "" || endDate == " ") {
+			throw new CommandAttributeError(ERROR_END);
+		}
+		
+		return true;
+	}
+	
 	public String info() {
 		String output = String.format(INFO, description, endDate);
 		

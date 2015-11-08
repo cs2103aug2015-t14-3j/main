@@ -62,7 +62,7 @@ public class AddTest {
 		command = new AddFloating(" ");
 		output = logic.test2(command);
 		
-		assertEquals("com.cs2013t143j.TaskBuddyM.Command.CommandAttributeError: Invalid Description(Cannot be empty)", output);
+		assertEquals("Invalid Description(Cannot be empty)", output);
 	}
 	
 	@Test
@@ -72,6 +72,6 @@ public class AddTest {
 		command = new AddEvent("aaa", " ", null);
 		output = logic.test2(command);
 		
-		assertEquals("com.cs2013t143j.TaskBuddyM.Command.CommandAttributeError: Invalid Start Date", output);
+		assertEquals("Invalid Start Date", output);
 	}
 }

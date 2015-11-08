@@ -1,0 +1,16 @@
+Deleting Tasks
+The command to delete a task is ‘delete’ followed by the indexes of the task to be removed from the last 'display' command
+
+e.g.
+display (displays all incomplete tasks)
+
+  Description          Start Date         End Date
+1.Submit report                           10/9/2015
+2.Do CE4                                  1/1/2020
+3.Go for a Jog
+
+delete 3 would delete the third task (Go for a Jog)
+
+Specifying multiple numbers will delete multiple tasks
+
+i.e. delete 1 2 will delete the first and second task

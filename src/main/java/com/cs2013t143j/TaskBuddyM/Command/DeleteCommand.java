@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
+//@@Chow Hong Ern Daniel A0121327U
 public class DeleteCommand implements Command {
 	
 	private String delIndex;
@@ -16,7 +17,7 @@ public class DeleteCommand implements Command {
 	
 	private final String ERROR_INT = "Index provided is not an Integer";
 	private final String ERROR_NEGATIVE = "Index provided must be larger than 0";
-	private final String ERROR_RANGE = "Index providded is larger than last display";
+	private final String ERROR_RANGE = "Index provided is larger than last display";
 
 	public DeleteCommand(String _index) {
 		delIndex = _index;
@@ -74,6 +75,10 @@ public class DeleteCommand implements Command {
 		output += command.execute(lastDisplay, sAccess);
 		
 		return output;
+	}
+	
+	public boolean isValid() {
+		return true;
 	}
 	
 	public void undo(StorageAccess sAccess) {
