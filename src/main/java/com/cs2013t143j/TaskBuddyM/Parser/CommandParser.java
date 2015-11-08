@@ -140,6 +140,7 @@ public class CommandParser {
 					break;
 				default:
 					dictionary.put(DIC_SUBCOMMAND, null);
+					break;
 				}
 			}
 		}

@@ -22,6 +22,7 @@ public class ContentParser {
 	private static final String ERROR_INDEX = "No index entered";
 	private static final String ERROR_FIELD = "Invalid field entered";
 	private static final String ERROR_EDIT_CONTENT = "Invalid content for 'edit' entered";
+	private static final String ERROR_DISPLAY_CONTENT = "Invalid content for 'display' entered";
 	
 	String userInput;
 	
@@ -77,7 +78,7 @@ public class ContentParser {
 		return dictionary;
 	}
 	
-	public Map<String,String> extractDisplayContent() throws TooManyDateFoundException  {
+	public Map<String,String> extractDisplayContent() throws TooManyDateFoundException {
 		if (userInput.length() != 0) {
 			dictionary.put(DIC_DESCRIPTION, userInput);
 			retrieveDisplayDate();
@@ -187,8 +188,6 @@ public class ContentParser {
 	}
 	
 	private void checkException(String method, String error) throws InvalidInputException {
-		assert method != null;
-		assert method != "";
 		if (userInput.equals(null) || userInput.equals("") || userInput.equals(" ")) {
 			InvalidInputException e = new InvalidInputException(error);
 			logger.log(Level.SEVERE, "Exception in ContentParser " + method);
