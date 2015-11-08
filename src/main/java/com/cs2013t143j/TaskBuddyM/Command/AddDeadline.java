@@ -20,13 +20,7 @@ public class AddDeadline extends AddCommand {
 	
 	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) throws CommandAttributeError {
 		
-		if (description == null || description == "" || description == " ") {
-			throw new CommandAttributeError(ERROR_DESCRIPTION);
-		}
-		
-		if (endDate == null || endDate == "" || endDate == " ") {
-			throw new CommandAttributeError(ERROR_END);
-		}
+		isValid();
 		
 		LocalDateTime end = convertDateTime(endDate);
 		
@@ -41,6 +35,18 @@ public class AddDeadline extends AddCommand {
 		return output;
 	}
 
+	public boolean isValid() throws CommandAttributeError {
+		if (description == null || description == "" || description == " ") {
+			throw new CommandAttributeError(ERROR_DESCRIPTION);
+		}
+		
+		if (endDate == null || endDate == "" || endDate == " ") {
+			throw new CommandAttributeError(ERROR_END);
+		}
+		
+		return true;
+	}
+	
 	public String info() {
 		String output = String.format(INFO, description, endDate);
 		

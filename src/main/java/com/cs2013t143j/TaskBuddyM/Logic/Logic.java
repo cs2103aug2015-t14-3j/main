@@ -57,7 +57,7 @@ public class Logic {
 			commandToExecute = commandCreator.createCommand(command);
 		} catch (CommandAttributeError e) {
 			logger.severe("Exception(createCommand): " + e.toString());
-			return e.toString();
+			return e.getMessage();
 		}
 			
 		try {
@@ -66,7 +66,7 @@ public class Logic {
 			output = commandToExecute.execute(lastDisplay, storageAccess);
 		} catch (CommandAttributeError e) {
 			logger.severe("Exception(execute): " + e.toString());
-			return e.toString();
+			return e.getMessage();
 		}
 		
 		lastDisplay = DisplayCommand.getLastDisplay();
@@ -80,7 +80,7 @@ public class Logic {
 		output = command.execute(lastDisplay, storageAccess);
 		} catch (CommandAttributeError e) {
 			logger.log(Level.SEVERE, "Exception Encountered in execute", e);
-			return e.toString();
+			return e.getMessage();
 		}
 		lastDisplay = DisplayCommand.getLastDisplay();
 		

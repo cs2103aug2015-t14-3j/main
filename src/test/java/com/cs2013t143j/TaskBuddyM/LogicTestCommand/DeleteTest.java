@@ -47,7 +47,7 @@ public class DeleteTest {
 		command = new DeleteCommand("Hello");
 		output = logic.test2(command);
 		
-		assertEquals("com.cs2013t143j.TaskBuddyM.Command.CommandAttributeError: Index provided is not an Integer", output);
+		assertEquals("Index provided is not an Integer", output);
 	}
 	
 	@Test
@@ -69,7 +69,7 @@ public class DeleteTest {
 		command = new DeleteCommand("-1");
 		output = logic.test2(command);
 		
-		assertEquals("com.cs2013t143j.TaskBuddyM.Command.CommandAttributeError: Index provided must be larger than 0", output);
+		assertEquals("Index provided must be larger than 0", output);
 	}
 	
 	@Test
@@ -91,6 +91,6 @@ public class DeleteTest {
 		command = new DeleteCommand("4");
 		output = logic.test2(command);
 		
-		assertEquals("com.cs2013t143j.TaskBuddyM.Command.CommandAttributeError: Index providded is larger than last display", output);
+		assertEquals("Index provided is larger than last display", output);
 	}
 }

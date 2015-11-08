@@ -79,6 +79,10 @@ public class DisplayCommand implements Command {
 		return null;
 	}
 	
+	public boolean isValid() throws CommandAttributeError {
+		return true;
+	}
+	
 	public void undo(StorageAccess sAccess) {
 		return;
 	}

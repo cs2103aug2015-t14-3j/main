@@ -58,6 +58,8 @@ public class CommandCreate {
 	private final String INVALID_EDIT = "Invalid field to edit";
 	private final String INVALID_COMMAND = "Invalid Command specified";
 	
+	private final String ERROR_PARSER = "Parser Error: ";
+	
 	private TBParserStub parser;
 	
 	private Stack<Command> undoStack;
@@ -76,7 +78,7 @@ public class CommandCreate {
 		try {
 			dictionary = parser.getDictionary(_command);
 		} catch (Exception e) {
-			throw new CommandAttributeError(e.toString());
+			throw new CommandAttributeError(ERROR_PARSER + e.toString());
 		}
 		
 		System.out.println(dictionary.toString());
@@ -88,6 +90,11 @@ public class CommandCreate {
 		switch (commandType) {
 		case "add":
 			command = createAdd(dictionary);
+			try {
+				command.isValid();
+			} catch (CommandAttributeError e) {
+				break;
+			}
 			undoStack.push(command);
 			break;
 		case "display":
@@ -95,10 +102,20 @@ public class CommandCreate {
 			break;
 		case "delete":
 			command = createDelete(dictionary);
+			try {
+				command.isValid();
+			} catch (CommandAttributeError e) {
+				break;
+			}
 			undoStack.push(command);
 			break;
 		case "edit":
 			command = createEdit(dictionary);
+			try {
+				command.isValid();
+			} catch (CommandAttributeError e) {
+				break;
+			}
 			undoStack.push(command);
 			break;
 		case "search":

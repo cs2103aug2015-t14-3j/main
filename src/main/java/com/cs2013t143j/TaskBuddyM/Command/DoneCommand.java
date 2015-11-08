@@ -42,6 +42,10 @@ public class DoneCommand implements Command {
 		return output;
 	}
 	
+	public boolean isValid() {
+		return true;
+	}
+	
 	public void undo(StorageAccess sAccess) {
 		return;
 	}
