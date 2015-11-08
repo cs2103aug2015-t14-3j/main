@@ -22,6 +22,9 @@ public class CommandParser {
 	private static final String COMMAND_DELETE = "delete";
 	private static final String COMMAND_DISPLAY = "display";
 	private static final String COMMAND_DONE = "done";
+	private static final String COMMAND_OVERDUE = "overdue";
+	private static final String COMMAND_MONTH = "month";
+	private static final String COMMAND_WEEK = "week";
 	private static final String COMMAND_EDIT = "edit";
 	private static final String COMMAND_HELP = "help";
 	private static final String COMMAND_INSERT = "insert";
@@ -40,6 +43,9 @@ public class CommandParser {
 	private static final String DISPLAY_SUBCOMMAND_DUE = "due";
 	private static final String DISPLAY_SUBCOMMAND_INCOMPLETE = "incomplete";
 	private static final String DISPLAY_SUBCOMMAND_DONE = "done";
+	private static final String DISPLAY_SUBCOMMAND_OVERDUE = "overdue";
+	private static final String DISPLAY_SUBCOMMAND_MONTH = "month";
+	private static final String DISPLAY_SUBCOMMAND_WEEK = "week";
 	private static final String DISPLAY_SUBCOMMAND_FLOATING = "floating";
 	private static final String DISPLAY_SUBCOMMAND_RANGE = "range";
 	
@@ -108,6 +114,12 @@ public class CommandParser {
 			} else if (arr[i].equalsIgnoreCase(COMMAND_DONE)) {
 				dictionary.put(DIC_COMMAND,COMMAND_DONE);
 				break;
+			}else if (arr[i].equalsIgnoreCase(COMMAND_OVERDUE)){
+				dictionary.put(DIC_COMMAND,COMMAND_OVERDUE);
+			} else if (arr[i].equalsIgnoreCase(COMMAND_WEEK)){
+				dictionary.put(DIC_COMMAND,COMMAND_WEEK);
+			} else if (arr[i].equalsIgnoreCase(COMMAND_MONTH)){
+				dictionary.put(DIC_COMMAND,COMMAND_MONTH);
 			} else if (arr[i].equalsIgnoreCase(COMMAND_REDO)) {
 				dictionary.put(DIC_COMMAND,COMMAND_REDO);
 				break;
@@ -132,6 +144,9 @@ public class CommandParser {
 				case DISPLAY_SUBCOMMAND_AFTER:
 				case DISPLAY_SUBCOMMAND_DUE:
 				case DISPLAY_SUBCOMMAND_DONE:
+				case DISPLAY_SUBCOMMAND_OVERDUE:
+				case DISPLAY_SUBCOMMAND_MONTH:
+				case DISPLAY_SUBCOMMAND_WEEK:
 				case DISPLAY_SUBCOMMAND_INCOMPLETE:
 				case DISPLAY_SUBCOMMAND_FLOATING:
 				case DISPLAY_SUBCOMMAND_RANGE:

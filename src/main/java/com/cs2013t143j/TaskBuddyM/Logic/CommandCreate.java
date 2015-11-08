@@ -1,6 +1,7 @@
 package com.cs2013t143j.TaskBuddyM.Logic;
 
 import java.util.Map;
+
 import java.util.Stack;
 
 import com.cs2013t143j.TaskBuddyM.Command.AddDeadline;
@@ -12,6 +13,9 @@ import com.cs2013t143j.TaskBuddyM.Command.DeleteCommand;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayAfter;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayAll;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayDone;
+import com.cs2013t143j.TaskBuddyM.Command.DisplayWeek;
+import com.cs2013t143j.TaskBuddyM.Command.DisplayMonth;
+import com.cs2013t143j.TaskBuddyM.Command.DisplayOverDue;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayDue;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayFloating;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayFrom;
@@ -215,6 +219,12 @@ public class CommandCreate {
 				return new DisplayAfter(date);
 			case "due":
 				return new DisplayDue(date);
+			case "overdue":
+				return new DisplayOverDue();
+			case "month":
+				return new DisplayMonth();
+			case "week":
+				return new DisplayWeek();
 			case "floating":
 				return new DisplayFloating();
 			case "range":
