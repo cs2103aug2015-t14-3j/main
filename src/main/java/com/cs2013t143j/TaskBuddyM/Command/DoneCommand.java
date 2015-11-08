@@ -11,7 +11,7 @@ public class DoneCommand implements Command {
 	
 	private final String INFO = "Done no.%s";
 	
-	private final String DONE_OUTPUT = "Changed the done status of task %d\n\n";
+	private final String DONE_OUTPUT = "Changed the done status of task %d\n";
 	private final String INVALID_INDEX = "Invalid Index specified\n\n";
 
 	public DoneCommand(String _index) {
