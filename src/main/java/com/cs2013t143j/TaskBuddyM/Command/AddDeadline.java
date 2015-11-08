@@ -2,12 +2,17 @@ package com.cs2013t143j.TaskBuddyM.Command;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
 //@@Chow Hong Ern Daniel A0121327U
 public class AddDeadline extends AddCommand {
+	private static final Logger logger = Logger.getLogger(AddDeadline.class.getName());
+	
 	
 	private String endDate;
 
@@ -26,6 +31,11 @@ public class AddDeadline extends AddCommand {
 		
 		Task task = new Task(description, end);
 		addedTask = task;
+		
+		if(sAccess.showWarning(task) == true){
+			logger.setLevel(Level.WARNING);
+			logger.info("Warning!");
+		}
 		
 		sAccess.add(task);
 		
