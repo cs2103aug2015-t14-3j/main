@@ -48,7 +48,7 @@ public class CommandCreate {
 	private final String EDIT_FIELD = "field";
 	private final String EDIT_VALUE = "newValue";
 	
-	private final String HELP_COMMAND = "searchKey";
+	private final String HELP_COMMAND = "helpKey";
 	
 	private final String SEARCH_KEY = "searchKey";
 	

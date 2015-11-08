@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 ccc&&20-10-2015 00:00&&25-10-2015 00:00
 ddd
 edited
@@ -6,3 +7,9 @@ help
 help
 a
 aa &&05-11-2015 23:00
+=======
+swimming
+running&&06-11-2015 15:00
+buy food &&07-11-2015 15:00
+grocery &&07-11-2015 15:00
+>>>>>>> Stashed changes

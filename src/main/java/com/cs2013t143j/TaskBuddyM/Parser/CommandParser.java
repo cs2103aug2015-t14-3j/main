@@ -38,7 +38,6 @@ public class CommandParser {
 	private static final String DISPLAY_SUBCOMMAND_FROM = "from";
 	private static final String DISPLAY_SUBCOMMAND_AFTER = "after";
 	private static final String DISPLAY_SUBCOMMAND_DUE = "due";
-	private static final String DISPLAY_SUBCOMMAND_WITHIN = "within";
 	private static final String DISPLAY_SUBCOMMAND_INCOMPLETE = "incomplete";
 	private static final String DISPLAY_SUBCOMMAND_DONE = "done";
 	private static final String DISPLAY_SUBCOMMAND_FLOATING = "floating";
@@ -134,7 +133,6 @@ public class CommandParser {
 				case DISPLAY_SUBCOMMAND_DUE:
 				case DISPLAY_SUBCOMMAND_DONE:
 				case DISPLAY_SUBCOMMAND_INCOMPLETE:
-				case DISPLAY_SUBCOMMAND_WITHIN:
 				case DISPLAY_SUBCOMMAND_FLOATING:
 				case DISPLAY_SUBCOMMAND_RANGE:
 					dictionary.put(DIC_SUBCOMMAND, arr[index]);
@@ -148,6 +146,7 @@ public class CommandParser {
 	}
 	
 	public String removeWord(String word) {
+		assert word != "";
 		String regex = "\\s*\\b" + word + "\\b";
 		String temp = userInput.replaceAll(regex,"").trim();
 		if(temp.equals(userInput)) {
