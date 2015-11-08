@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -155,7 +156,8 @@ public class MainPanel extends JPanel implements ActionListener {
 	
 	@Override
     public void paintComponent(Graphics g) {
-		Image bg = new ImageIcon("src/main/res/papertexture14.jpg").getImage();
+		URL url = getClass().getResource("/papertexture14.jpg");
+		Image bg = new ImageIcon(url).getImage();
         g.drawImage(bg, 0, 0, getWidth(), getHeight(), this);
     }
 

@@ -34,7 +34,7 @@ public class AddDeadline extends AddCommand {
 		
 		if(sAccess.showWarning(task) == true){
 			logger.setLevel(Level.WARNING);
-			logger.info("Warning!");
+			logger.log(Level.WARNING,"You already have a simliar task!");
 		}
 		
 		sAccess.add(task);

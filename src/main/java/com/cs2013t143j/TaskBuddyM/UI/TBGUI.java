@@ -11,6 +11,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -56,7 +57,8 @@ public class TBGUI {
     	try {
     	     GraphicsEnvironment ge = 
     	         GraphicsEnvironment.getLocalGraphicsEnvironment();
-    	     ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("src/main/res/augie.ttf")));
+    	     URL url = TBGUI.class.getResource("/augie.ttf");
+    	     ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, TBGUI.class.getResourceAsStream("/augie.ttf")));
     	} catch (IOException|FontFormatException e) {
     	     //Handle exception
     	}
