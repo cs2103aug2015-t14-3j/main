@@ -10,6 +10,8 @@ import org.junit.Test;
 import com.cs2013t143j.TaskBuddyM.Parser.CommandParser;
 import com.cs2013t143j.TaskBuddyM.Parser.InvalidInputException;
 
+//@@author A0126303W
+
 public class CheckCommandExistsText {
 	
 	private Map<String, String> dictionary = new HashMap<String,String>();
