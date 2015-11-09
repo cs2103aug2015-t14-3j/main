@@ -20,25 +20,24 @@ public class RedoCommand {
 		private ArrayList<Task> TaskList = new ArrayList<Task>();
 
 		public RedoCommand(History history,StorageAccess storage) {
-						this.history = history;
-						this.storage = storage;
+			   this.history = history;
+			   this.storage = storage;
 		}
 
 		public String executeRedoAdd(ArrayList<Task> TaskList,StorageAccess storage) {
-						String feedback = "yes";
-						int index;
-						Task task;
-						StackCommand cmd;
+			   String feedback = "yes";
+			   int index;
+			   Task task;
+			   StackCommand cmd;
 
-						cmd = history.popRedoAdd();
-						task = cmd.getTask();
-						index = cmd.getIndex();
+			   cmd = history.popRedoAdd();
+			   task = cmd.getTask();
+			   index = cmd.getIndex();
+			   TaskList = storage.display();
+			   TaskList.add(index,task);
 	
-						TaskList = storage.display();
-						TaskList.add(index,task);
+			   storage.writeToFile();
 	
-						storage.writeToFile();
-	
-						return feedback;
+			   return feedback;
 	}
 }

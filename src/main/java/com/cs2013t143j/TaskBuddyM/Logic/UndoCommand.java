@@ -17,60 +17,58 @@ public class UndoCommand {
 	private StorageAccess storage;
 	private Task task  = new Task();
 	StackCommand cmd;
-	
 	private ArrayList<Task> TaskList = new ArrayList<Task>();
-	
+		
+		public UndoCommand(History history,StorageAccess storage) {
+				this.history = history;
+				this.storage = storage;
+		}
 
-	public UndoCommand(History history,StorageAccess storage) {
-		this.history = history;
-		this.storage = storage;
-	}
-
-	public String executeUndoAdd(ArrayList<Task> TaskList, StorageAccess storage)  {
-	 String feedback  = "yes";
-	 Task task = history.popUndoAdd();
+		public String executeUndoAdd(ArrayList<Task> TaskList, StorageAccess storage)  {
+				String feedback  = "yes";
+				Task task = history.popUndoAdd();
 	 
-	 TaskList = storage.display();
-	 int index = TaskList.size()-1;
-	 storage.delete(index);
+				TaskList = storage.display();
+				int index = TaskList.size()-1;
+				storage.delete(index);
+				 
+				storage.writeToFile();
 	 
-	 storage.writeToFile();
-	 
-	 return feedback;
-	}
+				return feedback;
+		}
 
-	public String executeUndoDelete(ArrayList<Task> TaskList, StorageAccess storage){
-	String feedback = "yes";
-	StackCommand cmd;
-	Task task;
-	int index;
+		public String executeUndoDelete(ArrayList<Task> TaskList, StorageAccess storage){
+				String feedback = "yes";
+				StackCommand cmd;
+				Task task;
+				int index;
 	
-	cmd = history.popUndoDelete();
-	task = cmd.getTask();
-	index  = cmd.getIndex();
+				cmd = history.popUndoDelete();
+				task = cmd.getTask();
+				index  = cmd.getIndex();
 	
-	TaskList = storage.display();
-	TaskList.add(index,task); 
+				TaskList = storage.display();
+				TaskList.add(index,task); 
 	
-	storage.writeToFile();
+				storage.writeToFile();
 	
-	return feedback;
-	}
+				return feedback;
+		}
 
-	public String executeUndoEdit(ArrayList<Task> TaskList, StorageAccess storage){
-	String feedback = "yes";
-	StackCommand cmd;
+		public String executeUndoEdit(ArrayList<Task> TaskList, StorageAccess storage){
+				String feedback = "yes";
+				StackCommand cmd;
 	
-	cmd = history.popUndoEdit();
-	Task task = cmd.getTask();
-	int index = cmd.getIndex();
+				cmd = history.popUndoEdit();
+				Task task = cmd.getTask();
+				int index = cmd.getIndex();
 	
-	TaskList = storage.display();
-	TaskList.add(index,task);
-	TaskList.remove(index+1);
+				TaskList = storage.display();
+				TaskList.add(index,task);
+				TaskList.remove(index+1);
 	
-	storage.writeToFile();
+				storage.writeToFile();
 	
-	return feedback;
+				return feedback;
 	}
 }

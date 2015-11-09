@@ -17,14 +17,12 @@ public class DisplayMonth  extends DisplayCommand{
 				String output = DISPLAY_HEADER_MONTH;
 				output = parseTasks(output);
 
-		return output;
-	}
+				return output;
+			}	
 
 			public String info() {
 				String output = INFO;
 	
 				return output;
 			}	
-	
-	
 }

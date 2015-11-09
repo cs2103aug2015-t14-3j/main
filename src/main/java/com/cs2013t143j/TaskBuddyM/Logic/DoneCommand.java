@@ -4,6 +4,7 @@ import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
 
 //@@ author A0101794H
 public class DoneCommand {
+	
 	private StorageAccess storage;
 	
 	private final String DONE_INDEX = "index";
@@ -13,12 +14,11 @@ public class DoneCommand {
 		this.storage = storage;
 	}
 	
-	
 	public String execute(Map<String,String> parsedCommand){
 	
-	int index = Integer.parseInt(parsedCommand.get(DONE_INDEX));
-	storage.done(index);
-	String output = String.format(DONE_OUTPUT, index);
-	return output;
+		int index = Integer.parseInt(parsedCommand.get(DONE_INDEX));
+		storage.done(index);
+		String output = String.format(DONE_OUTPUT, index);
+		return output;
     }
 }
