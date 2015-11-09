@@ -22,32 +22,42 @@ import com.joestelmach.natty.DateGroup;
 import com.joestelmach.natty.Parser;
 import com.joestelmach.natty.generated.DateParser_NumericRules.int_00_to_23_optional_prefix_return;
 
+//@@author A0145680A
+
+/*
+ * Date Parser is the combination of local date parser and natty parser
+ * 
+ * local parser parses the string such as ddmmyyyy, dd/mm/yyyy and etc
+ * natty parser parses implicit date-related information
+ */
 public class DateParser {
 
 	private Map<String,String> resDict;
 	
+	// position of date-related information in the input string
 	private int nattyAbsPosition;
 	private int localAbsPostion;
+	
+	// nattyParsedDateMatch is used for removing the date-related info after parsing
 	private List<String> nattyParsedDateMatch;
+	// these variables are save to avoid re-compute result from local parser 
 	private String localParsedDateResult;
 	private String localParsedDateMatch;
 	private String localParsedDateRegexp;
 	
-	private List<String> wordsContainBothNumberAndAlphabet;
-	
+	// there are two sets of regex used to trim the result string
+	// this int indicates which set we need to use
 	private int TRIM_SET_ID;
 	
 	private static final Logger logger =
 	        Logger.getLogger(DateParser.class.getName());
 	
 	public DateParser(){
-		wordsContainBothNumberAndAlphabet = new ArrayList<>();
 		nattyParsedDateMatch = new ArrayList<>();
 		TRIM_SET_ID = 2;
 	}
 	
 	public DateParser(Map dict){
-		wordsContainBothNumberAndAlphabet = new ArrayList<>();
 		nattyParsedDateMatch = new ArrayList<>();
 		resDict = dict;
 		TRIM_SET_ID = 2;
@@ -61,53 +71,46 @@ public class DateParser {
 		return resDict;
 	}
 	
-	public Map parseRange(Map dict) {
-		resDict = dict;
-		resDict.put("startDate", null);
-		resDict.put("endDate", null);
-		String description = (String)resDict.get("description");
-		for (String regexp : TIME_RANGE_REGEXPS.keySet()) {
-	        if (description.toLowerCase().matches("^.*"+regexp+".*$")) {
-	        
-	        }
-	    }
-		return null;
-	}
-	
+	/**
+	 * The input is firstly parsed by local parser and then parse to Natty parser
+	 * 
+	 */
 	private void parseDate() throws TooManyDateFoundException {
 		logger.entering(getClass().getName(), "parseDate");
+		// user input is in description
 		String description = (String)resDict.get("description");
 		String oldDescription = new String(description);
 		Map<String, String> localizedParseResult = matchDateByLocalFormat(description);
 		switch (localizedParseResult.size()) {
 			case 0:
-				logger.log(Level.INFO, "parse case 0");
+				logger.log(Level.INFO, "local parser find 0");
 				parseDateByNatty(0);
-				
 				trimDescriptionByMatch(description);
 				trimResDescription(TRIM_SET_ID);
 				break;
 			case 1:
-				logger.log(Level.INFO, "parse case 1");
+				logger.log(Level.INFO, "local parser find 1");
+				// only 1 object in localizedParseResult
 				for (String d : localizedParseResult.keySet()) {
 					localParsedDateResult = d;
 				}
 				determineStartOrEndDate(description, localParsedDateResult);
+				// Natty has problem to parse localized date format, therefore hide it with stub string
 				replaceLocalSingleMatchWithStub();
 				parseDateByNatty(1);
 				resDict.put("description", oldDescription);
-				trimDescriptionByMatch(description);
-				
+				trimDescriptionByMatch(description);		
 				trimResDescription(TRIM_SET_ID);
 				break;
 			case 2:
-				logger.log(Level.INFO, "parse case 2");
+				logger.log(Level.INFO, "local parser find 2");
+				// 2 is the max we should get, therefore no need to pass to Natty parser
 				setDateByArrayOrder(localizedParseResult);
 				trimResDescription(TRIM_SET_ID);
 				break;
 			default:
-				// throw error, when there are more than 2 time string
-				logger.log(Level.WARNING, "parse case default");
+				// throw error, when there are more than 2 date-related info found
+				logger.log(Level.WARNING, "local parser find many");
 				throw new TooManyDateFoundException("More Than 2 date has been found in LocalParser");
 		}
 		logger.exiting(getClass().getName(), "parseDate");
@@ -115,42 +118,42 @@ public class DateParser {
 
 	/*
 	 * Using matching to cut off natty matched description
-	 * @param description
+	 * and clean some remanents that missed by Natty
+	 * @param description the string we are going to trim
 	 */
 	private void trimDescriptionByMatch(String description) {
 		String newDes;
-		System.out.println(description);
-		if(nattyParsedDateMatch.size() > 0){
-			
+		if(nattyParsedDateMatch.size() > 0){		
 			for(String r : nattyParsedDateMatch){
-				System.out.println("Natty trim is " + r);
 				newDes = (String)resDict.get("description").replace(r, "");
-				System.out.println("Natty trim res is " + newDes);
 				resDict.put("description",newDes);
 			}		
-			// temp quick fix
-			newDes = (String)resDict.get("description").replace("before", "");
-			newDes = (String)resDict.get("description").replace("after", "");
+			newDes = (String)resDict.get("description");
+			newDes = newDes.replace("before", "");
+			newDes = newDes.replace("after", "");
+			newDes = newDes.replace("later", "");
 			resDict.put("description",newDes);
 			TRIM_SET_ID = 1;
 			nattyParsedDateMatch = new ArrayList<>();
-		}else{
-			resDict.put("description", description);
 		}
 	}
 	
+	/**
+	 * Set start date and end date based on how many local parser found and how many Natty found 
+	 * @param lastMatch represent how many date that local parser found
+	 * @throws TooManyDateFoundException
+	 */
 	private void parseDateByNatty(int lastMatch) throws TooManyDateFoundException {
 		String originalDescription = (String)resDict.get("description");
-		System.out.println(originalDescription);
 		// prevent Natty from missing parsing the string with number
 		replaceWordContainBothNumberAndAlphabetWithStub();
 		String description = (String)resDict.get("description");
 		List<String> NattyParseResult = matchDateByNatty(description);
 		int resultSize = NattyParseResult.size();
 		if(resultSize == 0){
-			logger.log(Level.INFO, "parse Natty case result size is 0");
+			logger.log(Level.INFO, "Natty find 0 date");
 		}else if (resultSize > 2) {
-			logger.log(Level.WARNING, "parse Natty case result size greater than 2");
+			logger.log(Level.WARNING, "Natty find many date");
 			throw new TooManyDateFoundException("More Than 2 date has been found in NattyParser");
 		}else if (lastMatch == 0 && resultSize == 1) {
 			logger.log(Level.INFO, "parse Natty case 01");
@@ -160,38 +163,40 @@ public class DateParser {
 			setDateByArrayOrder(NattyParseResult);
 		}else if (lastMatch == 1 && resultSize == 1) {
 			logger.log(Level.INFO, "parse Natty case 11");
-			System.out.println("localPos is "+localAbsPostion+"Natty Abs is"+nattyAbsPosition);
-			if(localAbsPostion>nattyAbsPosition){
-				System.out.println("checkpoint1");
-				resDict.put(STARTDATE, NattyParseResult.get(0));
-				resDict.put(ENDDATE, localParsedDateResult);
-			}else if(localAbsPostion<nattyAbsPosition){
-				System.out.println("checkpoint2");
-				resDict.put(STARTDATE, localParsedDateResult);
-				resDict.put(ENDDATE, NattyParseResult.get(0));
-			}		
+			setDateByPosition(NattyParseResult);		
 		}else{
 			logger.log(Level.INFO, "parse Natty case 12");
 			assert lastMatch == 1 : "LastMatch is "+lastMatch;
 			assert resultSize == 2 : "resultSize is "+resultSize;
-			//System.out.println("LastMatch is "+ lastMatch+" Resultsize is "+resultSize);
-			Map<String, String> localizedParseResult = matchDateByLocalFormat(description);
-			for (String date : localizedParseResult.keySet()) {
-				String trimedDescription = description.replace(date, "");
-				List<String> newNattyParseResult = matchDateByNatty(trimedDescription);
-				if(newNattyParseResult.get(0).equals(NattyParseResult.get(0))){
-					System.out.println("checkpoint");
-					resDict.put(STARTDATE, NattyParseResult.get(0));
-					resDict.put(ENDDATE, date);
-				}else{
-					System.out.println("checkpoint2");
-					resDict.put(STARTDATE, date);
-					resDict.put(ENDDATE, NattyParseResult.get(1));
-				}
+			setDateByComparison(description, NattyParseResult);
+		}
+		resDict.put("description",originalDescription);
+	}
+
+	private void setDateByComparison(String description, List<String> NattyParseResult)
+			throws TooManyDateFoundException {
+		Map<String, String> localizedParseResult = matchDateByLocalFormat(description);
+		for (String date : localizedParseResult.keySet()) {
+			String trimedDescription = description.replace(date, "");
+			List<String> newNattyParseResult = matchDateByNatty(trimedDescription);
+			if(newNattyParseResult.get(0).equals(NattyParseResult.get(0))){
+				resDict.put(STARTDATE, NattyParseResult.get(0));
+				resDict.put(ENDDATE, date);
+			}else{
+				resDict.put(STARTDATE, date);
+				resDict.put(ENDDATE, NattyParseResult.get(1));
 			}
 		}
-		System.out.println(originalDescription);
-		resDict.put("description",originalDescription);
+	}
+
+	private void setDateByPosition(List<String> NattyParseResult) {
+		if(localAbsPostion>nattyAbsPosition){
+			resDict.put(STARTDATE, NattyParseResult.get(0));
+			resDict.put(ENDDATE, localParsedDateResult);
+		}else if(localAbsPostion<nattyAbsPosition){
+			resDict.put(STARTDATE, localParsedDateResult);
+			resDict.put(ENDDATE, NattyParseResult.get(0));
+		}
 	}
 
 	private void setDateByArrayOrder(List<String> NattyParseResult) {
@@ -214,21 +219,25 @@ public class DateParser {
 			}
 		}
 	}
-	
+	/**
+	 * Match input with DATE_FORMAT_REGEXPS
+	 * @param userInput 
+	 * @return
+	 */
 	private Map<String, String> matchDateByLocalFormat(String userInput) {
 		Map<String, String> res = new LinkedHashMap<>();
 		int lastMatchLength = 0;
 	    for (String regexp : DATE_FORMAT_REGEXPS.keySet()) {
+	    	// only match with longer regexp 
 	        if (userInput.toLowerCase().matches("^.*"+regexp+".*$")&&regexp.length()>lastMatchLength) {
 	        	lastMatchLength = regexp.length();
-	        	System.out.println(regexp);
 	        	localParsedDateRegexp = regexp;
 	        	String format = DATE_FORMAT_REGEXPS.get(regexp);
 	        	Pattern p = Pattern.compile(regexp);
 	            Matcher m = p.matcher(userInput);
 	            while(m.find()) {
 	            	String matchDateString = m.group();
-	            	System.out.println(matchDateString);
+	            	// convert input date format to unified hh ddMMyyyy format
 	            	SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
 	            	try {
 						Date matchDate = simpleDateFormat.parse(matchDateString);
@@ -252,28 +261,15 @@ public class DateParser {
 		if(parsePhases.length==1){
 			List<DateGroup> groups = p.parse(userInput);
 	    	for(DateGroup group:groups) {
-	    	  List<Date> dates = group.getDates();
-	    	  for(Date d : dates){
-	    		  String timeString = convertDateToString(d);
-	    		  returnList.add(timeString);
-	    	  }
-	    	  nattyParsedDateMatch.add(group.getText());
-	    	  nattyAbsPosition = group.getAbsolutePosition();
+	    		addNattyResultToList(returnList, group);
+	    		nattyAbsPosition = group.getAbsolutePosition();
 	    	}
 		}else if(parsePhases.length == 2){
 			int cumulativePosition = 0;
 			for(String phase : parsePhases){
-				System.out.println("Natty MultiMatch is "+phase);
 				List<DateGroup> groups = p.parse(phase.replaceFirst("from ", ""));
 		    	for(DateGroup group:groups) {
-		    	  List<Date> dates = group.getDates();
-		    	  for(Date d : dates){
-		    		  String timeString = convertDateToString(d);
-		    		  returnList.add(timeString);
-		    	  }
-		    	  String matchText = group.getText();
-		    	  nattyParsedDateMatch.add(matchText);
-		    	  System.out.println("Natty MultiMatched is "+matchText);
+		    	  addNattyResultToList(returnList, group);
 		    	  nattyAbsPosition = cumulativePosition + group.getAbsolutePosition();
 		    	}
 		    	cumulativePosition = phase.length()+separator.length();
@@ -283,8 +279,23 @@ public class DateParser {
 		}
     	
     	return returnList;
+	}
+
+	private void addNattyResultToList(List<String> returnList, DateGroup group) {
+		List<Date> dates = group.getDates();
+		  for(Date d : dates){
+			  String timeString = convertDateToString(d);
+			  returnList.add(timeString);
+		  }
+		  String matchText = group.getText();
+		  nattyParsedDateMatch.add(matchText);
 	}	
 	
+	/**
+	 * In case of only one date is found, we need to guess it is a start date or end date
+	 * @param input
+	 * @param dateString
+	 */
 	private void determineStartOrEndDate(String input, String dateString) {
 		for (String regexp : TIME_KEY_REGEXPS.keySet()) {
 	        if (input.toLowerCase().matches("^.*"+regexp+".*$")) {
@@ -302,7 +313,6 @@ public class DateParser {
 	
 	private void replaceLocalSingleMatchWithStub() {
 		String description = (String)resDict.get("description");
-		System.out.println("old des is " + description);
 		Pattern p = Pattern.compile(localParsedDateRegexp);
         Matcher m = p.matcher(description);
         while(m.find()) {
@@ -310,23 +320,32 @@ public class DateParser {
         	String replacement = generateStubString("x", localParsedDateMatch.length());
         	String newDescription = description.replace(localParsedDateMatch, replacement);
         	localAbsPostion = newDescription.indexOf(replacement);
-        	System.out.println("newDes is " + newDescription);
         	resDict.put("description", newDescription);
         }
 	}
 	
 	private void replaceWordContainBothNumberAndAlphabetWithStub() {
 		String description = (String)resDict.get("description");
-		System.out.println("old des2 is " + description);
 		Pattern p = Pattern.compile("(([a-zA-Z]\\w*[0-9])|([0-9]\\w*[a-zA-Z]))");
         Matcher m = p.matcher(description);
         String newDescription = description;
         while(m.find()) {
         	String word = m.group();
-        	wordsContainBothNumberAndAlphabet.add(word);
         	String replacement = generateStubString("y", word.length());
         	newDescription = newDescription.replaceFirst(word, replacement);
-        	System.out.println("newDes2 is " + newDescription);
+        }
+        resDict.put("description", newDescription);
+	}
+	
+	private void replaceNumberWithStub() {
+		String description = (String)resDict.get("description");
+		Pattern p = Pattern.compile("\\b\\d+\\b");
+        Matcher m = p.matcher(description);
+        String newDescription = description;
+        while(m.find()) {
+        	String word = m.group();
+        	String replacement = generateStubString("z", word.length());
+        	newDescription = newDescription.replaceFirst(word, replacement);
         }
         resDict.put("description", newDescription);
 	}
@@ -339,6 +358,10 @@ public class DateParser {
 		return replacement;
 	}
 	
+	/**
+	 * After Natty's trimming, TRIM_KEY_REGEXPS1 is better for trimming the remanent string
+	 * @param TRIM_SET_ID
+	 */
 	private void trimResDescription(int TRIM_SET_ID) {
 		String description = (String)resDict.get("description");
 		List<String> trimKeyRegex;
@@ -351,7 +374,6 @@ public class DateParser {
 			Pattern p = Pattern.compile(reg);
 	        Matcher m = p.matcher(description);
 	        while(m.find()) {
-	        	System.out.println("Trim key is " + reg);
 	        	String matchString = m.group();
 	        	description = description.replace(matchString, "");
 	        }
@@ -369,12 +391,13 @@ public class DateParser {
 	
 	private static final String STARTDATE = "startDate";
 	private static final String ENDDATE = "endDate";
+	// the local date format regexps for local parser
 	private static final Map<String, String> DATE_FORMAT_REGEXPS;
+	// some key word that may imply about state date and end date
 	private static final Map<String, Boolean> TIME_KEY_REGEXPS;
+	// regexps for trimming
 	private static final List<String> TRIM_KEY_REGEXPS1;
 	private static final List<String> TRIM_KEY_REGEXPS2;
-	private static final Map<String, Integer> TIME_RANGE_REGEXPS;
-//	private static final List<String> NATTY_SEPARATOR_REGEXPS;
 	static{
 		DATE_FORMAT_REGEXPS = new LinkedHashMap<>();
 		DATE_FORMAT_REGEXPS.put("\\d{1,2}-\\d{1,2}-\\d{4}\\s\\d{1,2}:\\d{2}", "dd-MM-yyyy HH:mm");
@@ -468,10 +491,5 @@ public class DateParser {
 			TRIM_KEY_REGEXPS2.add("on\\s+("+i+"){1}");
 			TRIM_KEY_REGEXPS2.add(i);
 		}
-		
-		TIME_RANGE_REGEXPS = new LinkedHashMap<>();
-		TIME_RANGE_REGEXPS.put("week",1);
-		TIME_RANGE_REGEXPS.put("month",1);
-		TIME_RANGE_REGEXPS.put("year",1);
 	}
 }

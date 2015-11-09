@@ -23,6 +23,7 @@ import com.cs2013t143j.TaskBuddyM.Logic.Logic;
 import com.joestelmach.natty.DateGroup;
 import com.joestelmach.natty.Parser;
 
+//@@author A0145680A
 
 public class MainPanel extends JPanel implements ActionListener {
 
@@ -32,6 +33,7 @@ public class MainPanel extends JPanel implements ActionListener {
     private JTable table;
     private JPanel main_1;
     
+    // table columns
     private String[] columns = {"Description", "Start Date", "End Date"};
 
     MainPanel(Logic l){
@@ -45,10 +47,6 @@ public class MainPanel extends JPanel implements ActionListener {
         initDisplayScreen(main_1);
         
         initCommandLinePanel(main_1);
-//        main.setBorder(
-//                BorderFactory.createCompoundBorder(
-//                        BorderFactory.createTitledBorder("Your tt"),
-//                        BorderFactory.createEmptyBorder(5,5,5,5)));
         add(main_1);
         
     }
@@ -59,7 +57,7 @@ public class MainPanel extends JPanel implements ActionListener {
         textControlsPane.setOpaque(false);
         textControlsPane.setLayout(new BorderLayout());
         textControlsPane.setBorder(new EmptyBorder(10, 10, 10, 10));
-        //textControlsPane.setLayout(new BoxLayout(textControlsPane, BoxLayout.Y_AXIS));
+        
         textArea = new JTextArea ("Welcome to TaskBuddy!\n you could:\n  add\n  display\n  delete\n  .......");
         textArea.setBorder(new EmptyBorder(10, 20, 20, 20));
         textArea.setEditable(false);
@@ -68,11 +66,7 @@ public class MainPanel extends JPanel implements ActionListener {
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
 
-//        JScrollPane scroll = new JScrollPane (textArea, 
-//        		JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-//        scroll.setOpaque(false);
-//        actionLabel = new WebLabel("...Welcome to TaskBuddy....well, I'm not ready yet~\n check later");
-//        actionLabel.setBorder(BorderFactory.createEmptyBorder(10,0,0,0));
+
         textControlsPane.add(textArea,BorderLayout.NORTH);
         textControlsPane.setBorder(
                 BorderFactory.createCompoundBorder(
@@ -80,7 +74,8 @@ public class MainPanel extends JPanel implements ActionListener {
                         BorderFactory.createEmptyBorder(5,5,5,5)));
         
         main.add(textControlsPane,BorderLayout.CENTER);
-               
+           
+        // set table
         String[][] data = null;
         table = new JTable(new DefaultTableModel(data, columns)){
             {
@@ -91,24 +86,6 @@ public class MainPanel extends JPanel implements ActionListener {
                     setOpaque(false);
                 }});
             }
-//          @Override
-//          public boolean isCellEditable(int data, int columns)
-//          {
-//              return true;
-//          }
-//          @Override
-//          public Component prepareRenderer(TableCellRenderer r, int data, int columns)
-//          {
-//              Component c = super.prepareRenderer(r, data, columns);
-//
-//              if (data % 2 == 0)
-//                  c.setBackground(Color.WHITE);
-//
-//              else
-//                  c.setBackground(Color.LIGHT_GRAY);
-//
-//              return c;
-//          }
         };
         table.setFont(new Font("augie", Font.PLAIN, 20));
         table.setRowHeight(28);
@@ -122,13 +99,13 @@ public class MainPanel extends JPanel implements ActionListener {
 	private void initCommandLinePanel(JPanel main) {
 		JPanel commandLineTextField = new JPanel();
 		commandLineTextField.setOpaque(false);
-        //commandLineTextField.setLayout(new BoxLayout(commandLineTextField, BoxLayout.Y_AXIS));
+
         
 		WebLabel commandPop = new WebLabel("command line: ");
 		commandLineTextField.add(commandPop);
         
         WebTextField commandLine = new WebTextField(53);
-        //commandLine.setText("test");
+
         commandLine.setActionCommand("commandLine");
         commandLine.addActionListener(this);
         
@@ -140,6 +117,7 @@ public class MainPanel extends JPanel implements ActionListener {
         main.add(commandLineTextField,BorderLayout.PAGE_END);
 	}
 	
+	// update table by output from logic and clean command line
 	private void updateMsgAndTable(String output) {
 		String[] lines = output.split("\\r?\\n");
 		int lineNumber = lines.length;

@@ -27,10 +27,12 @@ import com.cs2013t143j.TaskBuddyM.Logic.Logic;
 import com.joestelmach.natty.DateGroup;
 import com.joestelmach.natty.Parser;
 
+//@@author A0145680A
+
 public class TBGUI {
     public static void main ( String[] args )
     {
-        // You should work with UI (including installing L&F) inside Event Dispatch Thread (EDT)
+    	// new thread for GUI
         SwingUtilities.invokeLater ( new Runnable ()
         {
             public void run ()
@@ -53,6 +55,7 @@ public class TBGUI {
         } );
     }
     
+    // load customized font
     private static void loadResources() {
     	try {
     	     GraphicsEnvironment ge = 
@@ -61,6 +64,7 @@ public class TBGUI {
     	     ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, TBGUI.class.getResourceAsStream("/augie.ttf")));
     	} catch (IOException|FontFormatException e) {
     	     //Handle exception
+    		System.out.println("load error "+e.getMessage());
     	}
 	}
 }
