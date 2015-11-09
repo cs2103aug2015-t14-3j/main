@@ -69,12 +69,12 @@ public class Storage {
 	public ArrayList<Task> searchTaskWithinPeriod(LocalDateTime startDateTime,LocalDateTime endDateTime){
 	
 		ArrayList<Task> newTaskList = new ArrayList<Task>();
-		try{
+		
 		for(int i=0;i< tasks.size();i++){
 			Task task = tasks.get(i);
 			LocalDateTime startDate= task.getStartDateTime();
 			LocalDateTime endDate = task.getEndDateTime();
-			
+			try{
 			//check if task is an event task
 			if((startDate!= null) && (endDate != null) && (startDate.compareTo(startDateTime) >= 0) && (endDate.compareTo(endDateTime) <= 0) )   {
 				newTaskList.add(task);
@@ -83,11 +83,11 @@ public class Storage {
 			if((startDate == null) && (endDate != null) && (endDate.compareTo(endDateTime) <= 0) ) {
 				newTaskList.add(task);
 			}
-		}
+		
 		}catch(NullPointerException e){
-			System.out.println("Wrong format");
+			System.out.println("Nothing to display!");
 		}
-				
+		}		
 		return newTaskList;
 	}
 
@@ -99,9 +99,10 @@ public class Storage {
 	public ArrayList<Task> showOverDue(){
 	
 	ArrayList<Task> OverDueTaskList = new ArrayList<Task>();
-	try{
+	
 	for(int i=0; i< tasks.size();i++){
 		 Task task = tasks.get(i);
+		 try{
 		  //check if task is deadline task
 		 if((task.getStartDateTime()== null) &&(task.getEndDateTime() != null) &&(LocalDateTime.now().isAfter(task.getEndDateTime()))) {
 			 OverDueTaskList.add(task);
@@ -111,20 +112,22 @@ public class Storage {
 			 OverDueTaskList.add(task);
 		 }
 		
-	}
+	
 	} catch(NullPointerException e){
-		System.out.println("Wrong format!");
+		System.out.println("Nothing to display!");
+	}
 	}
 	return OverDueTaskList;
 	}
 
 	public ArrayList<Task> showWeek(){
 	ArrayList<Task> WeekList = new ArrayList<Task>();
-	try{
+	
 	for(int i=0;i< tasks.size();i++){
 		Task task = tasks.get(i);
 		LocalDateTime endTime = task.getEndDateTime();
 		LocalDateTime OneWeekLater = (LocalDateTime.now()).plusWeeks(1);
+		try{
 		//check if task is deadline task
 		if( (task.getStartDateTime() == null)&&  (endTime != null) &&(endTime.isAfter(LocalDateTime.now()))  && (endTime.isBefore(OneWeekLater))  ){ 
 			WeekList.add(task);
@@ -133,20 +136,22 @@ public class Storage {
 		if( (task.getStartDateTime() != null)&&  (endTime != null) &&(endTime.isAfter(LocalDateTime.now()))  && (endTime.isBefore(OneWeekLater))  ){ 
 			WeekList.add(task);
 		}
-	}
-	} catch(NullPointerException e){
-		System.out.println("Wrong format!");
-	}
-	return WeekList;
+	
+		}catch(NullPointerException e){
+ 		System.out.println("Nothing to display!");
+		}
+		}
+		return WeekList;
     }
 
 	public ArrayList<Task> showMonth(){
 		ArrayList<Task> MonthList = new ArrayList<Task>();
-		try{
+		
 		for(int i=0;i< tasks.size();i++){
 		Task task = tasks.get(i);
 		LocalDateTime endTime = task.getEndDateTime();
 		LocalDateTime OneMonthLater = (LocalDateTime.now()).plusMonths(1);
+		try{
 		//check if task is deadline task
 		if( (task.getStartDateTime() == null)&&  (endTime != null) &&(endTime.isAfter(LocalDateTime.now()))  && (endTime.isBefore(OneMonthLater))  ){ 
 			MonthList.add(task);
@@ -155,12 +160,12 @@ public class Storage {
 		if( (task.getStartDateTime() != null)&&  (endTime != null) &&(endTime.isAfter(LocalDateTime.now()))  && (endTime.isBefore(OneMonthLater))  ){ 
 			MonthList.add(task);
 		}
-		}
-		} catch(NullPointerException e){
-			System.out.println("Wrong format!");
+		}catch(NullPointerException e){
+	 		System.out.println("Nothing to display!");
+	 	}
 		}
 		return MonthList;
-		}
+	}
 
 	public void done(int index){
 		assert index != 0;
@@ -189,32 +194,34 @@ public class Storage {
 	}
 	
 	public void EqualsTo(Task task){
-		 	try{
+		 	
 			for(int i=0;i< tasks.size();i++){
 			Task newtask = tasks.get(i);
 			LocalDateTime newendTime = newtask.getEndDateTime();
 			LocalDateTime newstartTime = newtask.getStartDateTime();
-			String newdescription  = newtask.getDescription();
 			
 			LocalDateTime endTime = task.getEndDateTime();
 			LocalDateTime startTime = task.getStartDateTime();
-			String description = task.getDescription();
+	
+			try{
 			//check if task is event task
 			if((startTime != null) && (endTime != null) && (startTime.compareTo(newstartTime) == 0) && (endTime.compareTo(newendTime) == 0))   {
 				logger.setLevel(Level.WARNING);
 				logger.log(Level.WARNING,"Scheduling conflict/You already have entered the task!");
 				System.exit(0);
 			}
-			//check if task is floating task
+			//check if task is deadline task
 			if( (startTime == null) && (endTime != null)&&  (endTime.compareTo(newendTime) == 0)){
 				logger.setLevel(Level.WARNING);
 				logger.log(Level.WARNING,"You have another task ending with the same deadline!");
+			
 			}
-			} 
-		 	}catch(NullPointerException e){
-		 		System.out.println("Wrong format!");
+			}catch(NullPointerException e){
+		 		System.out.println("Nothing to display!");
 		 	}
-	}
+			}
+			}
+	
 
 }
 	

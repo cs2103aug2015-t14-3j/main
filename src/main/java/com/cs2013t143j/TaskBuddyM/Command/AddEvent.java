@@ -36,7 +36,7 @@ public class AddEvent extends AddCommand {
 		
 		sAccess.showWarning(task);
 		sAccess.add(task);
-	
+		
 		Command command = new DisplayAll();
 		String output = command.execute(lastDisplay, sAccess);
 		

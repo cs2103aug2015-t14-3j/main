@@ -36,6 +36,7 @@ public class AddDeadline extends AddCommand {
 		
 		sAccess.add(task);
 		
+		
 		Command command = new DisplayAll();
 		String output = command.execute(lastDisplay, sAccess);
 		
