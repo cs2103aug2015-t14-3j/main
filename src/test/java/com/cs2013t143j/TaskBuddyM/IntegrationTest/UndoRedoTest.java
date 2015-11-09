@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import com.cs2013t143j.TaskBuddyM.Logic.Logic;
 
+//@@author A0121327U
 public class UndoRedoTest {
 
 	Logic logic = new Logic();
@@ -33,6 +34,11 @@ public class UndoRedoTest {
 		RedoEditEndTest();
 		RedoDeleteTest();
 		RedoEmptyTest();
+		
+		logic.executeCommand("add bbb");
+		logic.executeCommand("clear");
+		
+		UndoClear();
 	}
 	
 	public void UndoDeleteTest() {
@@ -58,6 +64,11 @@ public class UndoRedoTest {
 	public void UndoAddTest() {
 		output = logic.executeCommand("undo");
 		assertEquals("Undid the last undoable command. Looks like there is nothing on your schedule. Enjoy your day!!!", output);
+	}
+	
+	public void UndoClear() {
+		output = logic.executeCommand("undo");
+		assertEquals("Undid the last undoable command. Here is your entire schedule:\n1.bbb	-	-\n", output);
 	}
 	
 	public void RedoAddTest() {

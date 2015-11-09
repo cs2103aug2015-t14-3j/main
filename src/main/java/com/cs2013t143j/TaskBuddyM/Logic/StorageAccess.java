@@ -8,7 +8,7 @@ import com.cs2013t143j.TaskBuddyM.Storage.Storage;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
 
-//@@Chow Hong Ern Daniel A0121327U
+//@@author A0121327U
 public class StorageAccess {
 	
 	private Storage storage;
@@ -25,7 +25,7 @@ public class StorageAccess {
 	public ArrayList<Task> showOverDue(){
 		ArrayList<Task> OverDueTasks = new ArrayList<Task>();
 		
-		OverDueTasks = storage.ShowOverDue();
+		OverDueTasks = storage.showOverDue();
 		
 		return OverDueTasks;
 	}
@@ -46,10 +46,8 @@ public class StorageAccess {
 		return MonthTaskList;		
 	}
 	
-	public boolean showWarning(Task task){
-		boolean str = storage.EqualsTo(task);
-		
-		return str;
+	public void showWarning(Task task){
+		 storage.EqualsTo(task);
 	}
 	
 	public void delete(int index) {

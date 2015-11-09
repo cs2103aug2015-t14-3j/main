@@ -10,34 +10,34 @@ import com.cs2013t143j.TaskBuddyM.Storage.Storage;
 
 import java.util.ArrayList;
 
+//@@ author A0101794H
 public class RedoCommand {
-	private History history;
-	private StorageAccess storage;
-	private Task task = new Task();
-	StackCommand cmd;
+		private History history;
+		private StorageAccess storage;
+		private Task task = new Task();
+		StackCommand cmd;
 	
-	private ArrayList<Task> TaskList = new ArrayList<Task>();
+		private ArrayList<Task> TaskList = new ArrayList<Task>();
 
-public RedoCommand(History history,StorageAccess storage) {
-	this.history = history;
-	this.storage = storage;
-}
+		public RedoCommand(History history,StorageAccess storage) {
+			   this.history = history;
+			   this.storage = storage;
+		}
 
-public String executeRedoAdd(ArrayList<Task> TaskList,StorageAccess storage){
-	String feedback = "yes";
-	int index;
-	Task task;
-	StackCommand cmd;
+		public String executeRedoAdd(ArrayList<Task> TaskList,StorageAccess storage) {
+			   String feedback = "yes";
+			   int index;
+			   Task task;
+			   StackCommand cmd;
 
-	cmd = history.popRedoAdd();
-	task = cmd.getTask();
-	index = cmd.getIndex();
+			   cmd = history.popRedoAdd();
+			   task = cmd.getTask();
+			   index = cmd.getIndex();
+			   TaskList = storage.display();
+			   TaskList.add(index,task);
 	
-	TaskList = storage.display();
-	TaskList.add(index,task);
+			   storage.writeToFile();
 	
-	storage.writeToFile();
-	
-	return feedback;
-}
+			   return feedback;
+	}
 }

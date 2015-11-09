@@ -11,6 +11,7 @@ import com.cs2013t143j.TaskBuddyM.Command.Command;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayAll;
 import com.cs2013t143j.TaskBuddyM.Logic.Logic;
 
+//@@author A0121327U
 public class AddTest {
 	
 	private Command command;

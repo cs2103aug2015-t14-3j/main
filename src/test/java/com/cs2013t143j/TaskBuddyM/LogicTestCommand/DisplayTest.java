@@ -16,6 +16,7 @@ import com.cs2013t143j.TaskBuddyM.Command.DisplayFrom;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayOn;
 import com.cs2013t143j.TaskBuddyM.Logic.Logic;
 
+//@@author A0121327U
 public class DisplayTest {
 	
 	private Command command;
@@ -348,5 +349,4 @@ public class DisplayTest {
 		assertEquals("Here is your entire schedule:\n\nDescription                 Start Date             End Date            Done\n1.aaa                 18-10-2015 14:00                                  No\n\n", output);
 
 	}
-
 }

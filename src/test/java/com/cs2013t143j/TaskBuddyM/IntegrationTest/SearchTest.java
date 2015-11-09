@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import com.cs2013t143j.TaskBuddyM.Logic.Logic;
 
+//@@author A0121327U
 public class SearchTest {
 
 	Logic logic = new Logic();

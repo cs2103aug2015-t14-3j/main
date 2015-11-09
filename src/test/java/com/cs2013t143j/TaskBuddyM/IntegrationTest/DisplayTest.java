@@ -1,11 +1,10 @@
 package com.cs2013t143j.TaskBuddyM.IntegrationTest;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
-
 import com.cs2013t143j.TaskBuddyM.Logic.Logic;
 
+//@@author A0121327U
 public class DisplayTest {
 
 	Logic logic = new Logic();
@@ -120,4 +119,36 @@ public class DisplayTest {
 		assertEquals("Looks like there is nothing on your schedule. Enjoy your day!!!", output);
 	}
 	
+	//@@author A0126303W
+	@Test
+	public void DisplayWeek() {
+		setup();
+		
+		output = logic.executeCommand("d week");
+		assertEquals("Looks like there is nothing on your schedule. Enjoy your day!!!", output);
+	}
+	
+	@Test
+	public void DisplayMonth() {
+		setup();
+		
+		output = logic.executeCommand("d month");
+		assertEquals("Looks like there is nothing on your schedule. Enjoy your day!!!", output);
+	}
+	
+	@Test
+	public void DisplayRange() {
+		setup();
+		
+		output = logic.executeCommand("d range 18/10/2015 to 23/10/2015");
+		assertEquals("Here are your tasks from 18/10/2015 to 23/10/2015\n1.submit report 	-	20 Oct 2015 00:00\n2.exam week  	18 Oct 2015 00:00	22 Oct 2015 00:00\n3.holidays  	18 Oct 2015 00:00	23 Oct 2015 00:00\n", output);
+	}
+	
+	@Test
+	public void DisplayOverdue() {
+		setup();
+		
+		output = logic.executeCommand("d overdue");
+		assertEquals("Here are all your overdue tasks:\n1.submit report 	-	20 Oct 2015 00:00\n2.recess week  	10 Oct 2015 00:00	20 Oct 2015 00:00\n3.exam week  	18 Oct 2015 00:00	22 Oct 2015 00:00\n4.holidays  	18 Oct 2015 00:00	23 Oct 2015 00:00\n5.aaa  	20 Oct 2015 00:00	30 Oct 2015 00:00\n", output);
+	}
 }

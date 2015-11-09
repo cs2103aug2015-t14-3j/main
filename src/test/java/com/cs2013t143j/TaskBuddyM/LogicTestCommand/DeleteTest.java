@@ -10,6 +10,7 @@ import com.cs2013t143j.TaskBuddyM.Command.DeleteCommand;
 import com.cs2013t143j.TaskBuddyM.Command.DisplayAll;
 import com.cs2013t143j.TaskBuddyM.Logic.Logic;
 
+//@@author A0121327U
 public class DeleteTest {
 	
 	private Command command;

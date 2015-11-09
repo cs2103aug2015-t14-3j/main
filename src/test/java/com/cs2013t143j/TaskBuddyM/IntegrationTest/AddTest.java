@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import com.cs2013t143j.TaskBuddyM.Logic.Logic;
 
+//@@author A0121327U
 public class AddTest {
 
 	Logic logic = new Logic();
@@ -34,5 +35,22 @@ public class AddTest {
 		
 		output = logic.executeCommand("add ccc 25/10/2015 30/10/2015");
 		assertEquals("Here is your entire schedule:\n1.ccc  	25 Oct 2015 00:00	30 Oct 2015 00:00\n", output);
+	}
+	
+	//@@author A0126303W
+	@Test
+	public void AddFailNoContent() {
+		logic.executeCommand("clear");
+		
+		output = logic.executeCommand("add");
+		assertEquals("Parser Error: com.cs2013t143j.TaskBuddyM.Parser.InvalidInputException: No content entered.", output);
+	}
+	
+	@Test
+	public void AddFailNoDescription() {
+		logic.executeCommand("clear");
+		
+		output = logic.executeCommand("add by today");
+		assertEquals("Parser Error: com.cs2013t143j.TaskBuddyM.Parser.InvalidInputException: No description entered for new task", output);
 	}
 }

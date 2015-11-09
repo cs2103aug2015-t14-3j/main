@@ -23,14 +23,14 @@ import com.cs2013t143j.TaskBuddyM.Storage.Storage;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
 
-
+//@@ author A0101794H
 public class StorageIO {
 	public static final DateTimeFormatter FORMAT_STORAGE_DATETIME = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
 	private static ArrayList<Task> tasks = new ArrayList<Task>();
 	public static String fileName = "data.txt";
 	
-public static ArrayList<Task> readFile() {
+	public static ArrayList<Task> readFile() {
 		
 		File file = new File(fileName);
 		try {
@@ -56,7 +56,7 @@ public static ArrayList<Task> readFile() {
 		return tasks;
 	}
 
-private static void createNewFile() {
+	private static void createNewFile() {
 		File file = new File(fileName);
 		try {
 				PrintWriter writer = new PrintWriter(new FileWriter(file));
@@ -67,7 +67,7 @@ private static void createNewFile() {
 		
 	}
 
-public static Task createTask(String command){
+	public static Task createTask(String command){
 
 		String[] splitComponents = command.split("&&");
 		Task task  = null;
@@ -93,13 +93,13 @@ public static Task createTask(String command){
 
 
 
-private static Task createFloatingTask(String[] splitComponents) {
+	private static Task createFloatingTask(String[] splitComponents) {
 	String description = splitComponents[0];
 	
 	return new Task(description);
-}
+	}
 
-private static Task createDeadLineTask(String[] splitComponents) {
+	private static Task createDeadLineTask(String[] splitComponents) {
 	String description = splitComponents[0];
 	String endDateString = splitComponents[1];
 	
@@ -107,32 +107,32 @@ private static Task createDeadLineTask(String[] splitComponents) {
 	
 	
 	return new Task(description,endDate);
-}
-
-
-private static Task createEventTask(String[] splitComponents){
- String description = splitComponents[0];
- String startDateString = splitComponents[1];
- String endDateString = splitComponents[2];
- 
- 
-LocalDateTime startDate = convertToDate(startDateString);
-LocalDateTime endDate = convertToDate(endDateString);
- 
-return new Task(description,startDate, endDate);
-
-}
-
-private static LocalDateTime convertToDate(String strDate){
-		
-try {
-		return LocalDateTime.parse(strDate, FORMAT_STORAGE_DATETIME);
-	} catch (Exception e) {
-		return null;
 	}
-}
+
+
+	private static Task createEventTask(String[] splitComponents){
+		String description = splitComponents[0];
+		String startDateString = splitComponents[1];
+		String endDateString = splitComponents[2];
+ 
+ 
+		LocalDateTime startDate = convertToDate(startDateString);
+		LocalDateTime endDate = convertToDate(endDateString);
+ 
+		return new Task(description,startDate, endDate);
+
+	}
+
+	private static LocalDateTime convertToDate(String strDate){
 		
-private static String createCommands(Task task){
+		try {
+		return LocalDateTime.parse(strDate, FORMAT_STORAGE_DATETIME);
+		} catch (Exception e) {
+		return null;
+		}
+	}
+		
+	private static String createCommands(Task task){
 	    
 		String description = task.getDescription();
 		String startDateTime = task.getStartDateTimeInString();
@@ -154,9 +154,9 @@ private static String createCommands(Task task){
 		}
 		
 		return str.toString();
-}
+	}
 
-public static void writeToFile(ArrayList<Task>  Tasks) {
+	public static void writeToFile(ArrayList<Task>  Tasks) {
 		ArrayList<String> commands = new ArrayList<String>();
 		
 		for(int i=0;i< Tasks.size();i++){

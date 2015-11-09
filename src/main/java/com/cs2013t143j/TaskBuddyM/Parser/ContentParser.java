@@ -1,4 +1,7 @@
+
 package com.cs2013t143j.TaskBuddyM.Parser;
+
+
 
 import java.util.Map;
 import java.util.logging.Level;
@@ -73,7 +76,6 @@ public class ContentParser {
 	}
 	
 	public Map<String,String> extractDeleteContent() throws InvalidInputException {
-		checkException("extractDeleteContent", ERROR_INDEX);
 		logger.log(Level.INFO, "Delete Index: " + userInput);
 		dictionary.put("index", userInput);
 		return dictionary;

@@ -1,4 +1,4 @@
-package com.cs2013t143j.TaskBuddyM.Storage;
+package com.cs2013t143j.TaskBuddyM.IntegrationTest;
 
 import static org.junit.Assert.*;
 
@@ -16,6 +16,7 @@ import java.time.format.DateTimeParseException;
 
 import org.junit.Test;
 
+//@@ author A0101794H
 public class StorageTest extends Storage {
 	
 	public static final DateTimeFormatter FORMAT_STORAGE_DATETIME = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
@@ -38,7 +39,7 @@ public class StorageTest extends Storage {
 		int index = TaskList.size()-1;
 		
 		assertEquals(TaskList.get(index).getDescription(),description);
-		//fail("Not yet implemented");
+		
 	}
 
 	@Test
@@ -52,8 +53,6 @@ public class StorageTest extends Storage {
 		int newindex = TaskList.size()-1;
 		
 		assertEquals(index-1,newindex);
-		
-		//fail("Not yet implemented");
 	}
 
 	@Test
@@ -75,8 +74,6 @@ public class StorageTest extends Storage {
 		
 		
 		assertEquals(olddescription,description);
-		
-
 	}
 
 	@Test
@@ -101,7 +98,7 @@ public class StorageTest extends Storage {
 	}
 
 	@Test
-public void testUpdateStartDate() {
+	public void testUpdateStartDate() {
 		ArrayList<Task> TaskList = new ArrayList<Task>();
 		Task testTask = new Task();
 		testTask.setDescription("test task");
@@ -122,8 +119,8 @@ public void testUpdateStartDate() {
 		
 		assertEquals(oldstartdate,newstartdate);
 		//fail("Not yet implemented");
-}
-
+	}
+	
 	@Test
 	public void testUpdateEndDate() {
 		ArrayList<Task> TaskList = new ArrayList<Task>();
@@ -140,10 +137,28 @@ public void testUpdateStartDate() {
 		//fail("Not yet implemented");
 	}
 
-	
-	//public void testSearchTaskWithinPeriod() {
+	@Test
+	public void testSearchTaskWithinPeriod() {
+		ArrayList<Task> TaskList = new ArrayList<Task>();
+		
+		Task testTask = new Task();
+		testTask.setDescription("test task");
+		testTask.setEndDateTime(null);
+		testTask.setStartDateTime(null);
+		testTask.setDescription(null);
+		
+		storage.add(testTask);
+		
+		String startDate = "18092015";
+		String endDate=  "12122015";
+		
+		LocalDateTime startDateTime  = convertToDate(startDate);
+		LocalDateTime endDateTime = convertToDate(endDate);
+		
+		assertEquals(TaskList,searchTaskWithinPeriod(startDateTime,endDateTime));
+		
 		//fail("Not yet implemented");
-	//}
+	}
 
 	@Test
 	public void testClearAll() {
@@ -162,24 +177,7 @@ public void testUpdateStartDate() {
 		TaskList = storage.display();
 		
 		assertEquals(TaskList,newTaskList);
-		
-		//fail("Not yet implemented");
-	}
-
-	
-	//public void testShowOverDue() {
-		//fail("Not yet implemented");
-	//}
-
-	
-	//public void testShowWeek() {
-		//fail("Not yet implemented");
-	//}
-
-	
-	//public void testShowMonth() {
-		//fail("Not yet implemented");
-	//}
+		}
 
 	@Test
 	public void testDone() {
@@ -193,16 +191,10 @@ public void testUpdateStartDate() {
 		//check the size of the arraylist after done is invoked
 		int new_index = TaskList.size()-1;
 		assertEquals(index-1,new_index);
-		//fail("Not yet implemented");
-}
+		
+	}
 
-	
-	//public void testDisplayDoneTasks() {
-		//fail("Not yet implemented");
-	//}
-
-	
-private static LocalDateTime convertToDate(String strDate){
+	private static LocalDateTime convertToDate(String strDate){
 		
 		try {
 				return LocalDateTime.parse(strDate, FORMAT_STORAGE_DATETIME);

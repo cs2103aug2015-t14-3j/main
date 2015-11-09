@@ -1,10 +1,11 @@
 package com.cs2013t143j.TaskBuddyM.Storage;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 import java.time.format.DateTimeFormatter;
 import com.cs2013t143j.TaskBuddyM.Storage.Storage;
 
-
+//@@ author A0101794H
 public  class Task {
 	
 	public static final DateTimeFormatter FORMAT_STORAGE_DATETIME = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
@@ -14,96 +15,96 @@ public  class Task {
 	private boolean done;
 	
 
-public Task()  { 
+	public Task()  { 
 	description = null;
 	startDateTime = null;
 	endDateTime = null;
 	done = false;
-}
+	}
 
-public Task(String description, LocalDateTime startDateTime,LocalDateTime endDateTime, boolean done) {
+	public Task(String description, LocalDateTime startDateTime,LocalDateTime endDateTime, boolean done) {
 	setDescription(description);
 	setStartDateTime(startDateTime);
 	setEndDateTime(endDateTime);
 	setIsDone(done);
-}
+	}
 
 
-public Task(String description, LocalDateTime endDateTime) {
+	public Task(String description, LocalDateTime endDateTime) {
 	setDescription(description);
 	setStartDateTime(null);
 	setEndDateTime(endDateTime);
 	setIsDone(false);
-}
+	}
 
-public Task(String description, LocalDateTime startDateTime,LocalDateTime endDateTime) {
+	public Task(String description, LocalDateTime startDateTime,LocalDateTime endDateTime) {
 	setDescription(description);
 	setStartDateTime(startDateTime);
 	setEndDateTime(endDateTime);
 	setIsDone(false);
-}
+	}
 
-public Task(String description)
-{
+	public Task(String description)
+	{
 	setDescription(description);
 	setStartDateTime(null);
 	setEndDateTime(null);
 	setIsDone(false);
-}
+	}
 
 
-public String getDescription() {
+	public String getDescription() {
 	return description;
-}
+	}
 
-public LocalDateTime getStartDateTime() {
+	public LocalDateTime getStartDateTime() {
 	return startDateTime;
-}
+	}
 
-public LocalDateTime getEndDateTime() {
+	public LocalDateTime getEndDateTime() {
 	return endDateTime;
-}
+	}
 
-public boolean isDone() {
+	public boolean isDone() {
 	return done;
-}
+	}
 
-public void setDescription(String _description) {
+	public void setDescription(String _description) {
 	description = _description;
-}
+	}
 
-public void setStartDateTime(LocalDateTime _startDateTime) {
-   startDateTime = _startDateTime;
-}
+	public void setStartDateTime(LocalDateTime _startDateTime) {
+	startDateTime = _startDateTime;
+	}
 
-public void setEndDateTime(LocalDateTime _endDateTime) {
+	public void setEndDateTime(LocalDateTime _endDateTime) {
 	endDateTime = _endDateTime;
-}
+	}
 
-public void setIsDone(boolean _done) {
+	public void setIsDone(boolean _done) {
 	done = _done;
-}
+	}
 
-private static String getDateTimeInString(LocalDateTime dateTime) {
+	private static String getDateTimeInString(LocalDateTime dateTime) {
     String dateTimeString = "";
     if (dateTime != null) {
         dateTimeString = dateTime.format(FORMAT_STORAGE_DATETIME);
     }
     return dateTimeString;
-}
+	}
 
-public String getStartDateTimeInString() {
+	public String getStartDateTimeInString() {
 	return getDateTimeInString(getStartDateTime());
-}
+	}
 
-public String getEndDateTimeInString() {
+	public String getEndDateTimeInString() {
 	return getDateTimeInString(getEndDateTime());
-}
+	}
 
-public void print() {
+	public void print() {
 	System.out.printf("%s,%s,%s\n",this.getDescription(),this.getStartDateTimeInString(),this.getEndDateTimeInString());
-}
-
+	}
+	
 }
 
 
