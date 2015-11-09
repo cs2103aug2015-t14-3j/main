@@ -43,12 +43,11 @@ public class StorageAccess {
 		
 		MonthTaskList = storage.showMonth();
 		
-		return MonthTaskList;
-		
+		return MonthTaskList;		
 	}
 	
 	public boolean showWarning(Task task){
-		 boolean str = storage.EqualsTo(task);
+		boolean str = storage.EqualsTo(task);
 		
 		return str;
 	}
@@ -74,8 +73,7 @@ public class StorageAccess {
 		
 		TaskList = storage.searchTaskWithinPeriod(startDate, endDate);
 		
-		return TaskList;
-		
+		return TaskList;	
 	}
 	
 	public void updateDescription(int index, String newdescription){

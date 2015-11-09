@@ -77,6 +77,9 @@ public class CommandCreate {
 	
 	public Command createCommand(String _command) throws CommandAttributeError {
 		
+		assert _command != null;
+		assert _command.trim().length() != 0;
+		
 		Map<String,String> dictionary;
 		
 		try {
