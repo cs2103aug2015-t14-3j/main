@@ -17,6 +17,8 @@ public class Logic {
 
 	private CommandCreate commandCreator;
 	
+	private final String ERROR_COMMAND = "No Command Specified";
+	
 	private static final Logger logger = Logger.getLogger(Logic.class.getName());
 	
 	public Logic() {
@@ -29,7 +31,7 @@ public class Logic {
 		
 		commandCreator = new CommandCreate();
 		
-	//	logger.setUseParentHandlers(false);
+		logger.setUseParentHandlers(false);
 		logger.setLevel(Level.ALL);
 				
 		logger.info("Run with all components");
@@ -50,8 +52,14 @@ public class Logic {
 	}
 	
 	public String executeCommand(String command) {
+		assert command != null;
+		
 		logger.info("Input: " + command);
 		Command commandToExecute;
+		
+		if (command.trim().length() == 0) {
+			return ERROR_COMMAND;
+		}
 		
 		try{
 			commandToExecute = commandCreator.createCommand(command);
