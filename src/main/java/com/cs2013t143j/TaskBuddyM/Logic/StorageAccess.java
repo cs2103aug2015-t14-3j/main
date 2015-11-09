@@ -46,10 +46,8 @@ public class StorageAccess {
 		return MonthTaskList;		
 	}
 	
-	public boolean showWarning(Task task){
-		boolean str = storage.EqualsTo(task);
-		
-		return str;
+	public void showWarning(Task task){
+		 storage.EqualsTo(task);
 	}
 	
 	public void delete(int index) {

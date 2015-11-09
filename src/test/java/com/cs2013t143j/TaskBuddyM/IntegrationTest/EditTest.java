@@ -55,13 +55,4 @@ public class EditTest {
 		output = logic.executeCommand("e 2 start date 25/10/2015");
 		assertEquals("Index provided is larger than last display", output);
 	}
-	
-	@Test
-	public void EditInvalidField() {
-		logic.executeCommand("clear");
-		
-		logic.executeCommand("add aaa");
-		output = logic.executeCommand("e 2 field 25/10/2015");
-		assertEquals("Parser Error: com.cs2013t143j.TaskBuddyM.Parser.InvalidInputException: Invalid field entered", output);
-	}
 }

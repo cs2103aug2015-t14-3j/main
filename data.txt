@@ -1,1 +1,4 @@
+<<<<<<< HEAD
+=======
 bbb
+>>>>>>> branch 'master' of https://github.com/cs2103aug2015-t14-3j/main.git

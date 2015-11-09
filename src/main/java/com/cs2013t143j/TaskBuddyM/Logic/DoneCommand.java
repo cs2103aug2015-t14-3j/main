@@ -2,9 +2,7 @@ package com.cs2013t143j.TaskBuddyM.Logic;
 import java.util.Map;
 import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
 
-
-
-
+//@@ author A0101794H
 public class DoneCommand {
 	private StorageAccess storage;
 	
@@ -16,21 +14,11 @@ public class DoneCommand {
 	}
 	
 	
-public String execute(Map<String,String> parsedCommand){
-	
-	
-	
-	
-	
-	
+	public String execute(Map<String,String> parsedCommand){
 	
 	int index = Integer.parseInt(parsedCommand.get(DONE_INDEX));
 	storage.done(index);
 	String output = String.format(DONE_OUTPUT, index);
 	return output;
     }
-	
-	
-	
-	
 }

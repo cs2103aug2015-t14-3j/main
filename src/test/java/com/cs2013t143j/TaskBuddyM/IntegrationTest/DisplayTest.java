@@ -1,9 +1,7 @@
 package com.cs2013t143j.TaskBuddyM.IntegrationTest;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
-
 import com.cs2013t143j.TaskBuddyM.Logic.Logic;
 
 public class DisplayTest {

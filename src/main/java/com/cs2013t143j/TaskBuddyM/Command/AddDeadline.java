@@ -24,7 +24,7 @@ public class AddDeadline extends AddCommand {
 	}
 	
 	public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) throws CommandAttributeError {
-		
+	
 		isValid();
 		
 		LocalDateTime end = convertDateTime(endDate);
@@ -32,10 +32,7 @@ public class AddDeadline extends AddCommand {
 		Task task = new Task(description, end);
 		addedTask = task;
 		
-		if(sAccess.showWarning(task) == true){
-			logger.setLevel(Level.WARNING);
-			logger.log(Level.WARNING,"You already have a simliar task!");
-		}
+		sAccess.showWarning(task);
 		
 		sAccess.add(task);
 		

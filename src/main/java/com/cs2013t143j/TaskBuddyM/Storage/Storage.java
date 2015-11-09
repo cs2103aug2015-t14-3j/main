@@ -1,23 +1,29 @@
 package com.cs2013t143j.TaskBuddyM.Storage;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 import java.time.LocalDateTime;
+
+import com.cs2013t143j.TaskBuddyM.Command.AddDeadline;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 import com.cs2013t143j.TaskBuddyM.Storage.StorageIO;
+
 import java.lang.NullPointerException;
 
 
+//@@author A0101794H
 public class Storage {
-
+	
+	private static final Logger logger = Logger.getLogger(AddDeadline.class.getName());
 	private ArrayList<Task> tasks = new ArrayList<Task>();
 	private ArrayList<Task>doneTasks = new ArrayList<Task>();
-	private ArrayList<Task>newTaskList = new ArrayList<Task>();
 	
-	
-public Storage() {
+	public Storage() {
 		tasks = StorageIO.readFile();
 	}
 		
-public void add(Task newTask) {
+	public void add(Task newTask) {
 		tasks.add(newTask);
 		writeToFile();
 	}
@@ -39,111 +45,124 @@ public void add(Task newTask) {
 	public void updateDescription(int index, String newdescription){
 		Task task = tasks.get(index);
 		task.setDescription(newdescription);
-		//tasks.add(index,task);
+		
 		writeToFile();
 	}
 	
 	public void updateStartDate(int index,LocalDateTime newStartDate) {
+		assert index != 0;
 		Task task = tasks.get(index);
 		task.setStartDateTime(newStartDate);
-		//tasks.add(index,task);
+		
 		writeToFile();
 	}
 	
 	public void updateEndDate(int index,LocalDateTime newEndDate) {
 		assert index != 0;
 		
-		
 		Task task = tasks.get(index);
 		task.setEndDateTime(newEndDate);
-		//tasks.add(index,task);
 		
 		writeToFile();
 	}
 	
-public ArrayList<Task> searchTaskWithinPeriod(LocalDateTime startDateTime,LocalDateTime endDateTime)
-{
-	try{
-		
+	public ArrayList<Task> searchTaskWithinPeriod(LocalDateTime startDateTime,LocalDateTime endDateTime){
+	
+		ArrayList<Task> newTaskList = new ArrayList<Task>();
+		try{
 		for(int i=0;i< tasks.size();i++){
 			Task task = tasks.get(i);
 			LocalDateTime startDate= task.getStartDateTime();
 			LocalDateTime endDate = task.getEndDateTime();
 			
+			//check if task is an event task
 			if((startDate!= null) && (endDate != null) && (startDate.compareTo(startDateTime) >= 0) && (endDate.compareTo(endDateTime) <= 0) )   {
 				newTaskList.add(task);
 			}
-		
+			//check if task is a deadline task
+			if((startDate == null) && (endDate != null) && (endDate.compareTo(endDateTime) <= 0) ) {
+				newTaskList.add(task);
+			}
 		}
-		} catch(NullPointerException e){
+		}catch(NullPointerException e){
 			System.out.println("Wrong format");
 		}
 				
 		return newTaskList;
-}
+	}
 
-public void clearAll() {
+	public void clearAll() {
 	tasks = new ArrayList<Task>();
 	writeToFile();
 	}
 
-public ArrayList<Task> ShowOverDue(){
+	public ArrayList<Task> ShowOverDue(){
 	
 	ArrayList<Task> OverDueTaskList = new ArrayList<Task>();
-	
+	try{
 	for(int i=0; i< tasks.size();i++){
 		 Task task = tasks.get(i);
+		  //check if task is deadline task
 		 if((task.getStartDateTime()== null) &&(task.getEndDateTime() != null) &&(LocalDateTime.now().isAfter(task.getEndDateTime()))) {
 			 OverDueTaskList.add(task);
 		}
+		 //check if task is event task
 		 if((task.getStartDateTime()!=null)&&(task.getEndDateTime()!= null)&&(LocalDateTime.now().isAfter(task.getEndDateTime()))) {
 			 OverDueTaskList.add(task);
 		 }
 		
 	}
+	} catch(NullPointerException e){
+		System.out.println("Wrong format!");
+	}
 	return OverDueTaskList;
-}
+	}
 
-public ArrayList<Task> showWeek(){
-ArrayList<Task> WeekList = new ArrayList<Task>();
-
-for(int i=0;i< tasks.size();i++){
- Task task = tasks.get(i);
- LocalDateTime endTime = task.getEndDateTime();
- LocalDateTime OneWeekLater = (LocalDateTime.now()).plusWeeks(1);
- 
- if( (task.getStartDateTime() == null)&&  (endTime != null) &&(endTime.isAfter(LocalDateTime.now()))  && (endTime.isBefore(OneWeekLater))  ){ 
-	 WeekList.add(task);
-}
- 
- if( (task.getStartDateTime() != null)&&  (endTime != null) &&(endTime.isAfter(LocalDateTime.now()))  && (endTime.isBefore(OneWeekLater))  ){ 
-	 WeekList.add(task);
-}
-}
+	public ArrayList<Task> showWeek(){
+	ArrayList<Task> WeekList = new ArrayList<Task>();
+	try{
+	for(int i=0;i< tasks.size();i++){
+		Task task = tasks.get(i);
+		LocalDateTime endTime = task.getEndDateTime();
+		LocalDateTime OneWeekLater = (LocalDateTime.now()).plusWeeks(1);
+		//check if task is deadline task
+		if( (task.getStartDateTime() == null)&&  (endTime != null) &&(endTime.isAfter(LocalDateTime.now()))  && (endTime.isBefore(OneWeekLater))  ){ 
+			WeekList.add(task);
+		}
+		//check if task is event task
+		if( (task.getStartDateTime() != null)&&  (endTime != null) &&(endTime.isAfter(LocalDateTime.now()))  && (endTime.isBefore(OneWeekLater))  ){ 
+			WeekList.add(task);
+		}
+	}
+	} catch(NullPointerException e){
+		System.out.println("Wrong format!");
+	}
 	return WeekList;
-}
+    }
 
+	public ArrayList<Task> showMonth(){
+		ArrayList<Task> MonthList = new ArrayList<Task>();
+		try{
+		for(int i=0;i< tasks.size();i++){
+		Task task = tasks.get(i);
+		LocalDateTime endTime = task.getEndDateTime();
+		LocalDateTime OneMonthLater = (LocalDateTime.now()).plusMonths(1);
+		//check if task is deadline task
+		if( (task.getStartDateTime() == null)&&  (endTime != null) &&(endTime.isAfter(LocalDateTime.now()))  && (endTime.isBefore(OneMonthLater))  ){ 
+			MonthList.add(task);
+		}
+		//check if task is event task
+		if( (task.getStartDateTime() != null)&&  (endTime != null) &&(endTime.isAfter(LocalDateTime.now()))  && (endTime.isBefore(OneMonthLater))  ){ 
+			MonthList.add(task);
+		}
+		}
+		} catch(NullPointerException e){
+			System.out.println("Wrong format!");
+		}
+		return MonthList;
+		}
 
-public ArrayList<Task> showMonth(){
-ArrayList<Task> MonthList = new ArrayList<Task>();
-
-for(int i=0;i< tasks.size();i++){
- Task task = tasks.get(i);
- LocalDateTime endTime = task.getEndDateTime();
- LocalDateTime OneMonthLater = (LocalDateTime.now()).plusMonths(1);
- 
- if( (task.getStartDateTime() == null)&&  (endTime != null) &&(endTime.isAfter(LocalDateTime.now()))  && (endTime.isBefore(OneMonthLater))  ){ 
-	 MonthList.add(task);
-}
- 
- if( (task.getStartDateTime() != null)&&  (endTime != null) &&(endTime.isAfter(LocalDateTime.now()))  && (endTime.isBefore(OneMonthLater))  ){ 
-	 MonthList.add(task);
-}
-}
-	return MonthList;
-}
-
-public void done(int index){
+	public void done(int index){
 		assert index != 0;
 		
 		boolean done = true;
@@ -169,25 +188,49 @@ public void done(int index){
 		StorageIO.writeToFile(tasks);
 	}
 	
-	public boolean EqualsTo(Task task){
-		boolean str = true;
-		
-		
-		String description = task.getDescription();
-		LocalDateTime startTime = task.getStartDateTime();
-		LocalDateTime endTime = task.getEndDateTime();
-		
-		for(int i=0; i< tasks.size();i++){
-			Task oldTask = tasks.get(i);
-		
-			if((oldTask.getEndDateTime() == endTime) && (oldTask.getStartDateTime() == startTime) 
-					&& (oldTask.getDescription() == description)) {
-				str = true;
+	public void EqualsTo(Task task){
+		 	try{
+			for(int i=0;i< tasks.size();i++){
+			Task newtask = tasks.get(i);
+			LocalDateTime newendTime = newtask.getEndDateTime();
+			LocalDateTime newstartTime = newtask.getStartDateTime();
+			String newdescription  = newtask.getDescription();
+			
+			LocalDateTime endTime = task.getEndDateTime();
+			LocalDateTime startTime = task.getStartDateTime();
+			String description = task.getDescription();
+			//check if task is event task
+			if((startTime != null) && (endTime != null) && (startTime.compareTo(newstartTime) == 0) && (endTime.compareTo(newendTime) == 0))   {
+				logger.setLevel(Level.WARNING);
+				logger.log(Level.WARNING,"Scheduling conflict/You already have entered the task!");
+				System.exit(0);
 			}
-		}
-		return str;
+			//check if task is floating task
+			if( (startTime == null) && (endTime != null)&&  (endTime.compareTo(newendTime) == 0)){
+				logger.setLevel(Level.WARNING);
+				logger.log(Level.WARNING,"You have another task ending with the same deadline!");
+			}
+			} 
+		 	}catch(NullPointerException e){
+		 		System.out.println("Wrong format!");
+		 	}
 	}
+
 }
+	
+
+	
+
+
+	
+	
+	
+	
+	
+	
+
+	
+
 
 
 
