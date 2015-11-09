@@ -53,5 +53,15 @@ public class DeleteTest {
 		output = logic.executeCommand("r 2");
 		assertEquals("Index provided is larger than last display", output);
 	}
+	
+	@Test
+	public void DeleteNoIndex() {
+		logic.executeCommand("clear");
+		
+		logic.executeCommand("add bbb");
+		
+		output = logic.executeCommand("r");
+		assertEquals("Parser Error: com.cs2013t143j.TaskBuddyM.Parser.InvalidInputException: No content entered.", output);
+	}
 
 }

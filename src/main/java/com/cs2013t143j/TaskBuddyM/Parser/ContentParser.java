@@ -73,7 +73,6 @@ public class ContentParser {
 	}
 	
 	public Map<String,String> extractDeleteContent() throws InvalidInputException {
-		checkException("extractDeleteContent", ERROR_INDEX);
 		logger.log(Level.INFO, "Delete Index: " + userInput);
 		dictionary.put("index", userInput);
 		return dictionary;
