@@ -6,6 +6,8 @@ import java.util.logging.Logger;
 
 import com.cs2013t143j.TaskBuddyM.Logic.Logic;
 
+//@@author A0126303W-reused
+
 public class ContentParser {
 	
 	private static final String DIC_DESCRIPTION = "description";

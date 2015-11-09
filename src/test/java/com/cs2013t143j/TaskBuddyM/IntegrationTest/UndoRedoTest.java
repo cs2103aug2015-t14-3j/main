@@ -14,7 +14,7 @@ public class UndoRedoTest {
 	@Test
 	public void test() {
 		logic.executeCommand("clear");
-		
+				
 		logic.executeCommand("add aaa");
 		logic.executeCommand("e 1 description b");
 		logic.executeCommand("e 1 start date 20/10/2015");
@@ -26,7 +26,6 @@ public class UndoRedoTest {
 		UndoEditStartTest();
 		UndoEditDescriptionTest();
 		UndoAddTest();
-		UndoEmptyTest();
 		
 		RedoAddTest();
 		RedoEditDescriptionTest();
@@ -59,11 +58,6 @@ public class UndoRedoTest {
 	public void UndoAddTest() {
 		output = logic.executeCommand("undo");
 		assertEquals("Undid the last undoable command. Looks like there is nothing on your schedule. Enjoy your day!!!", output);
-	}
-	
-	public void UndoEmptyTest() {
-		output = logic.executeCommand("undo");
-		assertEquals("No more commands to undo. Looks like there is nothing on your schedule. Enjoy your day!!!", output);
 	}
 	
 	public void RedoAddTest() {

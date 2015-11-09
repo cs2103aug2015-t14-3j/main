@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
 import com.cs2013t143j.TaskBuddyM.Storage.Task;
 
-//@@Chow Hong Ern Daniel A0121327U
+//@@author A0121327U
 public class DeleteCommand implements Command {
 	
 	private String delIndex;
@@ -47,7 +47,7 @@ public class DeleteCommand implements Command {
 				deleted += String.valueOf(converted);
 				
 				if (i != indexList.length-1) {
-					deleted += ",";
+					deleted += ", ";
 				}
 				
 				tasks.add(lastDisplay.get(converted-1));

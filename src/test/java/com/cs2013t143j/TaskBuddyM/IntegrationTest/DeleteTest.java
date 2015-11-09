@@ -31,7 +31,7 @@ public class DeleteTest {
 		logic.executeCommand("add ccc");
 
 		output = logic.executeCommand("r 1 2");
-		assertEquals("Deleted task(s) 1,2\n1.ccc	-	-\n", output);
+		assertEquals("Deleted task(s) 1, 2\n1.ccc	-	-\n", output);
 	}
 	
 	@Test
