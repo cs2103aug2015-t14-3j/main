@@ -217,7 +217,7 @@ public class Storage {
 			
 			}
 			}catch(NullPointerException e){
-		 		System.out.println("Nothing to display!");
+		 		System.out.println("");
 		 	}
 			}
 	}
