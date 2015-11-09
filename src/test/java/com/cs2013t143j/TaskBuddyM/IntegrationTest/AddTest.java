@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import com.cs2013t143j.TaskBuddyM.Logic.Logic;
 
+//@@author A0121327U
 public class AddTest {
 
 	Logic logic = new Logic();
@@ -36,6 +37,7 @@ public class AddTest {
 		assertEquals("Here is your entire schedule:\n1.ccc  	25 Oct 2015 00:00	30 Oct 2015 00:00\n", output);
 	}
 	
+	//@@author A0126303W
 	@Test
 	public void AddFailNoContent() {
 		logic.executeCommand("clear");

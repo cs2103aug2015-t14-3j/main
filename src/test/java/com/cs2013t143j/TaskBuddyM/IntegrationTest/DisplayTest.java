@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import com.cs2013t143j.TaskBuddyM.Logic.Logic;
 
+//@@author A0121327U
 public class DisplayTest {
 
 	Logic logic = new Logic();
@@ -120,6 +121,7 @@ public class DisplayTest {
 		assertEquals("Looks like there is nothing on your schedule. Enjoy your day!!!", output);
 	}
 	
+	//@@author A0126303W
 	@Test
 	public void DisplayWeek() {
 		setup();
