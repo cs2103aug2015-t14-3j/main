@@ -1,9 +1,7 @@
 package com.cs2013t143j.TaskBuddyM.IntegrationTest;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
-
 import com.cs2013t143j.TaskBuddyM.Logic.Logic;
 
 //@@author A0121327U
@@ -143,7 +141,7 @@ public class DisplayTest {
 		setup();
 		
 		output = logic.executeCommand("d range 18/10/2015 to 23/10/2015");
-		assertEquals("Here are your tasks from 18/10/2015 to 23/10/2015\n1.exam week  	18 Oct 2015 00:00	22 Oct 2015 00:00\n2.holidays  	18 Oct 2015 00:00	23 Oct 2015 00:00\n", output);
+		assertEquals("Here are your tasks from 18/10/2015 to 23/10/2015\n1.submit report 	-	20 Oct 2015 00:00\n2.exam week  	18 Oct 2015 00:00	22 Oct 2015 00:00\n3.holidays  	18 Oct 2015 00:00	23 Oct 2015 00:00\n", output);
 	}
 	
 	@Test

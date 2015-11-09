@@ -34,11 +34,7 @@ public class AddEvent extends AddCommand {
 		Task task = new Task(description, start, end);
 		addedTask = task;
 		
-		if(sAccess.showWarning(task) == true){
-			logger.setLevel(Level.WARNING);
-			logger.log(Level.WARNING,"You already have a simliar task!");
-		}
-		
+		sAccess.showWarning(task);
 		sAccess.add(task);
 		
 		Command command = new DisplayAll();

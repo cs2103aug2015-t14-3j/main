@@ -25,7 +25,7 @@ public class StorageAccess {
 	public ArrayList<Task> showOverDue(){
 		ArrayList<Task> OverDueTasks = new ArrayList<Task>();
 		
-		OverDueTasks = storage.ShowOverDue();
+		OverDueTasks = storage.showOverDue();
 		
 		return OverDueTasks;
 	}
@@ -46,10 +46,8 @@ public class StorageAccess {
 		return MonthTaskList;		
 	}
 	
-	public boolean showWarning(Task task){
-		boolean str = storage.EqualsTo(task);
-		
-		return str;
+	public void showWarning(Task task){
+		 storage.EqualsTo(task);
 	}
 	
 	public void delete(int index) {

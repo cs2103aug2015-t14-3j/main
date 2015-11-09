@@ -1,5 +1,6 @@
 package com.cs2013t143j.TaskBuddyM.Command;
 
+//@@ author A0101794H
 import java.util.ArrayList;
 
 import com.cs2013t143j.TaskBuddyM.Logic.StorageAccess;
@@ -12,23 +13,16 @@ private final String DISPLAY_HEADER_WEEK = "Here are all your tasks for the week
 private final String INFO = "Display Week";
 	
 	
-public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) {
-		
-		ArrayList<Task> allTasks = sAccess.showWeek();
-		
-		tasks = allTasks;
-		
-		String output = DISPLAY_HEADER_WEEK;
-		
-		output = parseTasks(output);
-
-		return output;
+		public String execute(ArrayList<Task> lastDisplay, StorageAccess sAccess) {
+				ArrayList<Task> allTasks = sAccess.showWeek();
+				tasks = allTasks;
+				String output = DISPLAY_HEADER_WEEK;
+				output = parseTasks(output);
+				return output;
+		}
+		public String info() {
+			String output = INFO;
+	
+			return output;
+		}	
 	}
-public String info() {
-	String output = INFO;
-	
-	return output;
-}	
-	
-	
-}
